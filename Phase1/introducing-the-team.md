@@ -1,6 +1,7 @@
 # Introducing the Team
 
 [Group photo here]
+
 [Team battle cry here]
 
 ## ***REMOVED***
