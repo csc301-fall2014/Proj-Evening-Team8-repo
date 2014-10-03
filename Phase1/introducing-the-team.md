@@ -8,7 +8,7 @@
 [Your bio here]
 
 ## ***REMOVED***
-[Your bio here]
+I'm a third year student in the computer science specialist program. I've always enjoyed designing and building things, which led me towards CS ever since writing my first lines of code in high school. Right now I'm not entirely sure of the path of computer science I'd like to pursue in the future, but I find that software engineering one that interests me the most. Although that is one of the reasons why I took this course, the main reason is that I really like working on these kinds of projects where problem solving can be applied to create cool things. Whenever I have some free time I usually spend it on video games, watching films, and cooking. I also plan to finish developing the game I worked on over the summer whenever my busy periods are over.
 
 ## ***REMOVED***
 [Your bio here]
