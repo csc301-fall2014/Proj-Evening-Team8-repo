@@ -20,7 +20,7 @@ I'm a third year student aiming for a Specialist degree in Computer Science. I h
 [Your bio here]
 
 ## Austin McKennan
-[Your bio here]
+I'm a third year student in a computer science specialist post. I have always been interested in how computers actually work internally which led me to take some coding courses in highschool. I felt the type of thinking required to solve computer science problems was well suited to me and my interest has grown since taking those courses. In the summer I work for the City of Toronto on the Unix Server team which has also helped me develop an understanding of how I&T operates in a business environment. In my free time, I am usually gaming or watching sports/TV. I also enjoy going out with friends and listening to music.
 
 ## ***REMOVED***
 [Sorry I forgot you :(]
