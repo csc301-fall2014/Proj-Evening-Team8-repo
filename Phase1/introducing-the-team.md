@@ -1,6 +1,7 @@
 # Introducing the Team
 
-[Group photo here]
+Team photo:
+http://imgur.com/bzAgycx
 
 [Team battle cry here]
 
@@ -20,7 +21,7 @@ I'm a third year student aiming for a Specialist degree in Computer Science. I h
 [Your bio here]
 
 ## Austin McKennan
-I'm a third year student in a computer science specialist post. I have always been interested in how computers actually work internally which led me to take some coding courses in highschool. I felt the type of thinking required to solve computer science problems was well suited to me and my interest has grown since taking those courses. In the summer I work for the City of Toronto on the Unix Server team which has also helped me develop an understanding of how I&T operates in a business environment. In my free time, I am usually gaming or watching sports/TV. I also enjoy going out with friends and listening to music.
+[Your bio here]
 
 ## ***REMOVED***
-[Sorry I forgot you :(]
+I am a third year comp sci student with a focus on web/game development. I took this course because I am very interested on how teams work in software development and how efficiency and production can be maximized. I have always been into the video game scene and when I was younger I hoped to work at some big game studio but now I feel more inclined towards web dev. Entertainment is awesome and all but practical use of applications has a greater hold on me now. I have recently got super into the hackathon scene because I feel huge things are happening in that space. I wish I was at one every weekend haha. I love the support and momentum those things allow and I think I learn more during those weekends than I do months at school. Always been extremely interested in the advancements of tech in general and love the applications people are doing in the IoT space. Dream is to work in Silicon Vally someday working for some crazy startup.
