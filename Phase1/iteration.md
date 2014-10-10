@@ -3,7 +3,7 @@
 * Create topics, view topics
 * Topic subscription
 * Account Creation (simple authentication like in a text file)
-* Make Web Sexy and Ka$H$$$ KAPPA
+* Make a pretty UI
 
 ## 3 user-stories/features/components:
 * Notifications for subscriptions
