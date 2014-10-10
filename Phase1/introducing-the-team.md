@@ -1,7 +1,7 @@
 # Introducing the Team
 
-Team photo:
 ![Group Photo](http://i.imgur.com/bzAgycx.jpg)
+From left to right: ***REMOVED***, Austin McKennan, ***REMOVED***, ***REMOVED***, ***REMOVED***, ***REMOVED***, ***REMOVED***
 
 [Team battle cry here]
 
