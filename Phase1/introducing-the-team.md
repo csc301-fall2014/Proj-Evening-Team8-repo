@@ -3,8 +3,6 @@
 ![Group Photo](http://i.imgur.com/bzAgycx.jpg)
 From left to right: ***REMOVED***, Austin McKennan, ***REMOVED***, ***REMOVED***, ***REMOVED***, ***REMOVED***, ***REMOVED***
 
-[Team battle cry here]
-
 ## ***REMOVED***
 I'm a third year Computer Science Specialist student.  I originally got into CompSci as a field because I ended up having a real affinity for it in comparison to disciplines.  Since starting at UofT, I've found very little of the content in CSC courses to be unenjoyable.  I'm currently focusing on a path towards Software and/or Web Development, though in the future I could see myself contributing to Artificial Intelligence research, as AI is probably the perfect fusion of my interests.
 
