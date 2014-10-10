@@ -1,7 +1,7 @@
 # Introducing the Team
 
 Team photo:
-http://imgur.com/bzAgycx
+![Group Photo](http://i.imgur.com/bzAgycx.jpg)
 
 [Team battle cry here]
 
