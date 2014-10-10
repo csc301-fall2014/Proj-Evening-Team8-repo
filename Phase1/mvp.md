@@ -1,3 +1,5 @@
+##MVP
+
 Our project is a forum with user defined structure. It is aimed at university students and staff with the 
 purpose of facilitating simple communication within various interest groups. Users are able to browse through
 existing boards or create new topics that are relevant to them. Users can also subscribe to specific topics 
