@@ -1,4 +1,4 @@
-## Phase 2 (3 weeks long) of the project:
+## Phase 2:
 * Groups with privacy settings
 * Create topics, view topics
 * Topic subscription
