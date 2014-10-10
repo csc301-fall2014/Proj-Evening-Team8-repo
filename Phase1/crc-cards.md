@@ -1,6 +1,4 @@
-Our crc cards can be viewed here:
-
-http://imgur.com/3rxIFLy
+![CRC Cards](http://i.imgur.com/3rxIFLy.jpg)
 
 ## Scenarios:
 					
