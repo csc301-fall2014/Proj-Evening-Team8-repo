@@ -1,6 +1,7 @@
 ## User Stories:
-Priority: 1: highest -> 3: lowest
-Difficulty: A: hardest -> C: easiest
+
+####Priority: 1 highest -> 3 lowest
+####Difficulty: A hardest -> C easiest
 
 * As Max or Professor Sara, I want to post a message to a specific topic so that I can participate in discussions. [1] [C]
 * As Max or Professor Sara, I want to be able to register so that I can create an account.[1] [C]
