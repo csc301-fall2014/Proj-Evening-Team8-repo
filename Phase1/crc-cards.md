@@ -1,6 +1,6 @@
-## CRC Cards:
+Our crc cards can be viewed here:
 
-![CRC Cards](http://i.imgur.com/3rxIFLy.jpg)
+http://imgur.com/3rxIFLy
 
 ## Scenarios:
 					
@@ -12,16 +12,17 @@ As Max, I want to post a message to a specific board so that I can participate i
 					
 As Max, I want to be able to register so that I can create and login into an account.			
 					
-* User inputs a username and password.					
+* Max inputs a username and password.					
 * AuthDAO adds an AuthenticatedUser entry.					
-* User logs in with username and password					
+* Max logs in with username and password					
 * AuthDAO checks input with AuthenticatedUser mapping (username = primary key)					
 					
 As Max, I want to join groups, such as courses or teams, so that I can participate in specific discussions.					
-					
-CANT BE DONE SORRY MAX		RIP Max's dreams 2014-2014			
+* Max creates a group
+* DAO stores the group privately
+* Max can then invite users to come into the group exclusively
+* Max can create boards where only a certain group can chat on
 					
 As Max, I want to filter and sort topics based on subscription so that I can view relevant topics at a glance.					
-					
 * User clicks a 'filter' or 'sort' button					
 * DAO checks user's subscriptions, and displays all boards that have been subscribed to		
