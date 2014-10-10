@@ -6,7 +6,9 @@ http://imgur.com/bzAgycx
 [Team battle cry here]
 
 ## ***REMOVED***
-[Your bio here]
+I'm a third year Computer Science Specialist student.  I originally got into CompSci as a field because I ended up having a real affinity for it in comparison to disciplines.  Since starting at UofT, I've found very little of the content in CSC courses to be unenjoyable.  I'm currently focusing on a path towards Software and/or Web Development, though in the future I could see myself contributing to Artificial Intelligence research, as AI is probably the perfect fusion of my interests.
+
+My other interests include Cognitive Science (I originally had a CogSci major alongside my CompSci specialist, but found that I'd be unable to pursue all the CompSci courses that I wanted) and competitive gaming (RTS, MOBA, MMORPG, Rhythm, you name it, I'm game).  If time and money weren't an issue, however, I'd probably want to be a career student.  The list of things I'd like to learn is unfortunately growing much faster than I could feasibly keep up with.
 
 ## ***REMOVED***
 I'm a third year student in the computer science specialist program. I've always enjoyed designing and building things, which led me towards CS ever since writing my first lines of code in high school. Right now I'm not entirely sure of the path of computer science I'd like to pursue in the future, but I find that software engineering is the path that interests me the most. Although getting to understand SE is one of the reasons why I took this course, the main reason is that I really like working on these kinds of projects; where problem solving can be applied to create cool things. Whenever I have some free time I usually spend it on video games, watching films, and cooking. I also plan to finish developing the game I worked on over the summer whenever this busy school period is over.
