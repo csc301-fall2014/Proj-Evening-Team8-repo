@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<div id="container" align="center">
+    <h1>Registration</h1>
+    <form action="{% url 'mainsite:register' %}" method="post">
+        {% csrf_token %} <!--Cross Site Request Forgery protection-->
+        {{ form.as_p }}
+        <p>
+            <input type="submit" value="Submit" />
+        </p>
+
+    </form>
+</div>
+
+</body>
+</html>
