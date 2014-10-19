@@ -6,5 +6,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'messageboard.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^mainsite/', include('mainsite.urls', namespace="mainsite")),
     url(r'^admin/', include(admin.site.urls)),
 )
