@@ -3,5 +3,4 @@ from mainsite import views
 
 urlpatterns = [
     url(r'^registration', views.registration, name='registration'),
-    url(r'^register', views.register, name='register'),
 ]
