@@ -10,6 +10,9 @@ def registration(request):
         if form.is_valid():
             data = form.cleaned_data
             user = User.objects.create_user(data['username'], data['email'], data['password'])
+            user.first_name = data['first_name']
+            user.last_name = data['last_name']
+            user.save()
             return render(request, 'mainsite/registrationcomplete.html', {'data': data})
         else:
             return HttpResponse('Invalid Form Data.' + str(form.errors))
