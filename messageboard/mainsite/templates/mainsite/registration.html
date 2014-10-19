@@ -7,7 +7,7 @@
 <body>
 <div id="container" align="center">
     <h1>Registration</h1>
-    <form action="{% url 'mainsite:register' %}" method="post">
+    <form action="" method="post">
         {% csrf_token %} <!--Cross Site Request Forgery protection-->
         {{ form.as_p }}
         <p>
