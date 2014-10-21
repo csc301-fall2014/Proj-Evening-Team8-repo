@@ -33,9 +33,11 @@ def login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            # Redirect to a success page
+            # This is where we redirect to our messageboard!
             return render(request, 'mainsite/', {'data': data})
-
+        else:
+            # Display validation errors
+            return HttpResponse('Invalid Form Data.')
     else:
         return render(request, 'mainsite/registration/login.html', {'form': AuthenticationForm()})
 
@@ -46,3 +48,6 @@ def logout_view(request):
 
 def index(request):
     return render(request, 'mainsite/index.html')
+
+def messageboard(request):
+    return render(request, 'mainsite/messageboard.html')
