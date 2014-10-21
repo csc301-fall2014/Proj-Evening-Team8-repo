@@ -20,7 +20,7 @@ def registration(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.save()
-            return render(request, 'mainsite/registrationcomplete.html', {'data': data})
+            return render(request, 'mainsite/registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
             return HttpResponse('Invalid Form Data.' + str(form.errors))
