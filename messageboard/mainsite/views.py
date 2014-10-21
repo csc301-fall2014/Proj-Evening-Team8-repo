@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, logout
+#imported login and changed the name because login is also our view function
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -32,9 +34,10 @@ def login(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
-            # This is where we redirect to our messageboard!
-            return render(request, 'mainsite/', {'data': data})
+            #login the user
+            auth_login(request, user)
+            #redirect
+            return render(request, 'mainsite/messageboard.html')
         else:
             # Display validation errors
             return HttpResponse('Invalid Form Data.')
@@ -50,4 +53,9 @@ def index(request):
     return render(request, 'mainsite/index.html')
 
 def messageboard(request):
-    return render(request, 'mainsite/messageboard.html')
+    #if our user is not a real user
+    if not request.user.is_authenticated():
+        return HttpResponse('Invalid Form Data.' + str(form.errors))
+    else:
+        return render(request, 'mainsite/messageboard.html')
+    
