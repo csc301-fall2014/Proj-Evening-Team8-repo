@@ -47,6 +47,7 @@ def login(request):
 def logout_view(request):
     logout(request)
     # Redirect to a success page.
+    return render(request, 'mainsite/index.html', {'form': AuthenticationForm()})
 
 
 def index(request):
