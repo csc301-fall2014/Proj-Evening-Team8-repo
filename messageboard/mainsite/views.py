@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -36,4 +37,12 @@ def login(request):
             return render(request, 'mainsite/', {'data': data})
 
     else:
-        return render(request, 'mainsite/login/login.html', {'form': AuthenticationForm()})
+        return render(request, 'mainsite/registration/login.html', {'form': AuthenticationForm()})
+
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page.
+
+
+def index(request):
+    return render(request, 'mainsite/index.html')
