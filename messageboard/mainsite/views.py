@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, MessageForm
+from mainsite.forms import UserForm, MessageForm, TopicForm
 from django.contrib.auth import authenticate, logout
 #imported login and changed the name because login is also our view function
 from django.contrib.auth import login as auth_login
@@ -21,13 +21,13 @@ def registration(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.save()
-            return render(request, 'mainsite/registration/registrationcomplete.html', {'data': data})
+            return render(request, 'registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
             return HttpResponse('Invalid Form Data.' + str(form.errors))
     else:
         # Registration not completed, initialize form
-        return render(request, 'mainsite/registration/registration.html', {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
+        return render(request, 'registration/registration.html', {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
 
 def login(request):
     if request.method == 'POST':
@@ -43,20 +43,31 @@ def login(request):
             # Display validation errors
             return HttpResponse('Invalid Form Data.')
     else:
-        return render(request, 'mainsite/registration/login.html', {'form': AuthenticationForm()})
+        return render(request, 'registration/login.html', {'form': AuthenticationForm()})
 
 def logout_view(request):
     logout(request)
     # Redirect to a success page.
-    return render(request, 'mainsite/index.html', {'form': AuthenticationForm()})
+    return render(request, 'index.html', {'form': AuthenticationForm()})
 
 def index(request):
-    return render(request, 'mainsite/index.html')
+    return render(request, 'index.html')
 
 @login_required(login_url='/mainsite/login')
 def messageboard(request):
     topic_list = Topic.objects.all()
-    return render(request, 'mainsite/messageboard.html', {'topics': topic_list})
+    return render(request, 'messageboard.html', {'topics': topic_list})
+
+@login_required(login_url='/mainsite/login')
+def create_topic(request):
+    if request.method == 'POST':
+        topic = Topic(topic_name=request.POST['topic_name'], creator=request.user)
+        topic.save()
+        return redirect('/mainsite/messageboard/')
+    else:
+        return render(request, 'topics/create_topic.html',
+                        {'form': TopicForm})
+
 
 @login_required(login_url='/mainsite/login')
 def topic(request, topicid):
@@ -65,10 +76,24 @@ def topic(request, topicid):
         if filledForm.is_valid():
             data = filledForm.cleaned_data
             message = Message()
+            message.creator = request.user
             message.topic = Topic.objects.get(id=topicid)
-            message.pub_date = datetime.datetime.now()
             message.message_content = data['message_content']
             message.save()
     thisTopic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=thisTopic.id)
-    return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
+    return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
+
+@login_required(login_url='/mainsite/login')
+def subscribe(request, topicid):
+    # Associate the topic and user to create a subscription
+    user = request.user
+    user.subscribed_topics.add(Topic.objects.get(id=topicid))
+    # After subscribing, redirect to the user's subscription list.
+    return redirect('/mainsite/messageboard/subscriptions')
+
+@login_required(login_url='/mainsite/login')
+def subscribed_topics(request):
+    user = request.user
+    topic_list = user.subscribed_topics.all()
+    return render(request, 'topics/subscribed_topics.html', {'topics': topic_list})
