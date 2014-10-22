@@ -8,13 +8,15 @@
 <div id="header" align="center">
     <h2>Message Board</h2>
 </div>
-<ul>
-{% for topic in topics %}
-    <li>{{ topic.topic_name }}</li>
-{% empty %}
-    <p> No topics to display </p>
-{% endfor %}
-</ul>
+<div id="topics" align="center">
+    {% for topic in topics %}
+        <p>
+            <a href="{{topic.topic_name}}">{{ topic.topic_name }}</a>
+        </p>
+    {% empty %}
+        <p> No topics to display </p>
+    {% endfor %}
+</div>>
 <div id=logout" align="center">
 	<p><a href="/mainsite/logout/">Logout</a></p>
 </div>

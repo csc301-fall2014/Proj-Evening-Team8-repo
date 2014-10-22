@@ -5,6 +5,18 @@
     <title>{{ topic.topic_name }}</title>
 </head>
 <body>
-
+<div id="header" align="center">
+    <h2>{{ topic.topic_name }}</h2>
+</div>
+<div id="messages" align="center">
+    {% for msg in messages %}
+        <p>{{ msg.message_content }}</p>
+    {% empty %}
+        <p> No messages to display </p>
+    {% endfor %}
+</div>
+<div id=logout" align="center">
+	<p><a href="/mainsite/logout/">Logout</a></p>
+</div>
 </body>
 </html>
