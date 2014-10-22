@@ -59,7 +59,7 @@ def messageboard(request):
     return render(request, 'mainsite/messageboard.html', {'topics': topic_list})
 
 @login_required(login_url='/mainsite/login')
-def topic(request, topicname=""):
-    thisTopic = Topic.objects.get(topic_name=topicname)
+def topic(request, topicid):
+    thisTopic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=thisTopic.id)
     return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': thisTopic})
