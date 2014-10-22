@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm
@@ -38,8 +38,7 @@ def login(request):
             #login the user
             auth_login(request, user)
             #redirect
-            #return render(request, 'mainsite/messageboard.html')
-            return messageboard(request)
+            return redirect("/mainsite/messageboard/")
         else:
             # Display validation errors
             return HttpResponse('Invalid Form Data.')
@@ -62,5 +61,5 @@ def messageboard(request):
 @login_required(login_url='/mainsite/login')
 def topic(request, topicname=""):
     thisTopic = Topic.objects.get(topic_name=topicname)
-    messagelist = Message.objects.filter(topic__topic_name=topicname)
+    messagelist = Message.objects.filter(topic__id=thisTopic.id)
     return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': thisTopic})
