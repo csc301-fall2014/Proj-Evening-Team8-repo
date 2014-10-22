@@ -1,13 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.template import RequestContext, loader
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm
+from mainsite.forms import UserForm, MessageForm
 from django.contrib.auth import authenticate, logout
 #imported login and changed the name because login is also our view function
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.contrib.auth.decorators import login_required
+import datetime
+from mainsite.models import Topic, Message
 
 def registration(request):
     if request.method == 'POST':
@@ -37,7 +38,7 @@ def login(request):
             #login the user
             auth_login(request, user)
             #redirect
-            return render(request, 'mainsite/messageboard.html')
+            return redirect('/mainsite/messageboard/')
         else:
             # Display validation errors
             return HttpResponse('Invalid Form Data.')
@@ -49,14 +50,25 @@ def logout_view(request):
     # Redirect to a success page.
     return render(request, 'mainsite/index.html', {'form': AuthenticationForm()})
 
-
 def index(request):
     return render(request, 'mainsite/index.html')
 
+@login_required(login_url='/mainsite/login')
 def messageboard(request):
-    #if our user is not a real user
-    if not request.user.is_authenticated():
-        return HttpResponse('Invalid Form Data.' + str(form.errors))
-    else:
-        return render(request, 'mainsite/messageboard.html')
-    
+    topic_list = Topic.objects.all()
+    return render(request, 'mainsite/messageboard.html', {'topics': topic_list})
+
+@login_required(login_url='/mainsite/login')
+def topic(request, topicid):
+    if request.method == 'POST':
+        filledForm = MessageForm(request.POST)
+        if filledForm.is_valid():
+            data = filledForm.cleaned_data
+            message = Message()
+            message.topic = Topic.objects.get(id=topicid)
+            message.pub_date = datetime.datetime.now()
+            message.message_content = data['message_content']
+            message.save()
+    thisTopic = Topic.objects.get(id=topicid)
+    messagelist = Message.objects.filter(topic__id=thisTopic.id)
+    return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
