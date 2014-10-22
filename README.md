@@ -1,6 +1,11 @@
 ### Sprint One
 
-[First Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/11)
+[Planning Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/11)
+[First Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/5)
+[Final Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/16)
+
+### Sprint Two
+[Planning Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/17)
 
 # Phase 2 - Implementation
 
