@@ -14,7 +14,7 @@ class Topic(models.Model):
 
 class Message(models.Model):
     message_content = models.TextField()
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default=timezone.now())
     creator = models.ForeignKey(User)
     topic = models.ForeignKey(Topic)
 
