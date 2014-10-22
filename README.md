@@ -1,3 +1,7 @@
+### Sprint One
+
+[First Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/11)
+
 # Phase 2 - Implementation
 
 The main goal of this phase is to implement and present the first working version of your product. 
