@@ -59,13 +59,13 @@ def messageboard(request):
     return render(request, 'messageboard.html', {'topics': topic_list})
 
 @login_required(login_url='/mainsite/login')
-def createtopic(request):
+def create_topic(request):
     if request.method == 'POST':
         topic = Topic(topic_name=request.POST['topic_name'], creator=request.user)
         topic.save()
         return redirect('/mainsite/messageboard/')
     else:
-        return render(request, 'topics/createtopic.html',
+        return render(request, 'topics/create_topic.html',
                         {'form': TopicForm})
 
 
@@ -78,7 +78,6 @@ def topic(request, topicid):
             message = Message()
             message.creator = request.user
             message.topic = Topic.objects.get(id=topicid)
-            message.pub_date = datetime.datetime.now()
             message.message_content = data['message_content']
             message.save()
     thisTopic = Topic.objects.get(id=topicid)
@@ -97,4 +96,4 @@ def subscribe(request, topicid):
 def subscribed_topics(request):
     user = request.user
     topic_list = user.subscribed_topics.all()
-    return render(request, 'topics/subscribedtopics.html', {'topics': topic_list})
+    return render(request, 'topics/subscribed_topics.html', {'topics': topic_list})
