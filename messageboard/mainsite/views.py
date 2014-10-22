@@ -53,12 +53,12 @@ def logout_view(request):
 def index(request):
     return render(request, 'mainsite/index.html')
 
-@login_required(login_url='mainsite/login')
+@login_required(login_url='/mainsite/login')
 def messageboard(request):
     topic_list = Topic.objects.all()
     return render(request, 'mainsite/messageboard.html', {'topics': topic_list})
 
-@login_required(login_url='mainsite/login')
+@login_required(login_url='/mainsite/login')
 def topic(request, topicid):
     if request.method == 'POST':
         filledForm = MessageForm(request.POST)
