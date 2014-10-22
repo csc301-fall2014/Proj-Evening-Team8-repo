@@ -8,11 +8,12 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'password', 'email',  'first_name', 'last_name']
         widgets = {
-            'username': forms.TextInput(attrs={'required': True}),
-            'password': forms.PasswordInput(attrs={'required': True}),
-            'email': forms.TextInput(attrs={'required': True}),
+            'username': forms.TextInput(attrs={'required': 'True'}),
+            'password': forms.PasswordInput(attrs={'required': 'True'}),
+            'email': forms.TextInput(attrs={'required': 'True'}),
         }
 
+    # Ensure e-mail is unique.
     def clean_email(self):
         email = self.cleaned_data.get('email')
         username = self.cleaned_data.get('username')
