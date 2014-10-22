@@ -21,13 +21,13 @@ def registration(request):
             user.first_name = data['first_name']
             user.last_name = data['last_name']
             user.save()
-            return render(request, 'mainsite/registration/registrationcomplete.html', {'data': data})
+            return render(request, 'registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
             return HttpResponse('Invalid Form Data.' + str(form.errors))
     else:
         # Registration not completed, initialize form
-        return render(request, 'mainsite/registration/registration.html', {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
+        return render(request, 'registration/registration.html', {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
 
 def login(request):
     if request.method == 'POST':
@@ -43,7 +43,7 @@ def login(request):
             # Display validation errors
             return HttpResponse('Invalid Form Data.')
     else:
-        return render(request, 'mainsite/registration/login.html', {'form': AuthenticationForm()})
+        return render(request, 'registration/login.html', {'form': AuthenticationForm()})
 
 def logout_view(request):
     logout(request)
@@ -51,12 +51,12 @@ def logout_view(request):
     return render(request, 'mainsite/index.html', {'form': AuthenticationForm()})
 
 def index(request):
-    return render(request, 'mainsite/index.html')
+    return render(request, 'index.html')
 
 @login_required(login_url='/mainsite/login')
 def messageboard(request):
     topic_list = Topic.objects.all()
-    return render(request, 'mainsite/messageboard.html', {'topics': topic_list})
+    return render(request, 'messageboard.html', {'topics': topic_list})
 
 @login_required(login_url='/mainsite/login')
 def createtopic(request):
@@ -65,7 +65,7 @@ def createtopic(request):
         topic.save()
         return redirect('/mainsite/messageboard/')
     else:
-        return render(request, 'mainsite/createtopic.html',
+        return render(request, 'topics/createtopic.html',
                         {'form': TopicForm})
 
 
@@ -83,7 +83,7 @@ def topic(request, topicid):
             message.save()
     thisTopic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=thisTopic.id)
-    return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
+    return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
 
 @login_required(login_url='/mainsite/login')
 def subscribe(request, topicid):
@@ -97,4 +97,4 @@ def subscribe(request, topicid):
 def subscribed_topics(request):
     user = request.user
     topic_list = user.subscribed_topics.all()
-    return render(request, 'mainsite/subscribedtopics.html', {'topics': topic_list})
+    return render(request, 'topics/subscribedtopics.html', {'topics': topic_list})
