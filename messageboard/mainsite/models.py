@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Topic(models.Model):
     topic_name = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    subscriptions = models.ManyToManyField(User)
 
     def __str__(self):
         return str(self.id) + ": " + str(self.topic_name)
