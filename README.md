@@ -1,7 +1,9 @@
 ### Sprint One
 
 [Planning Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/11)
+
 [First Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/5)
+
 [Final Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/16)
 
 ### Sprint Two
