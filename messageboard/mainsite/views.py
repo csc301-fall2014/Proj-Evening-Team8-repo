@@ -1,12 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
-from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm
 from django.contrib.auth import authenticate, logout
 #imported login and changed the name because login is also our view function
 from django.contrib.auth import login as auth_login
-from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
@@ -58,12 +56,11 @@ def index(request):
 
 @login_required(login_url='/mainsite/login')
 def messageboard(request):
-    #if our user is not a real user
     topic_list = Topic.objects.all()
     return render(request, 'mainsite/messageboard.html', {'topics': topic_list})
 
 @login_required(login_url='/mainsite/login')
-def topic(request, topicname):
-    topic = Topic.objects.filter('topic_name__iexact=topicname')
-    messagelist = Message.object.filter('topic.topic_name__iexact=topicname')
-    return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': topic})
+def topic(request, topicname=""):
+    thisTopic = Topic.objects.get(topic_name=topicname)
+    messagelist = Message.objects.filter(topic__topic_name=topicname)
+    return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': thisTopic})
