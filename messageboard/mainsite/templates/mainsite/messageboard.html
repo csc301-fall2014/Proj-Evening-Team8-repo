@@ -11,7 +11,7 @@
 <div id="topics" align="center">
     {% for topic in topics %}
         <p>
-            <a href="{{topic.topic_name}}">{{ topic.topic_name }}</a>
+            <a href="{{ topic.id }}">{{ topic.topic_name }}</a>
         </p>
     {% empty %}
         <p> No topics to display </p>
