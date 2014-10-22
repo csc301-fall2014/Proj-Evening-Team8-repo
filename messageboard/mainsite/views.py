@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 
+from mainsite.models import Topic
 
 def registration(request):
     if request.method == 'POST':
@@ -37,7 +38,8 @@ def login(request):
             #login the user
             auth_login(request, user)
             #redirect
-            return render(request, 'mainsite/messageboard.html')
+            #return render(request, 'mainsite/messageboard.html')
+            return messageboard(request)
         else:
             # Display validation errors
             return HttpResponse('Invalid Form Data.')
@@ -58,5 +60,5 @@ def messageboard(request):
     if not request.user.is_authenticated():
         return HttpResponse('Invalid Form Data.' + str(form.errors))
     else:
-        return render(request, 'mainsite/messageboard.html')
-    
+        topic_list = Topic.objects.all()
+        return render(request, 'mainsite/messageboard.html', {'topics': topic_list})

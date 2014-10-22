@@ -7,10 +7,16 @@
 <body>
 <div id="header" align="center">
     <h2>Message Board</h2>
-    <p>We out here</p>
 </div>
-<div id"logout" align="center">
-	<p><a href="/mainsite/logout/">Logout</p>
+<ul>
+{% for topic in topics %}
+    <li>{{ topic.topic_name }}</li>
+{% empty %}
+    <p> No topics to display </p>
+{% endfor %}
+</ul>
+<div id=logout" align="center">
+	<p><a href="/mainsite/logout/">Logout</a></p>
 </div>
 
 </body>
