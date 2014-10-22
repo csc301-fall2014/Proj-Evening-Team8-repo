@@ -15,6 +15,14 @@
         <p> No messages to display </p>
     {% endfor %}
 </div>
+<div id="textbox" align="center">
+    <form action= "" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p> <input type="SUBMIT" value="Post"></p>
+    </form>
+</div>
+
 <div id=logout" align="center">
 	<a href="/mainsite/messageboard/">Back</a>
     <a href="/mainsite/logout/">Logout</a>
