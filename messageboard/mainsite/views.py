@@ -6,9 +6,11 @@ from mainsite.forms import UserForm
 from django.contrib.auth import authenticate, logout
 #imported login and changed the name because login is also our view function
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
-from mainsite.models import Topic
+from mainsite.models import Topic, Message
 
 def registration(request):
     if request.method == 'POST':
@@ -51,14 +53,17 @@ def logout_view(request):
     # Redirect to a success page.
     return render(request, 'mainsite/index.html', {'form': AuthenticationForm()})
 
-
 def index(request):
     return render(request, 'mainsite/index.html')
 
+@login_required(login_url='/mainsite/login')
 def messageboard(request):
     #if our user is not a real user
-    if not request.user.is_authenticated():
-        return HttpResponse('Invalid Form Data.' + str(form.errors))
-    else:
-        topic_list = Topic.objects.all()
-        return render(request, 'mainsite/messageboard.html', {'topics': topic_list})
+    topic_list = Topic.objects.all()
+    return render(request, 'mainsite/messageboard.html', {'topics': topic_list})
+
+@login_required(login_url='/mainsite/login')
+def topic(request, topicname):
+    topic = Topic.objects.filter('topic_name__iexact=topicname')
+    messagelist = Message.object.filter('topic.topic_name__iexact=topicname')
+    return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': topic})
