@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from mainsite.models import Topic, Message
 
+
 def registration(request):
     if request.method == 'POST':
         # Registration complete, data submitted via POST
@@ -29,11 +30,11 @@ def registration(request):
         # Registration not completed, initialize form
         return render(request, 'registration/registration.html', {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
 
+
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=request.POST['username'],
+                            password=request.POST['password'])
         if user is not None:
             #login the user
             auth_login(request, user)
@@ -41,22 +42,26 @@ def login(request):
             return redirect('/mainsite/messageboard/')
         else:
             # Display validation errors
-            return HttpResponse('Invalid Form Data.')
+            return HttpResponse('Username and/or password is incorrect.')
     else:
         return render(request, 'registration/login.html', {'form': AuthenticationForm()})
+
 
 def logout_view(request):
     logout(request)
     # Redirect to a success page.
     return render(request, 'index.html', {'form': AuthenticationForm()})
 
+
 def index(request):
     return render(request, 'index.html')
+
 
 @login_required(login_url='/mainsite/login')
 def messageboard(request):
     topic_list = Topic.objects.all()
     return render(request, 'messageboard.html', {'topics': topic_list})
+
 
 @login_required(login_url='/mainsite/login')
 def create_topic(request):
@@ -84,6 +89,7 @@ def topic(request, topicid):
     messagelist = Message.objects.filter(topic__id=thisTopic.id)
     return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
 
+
 @login_required(login_url='/mainsite/login')
 def subscribe(request, topicid):
     # Associate the topic and user to create a subscription
@@ -91,6 +97,7 @@ def subscribe(request, topicid):
     user.subscribed_topics.add(Topic.objects.get(id=topicid))
     # After subscribing, redirect to the user's subscription list.
     return redirect('/mainsite/messageboard/subscriptions')
+
 
 @login_required(login_url='/mainsite/login')
 def subscribed_topics(request):
