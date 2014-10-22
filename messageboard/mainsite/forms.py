@@ -16,7 +16,7 @@ class MessageForm(ModelForm):
         widgets ={
             'message_content': forms.Textarea(attrs={'cols': 40, 'rows': 3,
                                                      'placeholder': "Write your message here...",
-                                                     'required': True})
+                                                     'required': 'True'})
         }
 
 class TopicForm(ModelForm):
