@@ -72,3 +72,15 @@ def topic(request, topicid):
     thisTopic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=thisTopic.id)
     return render(request, 'mainsite/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
+
+@login_required(login_url='/mainsite/login')
+def subscribe(request, topicid):
+    user = request.user
+    user.topic_set.add(Topic.objects.get(id=topicid))
+    return redirect('/mainsite/messageboard/subscriptions')
+
+@login_required(login_url='/mainsite/login')
+def subscribed_topics(request):
+    user = request.user
+    topic_list = user.topic_set.all()
+    return render(request, 'mainsite/subscribedtopics.html', {'topics': topic_list})
