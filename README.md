@@ -1,4 +1,5 @@
 ### Sprint One
+[Backlog](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/2)
 
 [Planning Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/11)
 
