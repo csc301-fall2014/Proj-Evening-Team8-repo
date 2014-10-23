@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm, MessageForm, TopicForm
@@ -7,28 +7,68 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-import datetime
-from mainsite.models import Topic, Message
+from django.core.mail import send_mail
+from django.utils import timezone
+import datetime, hashlib, random
+from mainsite.models import Topic, Message, UserProfile
 
 
 def registration(request):
     if request.method == 'POST':
         # Registration complete, data submitted via POST
-        form = UserForm(request.POST)
-        if form.is_valid():
+        f = UserForm(request.POST)
+        if f.is_valid():  # Cleans form data as well
             # Accept data and display confirmation
-            data = form.cleaned_data
-            user = User.objects.create_user(data['username'], data['email'], data['password'])
-            user.first_name = data['first_name']
-            user.last_name = data['last_name']
-            user.save()
+            new_user = f.save(commit=False)  # Do not write to database yet
+            new_user.is_active = False  # Not active until e-mail activation
+            new_user.save()
+
+            # Generate activation key and UserProfile
+            salt = hashlib.sha1(str(random.random()).encode('utf-8')).hexdigest()[:5]
+            activation_key = hashlib.sha1((salt+new_user.email).encode('utf-8')).hexdigest()
+            key_expires = datetime.datetime.today() + datetime.timedelta(2)  # 48 hours
+
+            new_profile = UserProfile(user=new_user,
+                                      activation_key=activation_key,
+                                      key_expires=key_expires)
+            new_profile.save()
+
+            #Send activation key
+            email_subject = 'Account Activation'
+            email_body = "Dear %s,\nThank you for signing up. To complete your registration, click the link below.\n\n \
+                          http://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (username, activation_key)
+
+            send_mail(email_subject,
+                      email_body,
+                      'no-reply@messageboard.com',
+                      [new_user.email],
+                      fail_silently=False)
+
             return render(request, 'registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
-            return HttpResponse('Invalid Form Data.' + str(form.errors))
+            return HttpResponse('Invalid registration information.' + str(f.errors))
     else:
         # Registration not completed, initialize form
         return render(request, 'registration/registration.html', {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
+
+
+def email_activation(request, activation_key):
+    if request.user.is_authenticated():
+        HttpResponse('Account already activated.')
+
+    # Check for UserProfile that matches activation_key
+    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+    user = user_profile.user
+
+    # Check if activation_key has expired
+    if user_profile.key_expires < timezone.now():
+        user.delete()  # Delete User, dependant UserProfile automatically deleted as well
+        HttpResponse('Key has expired. Please register again.')
+
+    user.is_active = True
+    user.save()
+    HttpResponse('Account has been activated.')
 
 
 def login(request):
@@ -42,7 +82,7 @@ def login(request):
             return redirect('/mainsite/messageboard/')
         else:
             # Display validation errors
-            return HttpResponse('Username and/or password is incorrect.')
+            return HttpResponse('User does not exist or password is incorrect.')
     else:
         return render(request, 'registration/login.html', {'form': AuthenticationForm()})
 
