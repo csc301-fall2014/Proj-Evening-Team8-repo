@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='user_profile')
     activation_key = models.CharField(max_length=40, blank=True, unique=True)
     key_expires = models.DateTimeField(default=timezone.now)
 
