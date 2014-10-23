@@ -3,11 +3,11 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm, MessageForm, TopicForm
 from django.contrib.auth import authenticate, logout
-#imported login and changed the name because login is also our view function
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.core.exceptions import MultipleObjectsReturned
 from django.utils import timezone
 import datetime, hashlib, random
 from mainsite.models import Topic, Message, UserProfile
@@ -16,10 +16,13 @@ from mainsite.models import Topic, Message, UserProfile
 def registration(request):
     if request.method == 'POST':
         # Registration complete, data submitted via POST
-        f = UserForm(request.POST)
-        if f.is_valid():  # Cleans form data as well
+        form = UserForm(request.POST)
+        if form.is_valid():  # Cleans form data as well
             # Accept data and display confirmation
-            new_user = f.save(commit=False)  # Do not write to database yet
+            data = form.cleaned_data
+            new_user = User.objects.create_user(data['username'], data['email'], data['password'])
+            new_user.first_name = data['first_name']
+            new_user.last_name = data['last_name']
             new_user.is_active = False  # Not active until e-mail activation
             new_user.save()
 
@@ -36,7 +39,7 @@ def registration(request):
             #Send activation key
             email_subject = 'Account Activation'
             email_body = "Dear %s,\nThank you for signing up. To complete your registration, click the link below.\n\n \
-                          http://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (username, activation_key)
+http://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
 
             send_mail(email_subject,
                       email_body,
@@ -47,28 +50,33 @@ def registration(request):
             return render(request, 'registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
-            return HttpResponse('Invalid registration information.' + str(f.errors))
+            return HttpResponse('Invalid registration information.' + str(form.errors))
     else:
         # Registration not completed, initialize form
         return render(request, 'registration/registration.html', {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
 
 
 def email_activation(request, activation_key):
-    if request.user.is_authenticated():
-        HttpResponse('Account already activated.')
-
     # Check for UserProfile that matches activation_key
-    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+    try:
+        user_profile = UserProfile.objects.get(activation_key=activation_key)
+    except UserProfile.DoesNotExist:
+        return HttpResponse('Invalid activation link.')
+
     user = user_profile.user
+
+    # Check if already activated
+    if user.is_active:
+        return HttpResponse('Account already activated.')
 
     # Check if activation_key has expired
     if user_profile.key_expires < timezone.now():
         user.delete()  # Delete User, dependant UserProfile automatically deleted as well
-        HttpResponse('Key has expired. Please register again.')
+        return HttpResponse('Key has expired. Please register again.')
 
     user.is_active = True
     user.save()
-    HttpResponse('Account has been activated.')
+    return HttpResponse('Account has been activated.')
 
 
 def login(request):
