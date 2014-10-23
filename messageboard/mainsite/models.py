@@ -15,7 +15,7 @@ class UserProfile(models.Model):
 
 class Topic(models.Model):
     topic_name = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published', default=timezone.now())
+    pub_date = models.DateTimeField('date published', default=timezone.now)
     creator = models.ForeignKey(User, related_name='topics_created')
     subscriptions = models.ManyToManyField(User, related_name='subscribed_topics')
 
@@ -25,9 +25,9 @@ class Topic(models.Model):
 
 class Message(models.Model):
     message_content = models.TextField()
-    pub_date = models.DateTimeField('date published', default=timezone.now())
-    creator = models.ForeignKey(User, related_name='messages_created')
-    topic = models.ForeignKey(Topic, related_name='messages')
+    pub_date = models.DateTimeField('date published', default=timezone.now)
+    creator = models.ForeignKey(User)
+    topic = models.ForeignKey(Topic)
 
     def __str__(self):
         return str(self.id)
