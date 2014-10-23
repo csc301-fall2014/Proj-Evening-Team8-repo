@@ -96,7 +96,20 @@ def login(request):
                 auth_login(request, user)
                 return redirect('/mainsite/messageboard/')
             else:
-                return HttpResponse('Account not activated. Please check your e-mail for your activation link.')
+                if user.user_profile.key_expires < timezone.now():
+                    user.delete()  # Delete User, dependant UserProfile automatically deleted as well
+                    return HttpResponse('Account was not activated in time and is deleted. Please register again.')
+                else:
+                    # Resend activation key
+                    email_subject = 'Account Activation'
+                    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, go to the link below.\
+\n\nhttp://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (user.username, user.user_profile.activation_key)
+                    send_mail(email_subject,
+                              email_body,
+                              'no-reply@messageboard.com',
+                              [user.email],
+                              fail_silently=False)
+                    return HttpResponse('Account not activated. Another activation e-mail has been sent.')
         else:
             # Incorrect user or password
             return HttpResponse('User does not exist or password is incorrect.')
