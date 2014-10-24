@@ -2,18 +2,19 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.utils.timezone
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainsite', '0003_auto_20141022_0611'),
+        ('mainsite', '0002_auto_20141023_1140'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='message',
-            name='message_content',
-            field=models.TextField(),
+            model_name='userprofile',
+            name='key_expires',
+            field=models.DateTimeField(default=django.utils.timezone.now),
         ),
     ]

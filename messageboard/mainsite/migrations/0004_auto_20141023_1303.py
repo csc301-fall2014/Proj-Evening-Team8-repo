@@ -2,18 +2,19 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainsite', '0001_initial'),
+        ('mainsite', '0003_auto_20141023_1142'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='message',
-            name='message_content',
-            field=models.CharField(max_length=10, error_messages={'max_length': 'Please keep messages under 250 characters'}),
+            model_name='userprofile',
+            name='user',
+            field=models.OneToOneField(related_name='user_profile', to=settings.AUTH_USER_MODEL),
         ),
     ]
