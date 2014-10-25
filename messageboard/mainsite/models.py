@@ -7,6 +7,10 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
     activation_key = models.CharField(max_length=40, blank=True, unique=True)
     key_expires = models.DateTimeField(default=timezone.now)
+    user_description = models.CharField(max_length=200, blank=True, default = "")
+    profile_picture = models.ImageField(upload_to='thumbpath', blank=True, default = 'thumbpath/None/no-img.jpg')
+    school = models.CharField(max_length=200, blank=True, default = "", unique=False, null=True)
+    timejoined = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.user.username

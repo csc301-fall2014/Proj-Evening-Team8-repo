@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Your Profile</title>
+</head>
+<body>
+<div id="header" align="center">
+    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+</div>
+
+<div id="userinfo" align="center">
+    <p>@{{ user.username }}</p>
+    <p>{{ user.user_profile.user_description }}</p>
+    <p>School: {{ user.school }}</p>
+    <p>Time Joined:{{ user.timejoined }}</p>
+</div>
+
+
+<div id="footer" align="center">
+    <a href="/mainsite/messageboard/userprofile/{{ user.id }}/edit">Edit your profile</a><br>
+	<a href="/mainsite/messageboard/">Back</a>
+</div>
+</body>
+</html>

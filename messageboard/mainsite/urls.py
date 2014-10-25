@@ -14,4 +14,7 @@ urlpatterns = [
     url(r'^messageboard/creategroup/$', views.create_group, name='create_group'),
     url(r'^messageboard/group/(?P<groupid>[0-9]*)/$', views.group, name='group'),
     url(r'^messageboard/joinedgroups/$', views.joined_groups, name='joined_groups'),
+    url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/$', views.userprofile, name='userprofile'),
+    url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/edit/$', views.edituserprofile, name='edituserprofile'),
 ]
+
