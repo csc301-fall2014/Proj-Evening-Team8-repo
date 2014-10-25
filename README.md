@@ -12,7 +12,7 @@
 ### Sprint Two
 [Planning Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/17)
 
-First Daily Meeting Notes
+[First Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/25)
 
 Second Daily Meeting Notes 
 
