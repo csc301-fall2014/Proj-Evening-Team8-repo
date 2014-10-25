@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from mainsite.models import Message, Topic
+from mainsite.models import Message, Topic, Group
 
 
 class UserForm(forms.ModelForm):
@@ -38,3 +38,11 @@ class TopicForm(forms.ModelForm):
         model = Topic
         exclude = ('pub_date', 'creator', 'subscriptions')
         fields = ['topic_name']
+
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        exclude = ('creator', 'user_set')
+        fields = ['group_name']
+        

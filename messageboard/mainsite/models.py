@@ -30,3 +30,11 @@ class Message(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class Group(models.Model):
+    group_name = models.CharField(max_length=200)
+    creator = models.ForeignKey(User, related_name='groups_created')
+    user_set = models.ManyToManyField(User, related_name='joined_groups')
+
+    def __str__(self):
+        return str(self.id) + ": " + str(self.group_name)

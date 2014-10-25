@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Your Groups</title>
+</head>
+<body>
+<div id="header" align="center">
+    <h2>Your Joined Groups</h2>
+</div>
+<div id="topics" align="center">
+    {% for group in groups %}
+        <p>
+            <a href="/mainsite/messageboard/group/{{ group.id }}">{{ group.group_name }}</a>
+        </p>
+    {% empty %}
+        <p> You are not part of any groups. </p>
+    {% endfor %}
+</div>
+<div id="logout" align="center">
+	<p>
+		<a href="/mainsite/messageboard/">Back</a>
+		<a href="/mainsite/logout/">Logout</a>
+	</p>
+</div>
+
+</body>
+</html>
