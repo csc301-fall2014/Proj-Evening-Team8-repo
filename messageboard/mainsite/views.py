@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, MessageForm, TopicForm
+from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile
+from mainsite.models import Topic, Message, UserProfile, Group
 
 
 def registration(request):
@@ -174,3 +174,33 @@ def subscribed_topics(request):
     user = request.user
     topic_list = user.subscribed_topics.all()
     return render(request, 'topics/subscribed_topics.html', {'topics': topic_list})
+
+
+@login_required(login_url='/mainsite/login')
+def create_group(request):
+    if request.method == 'POST':
+        user = request.user
+        group = Group(group_name=request.POST['group_name'], creator=request.user)
+        group.save()
+        group.user_set.add(user)
+        user.joined_groups.add(group)
+        return redirect('/mainsite/messageboard/')
+    else:
+        return render(request, 'groups/create_group.html', {'form': GroupForm})
+    
+
+@login_required(login_url='/mainsite/login')
+def group(request, groupid):
+    this_group = Group.objects.get(id=groupid)
+    group_creator = this_group.creator
+    user_list = this_group.user_set.all()
+    return render(request, 'groups/group.html', {'group': this_group,
+                                                 'creator': group_creator,
+                                                 'users': user_list})
+
+
+@login_required(login_url='/mainsite/login')
+def joined_groups(request):
+    user = request.user
+    group_list = user.joined_groups.all()
+    return render(request, 'groups/joined_groups.html', {'groups': group_list})
