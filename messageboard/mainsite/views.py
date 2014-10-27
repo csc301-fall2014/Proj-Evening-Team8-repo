@@ -210,8 +210,10 @@ def joined_groups(request):
 @login_required(login_url='/mainsite/login')
 def join_group(request):
     if request.method == 'POST':
+        # Get the user and group object
         user = request.user
         this_group = Group.objects.get(group_name=request.POST['group_name'])
+        # Add the user to the group if the password is correct
         if this_group.group_password == request.POST['group_password']:
             this_group.user_set.add(user)
             user.joined_groups.add(this_group)
