@@ -212,13 +212,16 @@ def join_group(request):
     if request.method == 'POST':
         # Get the user and group object
         user = request.user
-        this_group = Group.objects.get(group_name=request.POST['group_name'])
+        try:
+            this_group = Group.objects.get(group_name=request.POST['group_name'])
+        except Group.DoesNotExist:
+            return HttpResponse('Group does not exist')
         # Add the user to the group if the password is correct
         if this_group.group_password == request.POST['group_password']:
             this_group.user_set.add(user)
             user.joined_groups.add(this_group)
         else:
-            return HttpResponse('Group does not exist or password is invalid')
+            return HttpResponse('Password is invalid')
         return redirect('/mainsite/messageboard/')
     else:
         return render(request, 'groups/join_group.html', {'form': JoinForm})
