@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='group',
             name='group_password',
-            field=models.CharField(default='austin', max_length=20),
+            field=models.CharField(default='', max_length=20),
             preserve_default=False,
         ),
     ]
