@@ -12,8 +12,8 @@
 <div id="userinfo" align="center">
     <p>@{{ user.username }}</p>
     <p>{{ user.user_profile.user_description }}</p>
-    <p>School: {{ user.school }}</p>
-    <p>Time Joined:{{ user.timejoined }}</p>
+    <p>School: {{ user.user_profile.school }}</p>
+    <p>Time Joined: {{ user.user_profile.timejoined.date_field.month }}.{{ user.user_profile.timejoined.date_field.year }}</p>
 </div>
 
 
