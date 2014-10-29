@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm, JoinForm
+from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
@@ -224,7 +224,7 @@ def join_group(request):
             return HttpResponse('Password is invalid')
         return redirect('/mainsite/messageboard/')
     else:
-        return render(request, 'groups/join_group.html', {'form': JoinForm})
+        return render(request, 'groups/join_group.html', {'form': GroupForm})
 
 
 

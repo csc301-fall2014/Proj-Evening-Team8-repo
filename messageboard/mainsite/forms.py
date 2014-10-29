@@ -47,8 +47,3 @@ class GroupForm(forms.ModelForm):
         fields = ('group_name', 'group_password')
 
 
-class JoinForm(forms.ModelForm):
-    class Meta:
-        model = Group
-        exclude = ('creator', 'user_set')
-        fields = ('group_name', 'group_password')
