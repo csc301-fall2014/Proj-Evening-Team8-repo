@@ -17,6 +17,7 @@ class Topic(models.Model):
     pub_date = models.DateTimeField('date published', default=timezone.now)
     creator = models.ForeignKey(User, related_name='topics_created')
     subscriptions = models.ManyToManyField(User, related_name='subscribed_topics')
+    allow_groups = models.ManyToManyField('Group', related_name='private_topic', blank=True)
 
     def __str__(self):
         return str(self.id) + ": " + str(self.topic_name)

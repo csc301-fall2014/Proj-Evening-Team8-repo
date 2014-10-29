@@ -37,7 +37,7 @@ class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
         exclude = ('pub_date', 'creator', 'subscriptions')
-        fields = ['topic_name']
+        fields = ('topic_name', 'allow_groups')
 
 
 class GroupForm(forms.ModelForm):
