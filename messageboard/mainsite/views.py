@@ -14,7 +14,7 @@ from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group
 
 def myview(request):
-    message_list = Message.objects.all().order_by('-pub_date')[:5].reverse()
+    message_list = Message.objects.all().order_by('pub_date')[:5]
     topic_list = Topic.objects.all()
     return render(request, 'myview.html', {'topics': topic_list, 'messages': message_list})
 
