@@ -1,0 +1,44 @@
+.info {
+	background-color: lightblue;
+	float: left;
+	width: 90px;
+	height: 288px;
+	border: 1px solid #000000;
+	margin: 0px;
+	padding: 4px;
+}
+.topicBox{
+	float: left;
+	width: 400px;
+	height: 400px;
+	border: 1px solid #000000;
+}
+.messages{
+	float: left;
+	width: 298px;
+	height:296px;
+	border: 1px solid #000000;
+}
+.logout{
+	clear: both;
+}
+.title{
+    width:398px;
+	height:100px;
+	border:1px solid #000000;
+}
+.allTopics{
+	width: 100%;
+	
+    display:-moz-box;
+    display:-webkit-box;
+    display:box;
+
+	
+	-webkit-box-pack: center;
+	-moz-box-pack: center;
+	box-pack: center;
+}
+p{
+	color: blue;
+}
