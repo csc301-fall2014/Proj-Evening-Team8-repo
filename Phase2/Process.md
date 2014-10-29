@@ -1,4 +1,22 @@
-LINKS TO MEETING NOTES
+### Sprint One
+[Backlog](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/2)
+
+[Planning Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/11)
+
+[First Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/5)
+
+[Second Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/23)
+
+[Final Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/16)
+
+### Sprint Two
+[Planning Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/17)
+
+[First Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/25)
+
+[Second Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/29) 
+
+Final Meeting Notes
 
 **Description of how you used GitHub issue management system (e.g. naming conventions, labels, team's conventions, etc.)**
 
