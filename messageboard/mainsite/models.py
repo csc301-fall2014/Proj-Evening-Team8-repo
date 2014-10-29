@@ -33,6 +33,7 @@ class Message(models.Model):
 
 class Group(models.Model):
     group_name = models.CharField(max_length=200)
+    group_password = models.CharField(max_length=20)
     creator = models.ForeignKey(User, related_name='groups_created')
     user_set = models.ManyToManyField(User, related_name='joined_groups')
 

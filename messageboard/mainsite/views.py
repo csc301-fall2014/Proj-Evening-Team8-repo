@@ -198,7 +198,8 @@ def subscribed_topics(request):
 def create_group(request):
     if request.method == 'POST':
         user = request.user
-        group = Group(group_name=request.POST['group_name'], creator=request.user)
+        group = Group(group_name=request.POST['group_name'],
+                      group_password=request.POST['group_password'], creator=request.user)
         group.save()
         group.user_set.add(user)
         user.joined_groups.add(group)
@@ -222,3 +223,27 @@ def joined_groups(request):
     user = request.user
     group_list = user.joined_groups.all()
     return render(request, 'groups/joined_groups.html', {'groups': group_list})
+
+
+@login_required(login_url='/mainsite/login')
+def join_group(request):
+    if request.method == 'POST':
+        # Get the user and group object
+        user = request.user
+        try:
+            this_group = Group.objects.get(group_name=request.POST['group_name'])
+        except Group.DoesNotExist:
+            return HttpResponse('Group does not exist')
+        # Add the user to the group if the password is correct
+        if this_group.group_password == request.POST['group_password']:
+            this_group.user_set.add(user)
+            user.joined_groups.add(this_group)
+        else:
+            return HttpResponse('Password is invalid')
+        return redirect('/mainsite/messageboard/')
+    else:
+        return render(request, 'groups/join_group.html', {'form': GroupForm})
+
+
+
+

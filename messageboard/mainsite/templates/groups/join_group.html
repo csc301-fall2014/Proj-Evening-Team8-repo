@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Join a Group</title>
+</head>
+<body>
+
+<div id="title" align="center">
+    <p>Join a Group</p>
+</div>ss
+
+<div id="name" align="center">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p> <input type="SUBMIT" value="Join"></p>
+    </form>
+</div>
+
+<div id="logout" align="center">
+	<p>
+		<a href="/mainsite/messageboard/">Back</a>
+		<a href="/mainsite/logout/">Logout</a>
+	</p>
+</div>
+
+</body>
+</html>
