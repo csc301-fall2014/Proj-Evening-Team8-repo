@@ -14,7 +14,7 @@
 
 [First Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/25)
 
-Second Daily Meeting Notes 
+[Second Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/29) 
 
 Final Meeting Notes
 
