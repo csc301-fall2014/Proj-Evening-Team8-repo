@@ -1,10 +1,13 @@
 LINKS TO MEETING NOTES
 
-NEED PERCENTAGES AND STUFF IN REVIEW MEETINGS
+**Description of how you used GitHub issue management system (e.g. naming conventions, labels, team's conventions, etc.)**
 
+Issue system was used to keep track of active tasks, as well as keeping track of administrative stuff such as meeting notes and announcements.  Generally, issues were divided into two main tags: 'feature' tag for active tasks, and 'administration' tag for non-implementation issues.
 
-Description of how you used GitHub issue management system (e.g. naming conventions, labels, team's conventions, etc.)
-Description of any other major decisions/conventions you may have made/used during the process, and why.
+Implementation issues with the 'feature' tag all have corresponding branches that include the issue number within its name.
 
-    For example: Did you have a "scrum master"? Why? Do you think it was the right decision?
+**Description of any other major decisions/conventions you may have made/used during the process, and why.**
 
+We chose to have a scrum master for this phase;  we found it important to have someone who makes calls on scheduling and keeps an overall view on the project's progress, in order to identify potential issues such as conflicting implementations or timing issues.
+
+Other decisions included trying to keep all parts as modular as possible - because it is difficult to collaborate with conflicting schedule, we prioritized the facilitation of individual work.  
