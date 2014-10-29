@@ -45,5 +45,8 @@ class GroupForm(forms.ModelForm):
         model = Group
         exclude = ('creator', 'user_set')
         fields = ('group_name', 'group_password')
+        widgets = {
+            'group_password': forms.PasswordInput(attrs={'required': 'True'}),
+        }
 
 
