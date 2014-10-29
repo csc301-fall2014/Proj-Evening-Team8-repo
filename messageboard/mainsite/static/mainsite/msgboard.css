@@ -1,0 +1,12 @@
+.navBar{
+	float:left;
+	width:200px;
+}
+.topics{
+	float:left;
+	width:80%;
+}
+.logout{
+	clear:both;
+	width: 100%;
+}

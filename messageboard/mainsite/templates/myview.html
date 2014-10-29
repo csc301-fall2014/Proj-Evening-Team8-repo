@@ -5,16 +5,18 @@
     <meta charset="UTF-8">
     <title>{{ "Table List View" }}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'mainsite/myview.css'%}"/>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="page">
+        <h1> Message Board </h1>
         <div class="allTopics" align="center">
             {% for topic in topics %}
                 <div class="topicBox">
                     <div class="title">
                         <p>
                             <a href="/mainsite/messageboard/{{ topic.id }}">
-                                <font size="10" color="grey">{{ topic.topic_name }}</font>
+                                <font size="6" color="grey">{{ topic.topic_name }}</font>
                             </a>
                         </p>
                     </div>
@@ -23,10 +25,13 @@
                         <p>Date: {{ topic.pub_date }}</p>
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
                     </div>
-                    <div class="messages" align="center">
+                    <div class="messages" align="left">
                         {% for msg in messages %}
                             {% if msg.topic.id  == topic.id %}
-                                <p>{{ msg.message_content }}</p>
+                                <div class="message">
+                                    <p> {{msg.creator}} @ {{msg.pub_date|date:"M d g:i a"}}</p>
+                                    <p>{{ msg.message_content }}</p>
+                                </div>
                             {% endif %}
                         {% endfor %}
                     </div>
@@ -42,6 +47,13 @@
 	<a href="/mainsite/messageboard/">Back</a>
     <a href="/mainsite/logout/">Logout</a>
 </div>
+
+    <script >
+        $(function(){
+            $("div.message:even").css("background-color", "#808080");
+            $("div.message:odd").css("background-color", "#B0B0B0");
+        });
+    </script>
 </body>
 </html>
 
