@@ -152,7 +152,7 @@ def create_topic(request):
 @login_required(login_url='/mainsite/login')
 def topic(request, topicid):
     if request.method == 'POST':
-	if "POST" in request.POST:
+        if "POST" in request.POST:
             filledForm = MessageForm(request.POST)
             if filledForm.is_valid():
                 data = filledForm.cleaned_data
@@ -166,8 +166,8 @@ def topic(request, topicid):
             message.message_content = request.POST['message_content']
             message.save()         
         elif "REMOVE" in request.POST:
-	    message = get_object_or_404(Message, pk=request.POST['msgID'])
-	    message.delete()
+            message = get_object_or_404(Message, pk=request.POST['msgID'])
+            message.delete()
    
     thisTopic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=thisTopic.id)
