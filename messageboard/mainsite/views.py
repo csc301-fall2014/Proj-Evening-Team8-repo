@@ -1,6 +1,6 @@
 import hashlib
 import random
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm
@@ -12,6 +12,11 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group
+
+def myview(request):
+    message_list = Message.objects.all()
+    topic_list = Topic.objects.all()
+    return render(request, 'myview.html', {'topics': topic_list, 'messages': message_list})
 
 
 def registration(request):
@@ -147,17 +152,30 @@ def create_topic(request):
 @login_required(login_url='/mainsite/login')
 def topic(request, topicid):
     if request.method == 'POST':
-        filledForm = MessageForm(request.POST)
-        if filledForm.is_valid():
-            data = filledForm.cleaned_data
-            message = Message()
-            message.creator = request.user
-            message.topic = Topic.objects.get(id=topicid)
-            message.message_content = data['message_content']
-            message.save()
+        if "POST" in request.POST:
+            filledForm = MessageForm(request.POST)
+            if filledForm.is_valid():
+                data = filledForm.cleaned_data
+                message = Message()
+                message.creator = request.user
+                message.topic = Topic.objects.get(id=topicid)
+                message.message_content = data['message_content']
+                message.save()
+        elif "save" in request.POST:
+            message = get_object_or_404(Message, pk=request.POST['msgID'])
+            message.message_content = request.POST['message_content']
+            message.save()         
+        elif "REMOVE" in request.POST:
+            message = get_object_or_404(Message, pk=request.POST['msgID'])
+            message.delete()
+   
     thisTopic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=thisTopic.id)
     return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
+
+
+
+
 
 
 @login_required(login_url='/mainsite/login')

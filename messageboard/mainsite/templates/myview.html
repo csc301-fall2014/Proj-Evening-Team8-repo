@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{{ "Table List View" }}</title>
+</head>
+<body>
+<div id="topics" align="center">
+    {% for topic in topics %}
+        <p>
+            <a href="/mainsite/messageboard/{{ topic.id }}"><font size="10" color="grey">{{ topic.topic_name }}</font></a>
+        </p>
+        <div id="info" align="center">
+            <p>Author: {{ topic.creator }}</p>
+	    <p>Date: {{ topic.pub_date }}</p>
+            <p>Subscriptor: 0</p> 
+  	<div id="messages" align="center">
+            {% for msg in messages %}
+                {% if msg.topic.id  == topic.id %}    
+                    <p>{{ msg.message_content }}</p>                 
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% empty %}
+        <p> No topics to display </p>
+    {% endfor %}
+</div>
+
+<div id="logout" align="center">
+	<a href="/mainsite/messageboard/">Back</a>
+    <a href="/mainsite/logout/">Logout</a>
+</div>
+</body>
+</html>
+
+
