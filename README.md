@@ -4,6 +4,8 @@
 
 [Process.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase2/Process.md)
 
+Main product can be found in /messageboard/, as a Django project.
+
 ### Sprint One
 [Backlog](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/2)
 
