@@ -28,17 +28,14 @@
 	border:1px solid #000000;
 }
 .allTopics{
-	width: 100%;
+	float: left;
 	
     display:-moz-box;
-    display:-webkit-box;
     display:box;
 
-	
-	-webkit-box-pack: center;
 	-moz-box-pack: center;
 	box-pack: center;
 }
-p{
-	color: blue;
+h1{
+	text-align: center;
 }
