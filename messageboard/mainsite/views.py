@@ -152,26 +152,29 @@ def create_topic(request):
 @login_required(login_url='/mainsite/login')
 def topic(request, topicid):
     if request.method == 'POST':
+        # Post a message to the topic.
         if "POST" in request.POST:
-            filledForm = MessageForm(request.POST)
-            if filledForm.is_valid():
-                data = filledForm.cleaned_data
+            filled_form = MessageForm(request.POST)
+            if filled_form.is_valid():
+                data = filled_form.cleaned_data
                 message = Message()
                 message.creator = request.user
                 message.topic = Topic.objects.get(id=topicid)
                 message.message_content = data['message_content']
                 message.save()
+        # Edit a message.
         elif "save" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.message_content = request.POST['message_content']
-            message.save()         
+            message.save()
+        # Delete a message.
         elif "REMOVE" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.delete()
    
-    thisTopic = Topic.objects.get(id=topicid)
-    messagelist = Message.objects.filter(topic__id=thisTopic.id)
-    return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': thisTopic, 'form': MessageForm()})
+    this_topic = Topic.objects.get(id=topicid)
+    messagelist = Message.objects.filter(topic__id=this_topic.id)
+    return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': this_topic, 'form': MessageForm()})
 
 
 
