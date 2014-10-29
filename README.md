@@ -1,3 +1,9 @@
+### Links to team deliverables
+
+[Product.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase2/Product.md)
+
+[Process.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase2/Process.md)
+
 ### Sprint One
 [Backlog](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/2)
 
