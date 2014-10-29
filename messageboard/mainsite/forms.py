@@ -44,5 +44,6 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         exclude = ('creator', 'user_set')
-        fields = ['group_name']
-        
+        fields = ('group_name', 'group_password')
+
+
