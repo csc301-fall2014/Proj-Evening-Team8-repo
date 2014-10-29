@@ -16,7 +16,7 @@
 
 [Second Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/29) 
 
-Final Meeting Notes
+[Final Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/33)
 
 **Description of how you used GitHub issue management system (e.g. naming conventions, labels, team's conventions, etc.)**
 
