@@ -1,35 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>MessageBoard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/msgboard.css'%}"/>
 </head>
 <body>
-<div id="header" align="center">
+<div class="header" align="center">
     <h2>Message Board</h2>
 </div>
-
-<div id="creategroup" align="center">
-    <a href="creategroup">Create a Group</a>
+<div class="navBar" align="left">
+    <ul>
+    <li><a href="creategroup">Create a Group</a></li>
+    <li><a href="joinedgroups">My Joined Groups</a></li>
+    <li><a href="joingroup">Join a Group</a></li>
+    <li><a href="create">Create a Topic</a></li>
+    <li><a href="subscriptions">My Subscribed Topics</a></li>
+	<li><a href="/mainsite/messageboard/myview/">Table View of Topics</a></li>
+    </ul>
 </div>
 
-<div id="joinedgroups" align="center">
-    <a href="joinedgroups">My Joined Groups</a>
-</div>
-
-<div id="joingroup" align="center">
-    <a href="joingroup">Join a Group</a>
-</div>
-
-<div id="createtopic" align="center">
-    <a href="create">Create a Topic</a>
-</div>
-
-<div id="subscribedtopics" align="center">
-    <a href="subscriptions">My Subscribed Topics</a>
-</div>
-
-<div id="topics" align="center">
+<div class="topics" align="center">
     {% for topic in topics %}
         <p>
             <a href="{{ topic.id }}">{{ topic.topic_name }}</a>
@@ -38,11 +30,10 @@
         <p> No topics to display </p>
     {% endfor %}
 </div>
-<div id=logout" align="center">
+<div class="logout" align="center">
 	<p><a href="/mainsite/logout/">Logout</a></p>
 </div>
-<div id=tablelistview" align="center">
-	<p><a href="/mainsite/messageboard/myview/">View All Topics</a></p>
+<div class="tablelistview" align="center">
 </div>
 
 </body>
