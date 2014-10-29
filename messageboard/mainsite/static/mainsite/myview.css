@@ -17,6 +17,7 @@
 	float: left;
 	width: 298px;
 	height:296px;
+	overflow-y: scroll;
 	border: 1px solid #000000;
 }
 .logout{
