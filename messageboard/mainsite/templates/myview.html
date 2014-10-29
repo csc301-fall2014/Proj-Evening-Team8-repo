@@ -1,35 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>{{ "Table List View" }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/myview.css'%}"/>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
-<div id="topics" align="center">
-    {% for topic in topics %}
-        <p>
-            <a href="/mainsite/messageboard/{{ topic.id }}"><font size="10" color="grey">{{ topic.topic_name }}</font></a>
-        </p>
-        <div id="info" align="center">
-            <p>Author: {{ topic.creator }}</p>
-	    <p>Date: {{ topic.pub_date }}</p>
-            <p>Subscriptor: 0</p> 
-  	<div id="messages" align="center">
-            {% for msg in messages %}
-                {% if msg.topic.id  == topic.id %}    
-                    <p>{{ msg.message_content }}</p>                 
-                {% endif %}
+    <div class="page">
+        <h1> Message Board </h1>
+        <div class="allTopics" align="center">
+            {% for topic in topics %}
+                <div class="topicBox">
+                    <div class="title">
+                        <p>
+                            <a href="/mainsite/messageboard/{{ topic.id }}">
+                                <font size="6" color="grey">{{ topic.topic_name }}</font>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="info" align="left">
+                        <p>Author: {{ topic.creator }}</p>
+                        <p>Date: {{ topic.pub_date }}</p>
+                        <p>Subscribers: {{ topic.subscriptions.count }}</p>
+                    </div>
+                    <div class="messages" align="left">
+                        {% for msg in messages %}
+                            {% if msg.topic.id  == topic.id %}
+                                <div class="message">
+                                    <p> {{msg.creator}} @ {{msg.pub_date|date:"M d g:i a"}}</p>
+                                    <p>{{ msg.message_content }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% empty %}
+                <p> No topics to display </p>
             {% endfor %}
         </div>
-    {% empty %}
-        <p> No topics to display </p>
-    {% endfor %}
 </div>
 
-<div id="logout" align="center">
+
+<div class="logout" align="center">
 	<a href="/mainsite/messageboard/">Back</a>
     <a href="/mainsite/logout/">Logout</a>
 </div>
+
+    <script >
+        $(function(){
+            $("div.message:even").css("background-color", "#808080");
+            $("div.message:odd").css("background-color", "#B0B0B0");
+        });
+    </script>
 </body>
 </html>
 
