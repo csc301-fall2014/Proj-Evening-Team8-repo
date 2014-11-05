@@ -27,4 +27,8 @@ urlpatterns = [
 
     # Table view
     url(r'^messageboard/myview/$', views.myview, name='myview'),
+
+    # User profiles
+    url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/$', views.userprofile, name='userprofile'),
+    url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/edit/$', views.edituserprofile, name='edituserprofile'),
 ]

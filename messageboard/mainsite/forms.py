@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from mainsite.models import Message, Topic, Group
+from mainsite.models import Message, Topic, Group, UserProfile
 
 
 class UserForm(forms.ModelForm):
@@ -12,6 +12,20 @@ class UserForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'required': 'True'}),
             'email': forms.TextInput(attrs={'required': 'True'}),
         }
+
+    # Ensure e-mail is unique.
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and User.objects.filter(email=email).exclude(username=username).count():
+            raise forms.ValidationError(u'Email addresses must be unique.')
+        return email
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ('user', 'activation_key', 'key_expires', 'timejoined')
 
     # Ensure e-mail is unique.
     def clean_email(self):
