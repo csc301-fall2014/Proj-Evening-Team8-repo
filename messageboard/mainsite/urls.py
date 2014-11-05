@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from mainsite import views
+from django.conf import settings
 
 urlpatterns = [
 
@@ -31,4 +32,9 @@ urlpatterns = [
     # User profiles
     url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/$', views.userprofile, name='userprofile'),
     url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/edit/$', views.edituserprofile, name='edituserprofile'),
+
+    #static media
+    url(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+
 ]
