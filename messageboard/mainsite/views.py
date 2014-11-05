@@ -1,5 +1,6 @@
 import hashlib
 import random
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -12,6 +13,8 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group
+from PIL import Image as PImage
+from os.path import join as pjoin
 
 def myview(request):
     message_list = Message.objects.all().order_by('pub_date')[:5]
@@ -257,15 +260,17 @@ def edituserprofile(request, userid):
     args = {}
     user = User.objects.get(id=userid)
     userprofile = user.user_profile
+    img = None
     if request.method == "POST":
-        form = UserProfileForm(request.POST, instance=user)
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
+            form.save()
             #get data from form
-            data = form.cleaned_data
-            userprofile.user_description = data['user_description']
-            userprofile.school = data['school']
-            userprofile.save()
-            # Do something. Should generally end with a redirect. For example:
+            #data = form.cleaned_data
+
+            #userprofile.user_description = data['user_description']
+            #userprofile.school = data['school']
+            #userprofile.save():
             return render(request, 'userprofile/userprofile.html', {'user': user})
     else:
         form = UserProfileForm(instance=user,
