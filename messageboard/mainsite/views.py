@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm
+from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm, UserProfileForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
@@ -247,6 +247,32 @@ def join_group(request):
     else:
         return render(request, 'groups/join_group.html', {'form': GroupForm})
 
+@login_required(login_url='/mainsite/login')
+def userprofile(request, userid):
+    user = User.objects.get(id=userid)
+    return render(request, 'userprofile/userprofile.html', {'user': user})
+
+@login_required(login_url='/mainsite/login')
+def edituserprofile(request, userid):
+    args = {}
+    user = User.objects.get(id=userid)
+    userprofile = user.user_profile
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            #get data from form
+            data = form.cleaned_data
+            userprofile.user_description = data['user_description']
+            userprofile.school = data['school']
+            userprofile.save()
+            # Do something. Should generally end with a redirect. For example:
+            return render(request, 'userprofile/userprofile.html', {'user': user})
+    else:
+        form = UserProfileForm(instance=user,
+         initial={'user_description': user.user_profile.user_description, 'school': user.user_profile.school})
+
+    args['form'] = form
+    return render(request, "userprofile/edituserprofile.html", args)
 
 
 
