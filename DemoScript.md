@@ -1,13 +1,15 @@
 MessageBoard (working title) is a group discussion board aimed at university students and professors.
 
-First: Registration
+## First: Registration
 
 Register a user and show the console verification.
+
+Login after.
 
 Mention:
 * Username and e-mails must be unique
 
-Second: Topics
+## Second: Topics
 
 Users can browse through created topics, ranging from class discussions to study groups to clubs, 
 and post messages for everyone else to see. If a user makes a mistake in posting their message they 
@@ -35,7 +37,7 @@ Mention:
 * Usernames will show up beside messages
 * Profile pics also will show up beside messages
 
-Third: Groups
+## Third: Groups
 
 Groups are there for users to keep track of different circles of peers, to know who to go to for certain
 classes or who to contact for study sessions. Groups are kept private so only those given the group name 
