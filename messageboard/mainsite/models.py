@@ -16,6 +16,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+
 class Topic(models.Model):
     topic_name = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published', default=timezone.now)
@@ -34,6 +35,7 @@ class Message(models.Model):
 
     def __str__(self):
         return str(self.id)
+
 
 class Group(models.Model):
     group_name = models.CharField(max_length=200)

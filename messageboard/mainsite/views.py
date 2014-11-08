@@ -58,7 +58,10 @@ def registration(request):
             return render(request, 'registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
-            return HttpResponse('Invalid registration information.' + str(form.errors))
+            return render(request, 'notice.html', {
+                'title': 'Invalid Registration Information',
+                'message': str(form.errors),
+                'back': 'mainsite/registration/'})
     else:
         # Registration not completed, initialize form
         return render(request, 'registration/registration.html',
@@ -67,8 +70,10 @@ def registration(request):
 
 def send_activation_email(new_user, activation_key):
     email_subject = 'Account Activation'
-    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, go to the link below.\
-\n\nhttp://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
+    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, access to the link below.\n\n" +\
+                 "http://127.0.0.1:8000/mainsite/activation/%s\n\n" +\
+                 "Yours,\nTeam8s"\
+                 % (new_user.username, activation_key)
     send_mail(email_subject,
               email_body,
               'no-reply@messageboard.com',
@@ -81,13 +86,20 @@ def email_activation(request, activation_key):
     try:
         user_profile = UserProfile.objects.get(activation_key=activation_key)
     except UserProfile.DoesNotExist:
-        return HttpResponse('Invalid activation link.')
+        return render(request, 'notice.html', {
+            'title': 'Invalid Activation Link',
+            'message': 'The activation link you have provided does not correspond to any account.\n' +
+                       'Double check you have the correct link.',
+            'back': 'mainsite/'})
 
     user = user_profile.user
 
     # If already activated, do nothing
     if user.is_active:
-        return HttpResponse('Account already activated.')
+        return render(request, 'notice.html', {
+            'title': 'Account already activated',
+            'message': 'The account is already activated.\n',
+            'back': 'mainsite/'})
 
     # Check if activation_key has expired
     if user_profile.key_expires < timezone.now():
@@ -113,7 +125,7 @@ def login(request):
                     return HttpResponse('Account was not activated in time and is deleted. Please register again.')
                 else:
                     # Resend activation key
-                    send_activation_email(new_user, activation_key)
+                    send_activation_email(user, user.user_profile.activation_key)
                     return HttpResponse('Account not activated. Another activation e-mail has been sent.')
         else:
             # Incorrect user or password
