@@ -44,14 +44,7 @@ def registration(request):
             key_expires = timezone.now() + timezone.timedelta(2)  # 48 hours
 
             # Send activation key
-            email_subject = 'Account Activation'
-            email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, go to the link below.\
-\n\nhttp://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
-            send_mail(email_subject,
-                      email_body,
-                      'no-reply@messageboard.com',
-                      [new_user.email],
-                      fail_silently=False)
+            send_activation_email(new_user, activation_key)
 
             # E-mail sent, safe to save to database
             new_user.save()
@@ -70,6 +63,17 @@ def registration(request):
         # Registration not completed, initialize form
         return render(request, 'registration/registration.html',
                       {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
+
+
+def send_activation_email(new_user, activation_key):
+    email_subject = 'Account Activation'
+    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, go to the link below.\
+\n\nhttp://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
+    send_mail(email_subject,
+              email_body,
+              'no-reply@messageboard.com',
+              [new_user.email],
+              fail_silently=False)
 
 
 def email_activation(request, activation_key):
@@ -109,14 +113,7 @@ def login(request):
                     return HttpResponse('Account was not activated in time and is deleted. Please register again.')
                 else:
                     # Resend activation key
-                    email_subject = 'Account Activation'
-                    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, go to the link below.\
-\n\nhttp://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (user.username, user.user_profile.activation_key)
-                    send_mail(email_subject,
-                              email_body,
-                              'no-reply@messageboard.com',
-                              [user.email],
-                              fail_silently=False)
+                    send_activation_email(new_user, activation_key)
                     return HttpResponse('Account not activated. Another activation e-mail has been sent.')
         else:
             # Incorrect user or password
