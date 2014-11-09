@@ -5,57 +5,62 @@
     <title>{{ topic.topic_name }}</title>
 </head>
 <body>
-<div id="header" align="center">
-    <h2>{{ topic.topic_name }}</h2>
-</div>
-<script type="text/javascript">
-function hideorshow(obj) {
-	if (document.getElementById(obj).style.display == 'none') {
-		document.getElementById(obj).style.display='block';
-	} else {
-		document.getElementById(obj).style.display = 'none';
-	}
-}
-</script>
-<div id="messages" align="center">
-    {% for msg in messages %}
-        <p>{{msg.message_content}}
-            {% if msg.creator.username == user.username %}
-		<form action="" method="post">
-                    {% csrf_token %} 
-	            <p><input type="HIDDEN" name="msgID" value="{{ msg.id }}"></p>
-		    <input type="SUBMIT" name="REMOVE" value="Remove">
-			<input type="button" value="Edit" onClick="hideorshow({{ msg.id }})" />
-		</form>
-		
-		<form id="{{ msg.id }}" action="" method="post" style="display:none">
-		    {% csrf_token %}
-		    <p><input type="HIDDEN" name="msgID" value="{{ msg.id }}"></p>
-			<p><label for="id_message_content">Message content:</label> <textarea cols="40" id="message_content" name="message_content" rows="3">{{msg.message_content}}
-</textarea></p>
-                    <p><input type="SUBMIT" name="save" value="save"></p>
-		</form>
-	    {% endif %}
-        </p>
-    {% empty %}
-        <p> No messages to display </p>
-    {% endfor %}
-</div>
-<div id="textbox" align="center">
-    <form action= "" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p> <input type="SUBMIT" name="POST" value="Post"></p>
-    </form>
-</div>
+    <div id="header" align="center">
+        <h2>{{ topic.topic_name }}</h2>
+    </div>
+    <script type="text/javascript">
+        function hideorshow(obj) {
+            if (document.getElementById(obj).style.display == 'none') {
+                document.getElementById(obj).style.display='block';
+            } else {
+                document.getElementById(obj).style.display = 'none';
+            }
+        }
+    </script>
+    <div id="messages" align="center">
+        {% for msg in messages %}
+            <p>{{msg.message_content}}
+                {% if msg.creator.username == user.username %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <p><input type="HIDDEN" name="msgID" value="{{ msg.id }}"></p>
+                        <input type="SUBMIT" name="REMOVE" value="Remove">
+                        <input type="button" value="Edit" onClick="hideorshow({{ msg.id }})">
+                    </form>
 
-<div id="subscribe" align="center">
-    <a href="subscribe">Subscribe to this topic.</a>
-</div>
+                    <form id="{{ msg.id }}" action="" method="post" style="display:none">
+                        {% csrf_token %}
+                        <p>
+                            <input type="HIDDEN" name="msgID" value="{{ msg.id }}">
+                        </p>
+                        <p>
+                            <textarea cols="40" id="message_content" name="message_content" rows="3">{{msg.message_content}}</textarea>
+                        </p>
+                        <p>
+                            <input type="SUBMIT" name="save" value="save">
+                        </p>
+                    </form>
+                {% endif %}
+            </p>
+        {% empty %}
+            <p> No messages to display </p>
+        {% endfor %}
+    </div>
+    <div id="textbox" align="center">
+        <form action= "" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p> <input type="SUBMIT" name="POST" value="Post"></p>
+        </form>
+    </div>
 
-<div id="logout" align="center">
-	<a href="/mainsite/messageboard/">Back</a>
-    <a href="/mainsite/logout/">Logout</a>
-</div>
+    <div id="subscribe" align="center">
+        <a href="subscribe">Subscribe to this topic.</a>
+    </div>
+
+    <div id="logout" align="center">
+        <a href="/mainsite/messageboard/">Back</a>
+        <a href="/mainsite/logout/">Logout</a>
+    </div>
 </body>
 </html>
