@@ -17,6 +17,15 @@ from mainsite.models import Topic, Message, UserProfile, Group
 from os.path import join as pjoin
 
 
+# Not a view, helper function for notices (a more verbose HttpResponse)
+def response(request, title, message, link, button):
+    return render(request, 'response.html', {
+        'title': title,
+        'message': message,
+        'link': link,
+        'button': button})
+
+
 def myview(request):
     message_list = Message.objects.all().order_by('pub_date')[:5]
     topic_list = Topic.objects.all()
@@ -59,21 +68,22 @@ def registration(request):
             return render(request, 'registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
-            return render(request, 'notice.html', {
-                'title': 'Invalid Registration Information',
-                'message': str(form.errors),
-                'back': 'mainsite/registration/'})
+            return response(request,
+                            'Invalid Registration Information',
+                            str(form.errors),
+                            '/mainsite/registration/',
+                            'Back')
     else:
         # Registration not completed, initialize form
         return render(request, 'registration/registration.html',
                       {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
 
 
+# Not a view, helper function
 def send_activation_email(new_user, activation_key):
     email_subject = 'Account Activation'
-    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, access to the link below.\n\n" +\
-                 "http://127.0.0.1:8000/mainsite/activation/%s\n\n" + \
-                 u"Yours,\nTeam8s" % (new_user.username, activation_key)
+    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, access to the link below.\n\n\
+http://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
     send_mail(email_subject,
               email_body,
               'no-reply@messageboard.com',
@@ -86,29 +96,39 @@ def email_activation(request, activation_key):
     try:
         user_profile = UserProfile.objects.get(activation_key=activation_key)
     except UserProfile.DoesNotExist:
-        return render(request, 'notice.html', {
-            'title': 'Invalid Activation Link',
-            'message': 'The activation link you have provided does not correspond to any account.\n' +
-                       'Double check you have the correct link.',
-            'back': 'mainsite/'})
+        return response(request,
+                        'Invalid Activation Link',
+                        'The activation link you have provided does not correspond to any account.\n' +
+                        'Double check you have the correct link.',
+                        '/mainsite/',
+                        'Back')
 
     user = user_profile.user
 
     # If already activated, do nothing
     if user.is_active:
-        return render(request, 'notice.html', {
-            'title': 'Account already activated',
-            'message': 'The account is already activated.\n',
-            'back': 'mainsite/'})
+        return response(request,
+                        'Account already activated',
+                        'The account is already activated.\n',
+                        '/mainsite/',
+                        'Back')
 
     # Check if activation_key has expired
     if user_profile.key_expires < timezone.now():
         user.delete()  # Delete User, dependant UserProfile automatically deleted as well
-        return HttpResponse('Key has expired. Please register again.')
+        return response(request,
+                        'Expired Activation Link',
+                        'The activation link has expired. Please register again.',
+                        '/mainsite/registration/',
+                        'Register')
 
     user.is_active = True
     user.save()
-    return HttpResponse('Account has been activated.')
+    return response(request,
+                    'Account Activated',
+                    'Your account has been activated. You may now login.',
+                    '/mainsite/login/',
+                    'Login')
 
 
 def login(request):
@@ -122,14 +142,26 @@ def login(request):
             else:
                 if user.user_profile.key_expires < timezone.now():
                     user.delete()  # Delete User, dependant UserProfile automatically deleted as well
-                    return HttpResponse('Account was not activated in time and is deleted. Please register again.')
+                    return response(request,
+                                    'Expired Unactivated Account',
+                                    'Account was not activated in time and has been deleted. Please register again.',
+                                    '/mainsite/registration/',
+                                    'Register')
                 else:
                     # Resend activation key
                     send_activation_email(user, user.user_profile.activation_key)
-                    return HttpResponse('Account not activated. Another activation e-mail has been sent.')
+                    return response(request,
+                                    'Account Unactivated',
+                                    'Account not activated. Another activation e-mail has been sent.',
+                                    '/mainsite/login/',
+                                    'Back')
         else:
             # Incorrect user or password
-            return HttpResponse('User does not exist or password is incorrect.')
+            return response(request,
+                            'Incorrect Login',
+                            'User does not exist or password is incorrect.',
+                            '/mainsite/login/',
+                            'Back')
     else:
         return render(request, 'registration/login.html', {'form': AuthenticationForm()})
 
@@ -248,13 +280,21 @@ def join_group(request):
         try:
             this_group = Group.objects.get(group_name=request.POST['group_name'])
         except Group.DoesNotExist:
-            return HttpResponse('Group does not exist')
+            return response(request,
+                            'Nonexistent Group',
+                            'Group does not exist.',
+                            '/mainsite/messageboard/joingroup/',
+                            'Back')
         # Add the user to the group if the password is correct
         if this_group.group_password == request.POST['group_password']:
             this_group.user_set.add(user)
             user.joined_groups.add(this_group)
         else:
-            return HttpResponse('Password is invalid')
+            return response(request,
+                            'Incorrect Password',
+                            'Password is incorrect.',
+                            '/mainsite/messageboard/joingroup/',
+                            'Back')
         return redirect('/mainsite/messageboard/')
     else:
         return render(request, 'groups/join_group.html', {'form': GroupForm})
