@@ -13,10 +13,10 @@ from django.core.mail import send_mail
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group
 
-def myview(request):
-    message_list = Message.objects.all().order_by('pub_date')[:5]
+def tableview(request):
     topic_list = Topic.objects.all()
-    return render(request, 'myview.html', {'topics': topic_list, 'messages': message_list})
+    message_list = Message.objects.all()
+    return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
 
 
 def registration(request):
@@ -177,10 +177,6 @@ def topic(request, topicid):
     return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': this_topic, 'form': MessageForm()})
 
 
-
-
-
-
 @login_required(login_url='/mainsite/login')
 def subscribe(request, topicid):
     # Associate the topic and user to create a subscription
@@ -194,7 +190,9 @@ def subscribe(request, topicid):
 def subscribed_topics(request):
     user = request.user
     topic_list = user.subscribed_topics.all()
-    return render(request, 'topics/subscribed_topics.html', {'topics': topic_list})
+    message_list = Message.objects.filter(topic__in=topic_list)
+    return render(request, 'topics/subscribed_topics.html', {'topics': topic_list,
+                                                             'messages':message_list})
 
 
 @login_required(login_url='/mainsite/login')

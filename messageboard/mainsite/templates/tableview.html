@@ -3,19 +3,30 @@
 <head lang="en">
     {% load staticfiles %}
     <meta charset="UTF-8">
-    <title>{{ "Table List View" }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/myview.css'%}"/>
+    <title>Message Board - All Topics</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="page">
-        <h1> Message Board </h1>
+        <div class="Page Header" align="center">
+            <h1> Message Board </h1>
+        </div>
+        <div class="navBar" align="left">
+            <ul>
+                <li><a href="{% url 'mainsite:create_group' %}">Create a Group</a></li>
+                <li><a href="{% url 'mainsite:joined_groups' %}">My Joined Groups</a></li>
+                <li><a href="{% url 'mainsite:join_group' %}">Join a Group</a></li>
+                <li><a href="{% url 'mainsite:create_topic' %}">Create a Topic</a></li>
+                <li><a href="{% url 'mainsite:subscribed_topics' %}">My Subscribed Topics</a></li>
+            </ul>
+        </div>
         <div class="allTopics" align="center">
             {% for topic in topics %}
                 <div class="topicBox">
                     <div class="title">
                         <p>
-                            <a href="/mainsite/messageboard/{{ topic.id }}">
+                            <a href="{% url 'mainsite:topic' topic.id %}">
                                 <font size="6" color="grey">{{ topic.topic_name }}</font>
                             </a>
                         </p>
@@ -40,13 +51,11 @@
                 <p> No topics to display </p>
             {% endfor %}
         </div>
-</div>
+    </div>
 
-
-<div class="logout" align="center">
-	<a href="/mainsite/messageboard/">Back</a>
-    <a href="/mainsite/logout/">Logout</a>
-</div>
+    <div class="logout" align="center">
+        <a href="{% url 'mainsite:logout_view' %}">Logout</a>
+    </div>
 
     <script >
         $(function(){

@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view, name='logout_view'),
 
     # Topics and main page
-    url(r'^messageboard/$', views.messageboard, name='messageboard'),
+    url(r'^messageboard/$', views.tableview, name='messageboard'),
     url(r'^messageboard/create/$', views.create_topic, name='create_topic'),
     url(r'^messageboard/(?P<topicid>[0-9]*)/$', views.topic, name='topic'),
 
@@ -26,5 +26,5 @@ urlpatterns = [
     url(r'^messageboard/joingroup/$', views.join_group, name='join_group'),
 
     # Table view
-    url(r'^messageboard/myview/$', views.myview, name='myview'),
+    # url(r'^messageboard/myview/$', views.tableview, name='tableview'),
 ]
