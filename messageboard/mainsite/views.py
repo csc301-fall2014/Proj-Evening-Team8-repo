@@ -13,8 +13,9 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group
-from PIL import Image as PImage
+#from PIL import Image as PImage
 from os.path import join as pjoin
+
 
 def myview(request):
     message_list = Message.objects.all().order_by('pub_date')[:5]
@@ -71,9 +72,8 @@ def registration(request):
 def send_activation_email(new_user, activation_key):
     email_subject = 'Account Activation'
     email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, access to the link below.\n\n" +\
-                 "http://127.0.0.1:8000/mainsite/activation/%s\n\n" +\
-                 "Yours,\nTeam8s"\
-                 % (new_user.username, activation_key)
+                 "http://127.0.0.1:8000/mainsite/activation/%s\n\n" + \
+                 u"Yours,\nTeam8s" % (new_user.username, activation_key)
     send_mail(email_subject,
               email_body,
               'no-reply@messageboard.com',
