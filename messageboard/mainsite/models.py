@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from awesome_avatar.fields import AvatarField
+#from awesome_avatar.fields import AvatarField
 
 
 class UserProfile(models.Model):
