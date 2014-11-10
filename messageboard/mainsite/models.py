@@ -49,8 +49,8 @@ class Group(models.Model):
 
 
 class Tag(models.Model):
-    alphanumeric = RegexValidator(regex=r'^[0-9a-zA-Z]*$',
-                                  message='Only alphanumeric characters are allowed.',
+    alphanumeric = RegexValidator(regex=r'^[0-9a-zA-Z_]*$',
+                                  message='Only alphanumeric characters and underscores are allowed.',
                                   code='invalid_tag')
 
     tag_name = models.CharField(max_length=200, blank=False, unique=True, validators=[alphanumeric])

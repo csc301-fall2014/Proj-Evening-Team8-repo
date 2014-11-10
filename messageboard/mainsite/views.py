@@ -242,8 +242,8 @@ def topic(request, topicid):
                         tag.full_clean()  # Validate tag, not done automatically
                         tag.save()
                         this_topic.tags.add(tag)
-                    except ValidationError:
-                        tag_error = "Tags may only contain alphanumeric characters."
+                    except ValidationError as e:
+                        tag_error = str(e.message_dict['tag_name'])[2:-2]  # Trim [' and ']
 
         elif "remove_tag" in request.POST:
             tag_name = request.POST['tag_name']
