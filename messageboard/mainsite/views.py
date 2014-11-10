@@ -11,6 +11,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag
 #from PIL import Image as PImage
@@ -179,6 +180,17 @@ def index(request):
 @login_required(login_url='/mainsite/login')
 def messageboard(request):
     topic_list = Topic.objects.all()
+    if request.method == 'POST':
+        try:
+            tag_name=request.POST['tag_name']
+            tag = Tag.objects.get()
+            topic_list = tag.tagged_topics.all()
+        except Tag.DoesNotExist:
+            return response(request,
+                            'Nonexistant Tag',
+                            'Tag does not exist.',
+                            '/mainsite/messageboard/',
+                            'Back')
     return render(request, 'messageboard.html', {'topics': topic_list})
 
 
@@ -196,7 +208,7 @@ def create_topic(request):
 @login_required(login_url='/mainsite/login')
 def topic(request, topicid):
     this_topic = Topic.objects.get(id=topicid)
-
+    tag_error = ""
     if request.method == 'POST':
         # Post a message to the topic.
         if "POST" in request.POST:
@@ -220,8 +232,18 @@ def topic(request, topicid):
         elif "add_tag" in request.POST:
             tag_name = request.POST['tag_name']
             if tag_name:
-                tag, created = Tag.objects.get_or_create(tag_name=tag_name)
-                this_topic.tags.add(tag)
+                try:
+                    tag = Tag.objects.get(tag_name=tag_name)
+                    this_topic.tags.add(tag)
+                except Tag.DoesNotExist:
+                    tag = Tag()
+                    tag.tag_name = tag_name
+                    try:
+                        tag.full_clean()  # Validate tag, not done automatically
+                        tag.save()
+                        this_topic.tags.add(tag)
+                    except ValidationError:
+                        tag_error = "Tags may only contain alphanumeric characters."
 
         elif "remove_tag" in request.POST:
             tag_name = request.POST['tag_name']
@@ -246,7 +268,8 @@ def topic(request, topicid):
         'messages': messagelist,
         'topic': this_topic,
         'form': MessageForm(),
-        'tags': this_topic.tags.all})
+        'tags': this_topic.tags.all,
+        'tag_error': tag_error})
 
 
 @login_required(login_url='/mainsite/login')
