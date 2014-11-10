@@ -14,7 +14,6 @@ urlpatterns = [
     url(r'^messageboard/$', views.messageboard, name='messageboard'),
     url(r'^messageboard/create/$', views.create_topic, name='create_topic'),
     url(r'^messageboard/(?P<topicid>[0-9]*)/$', views.topic, name='topic'),
-
  
     # Subscriptions
     url(r'^messageboard/(?P<topicid>[0-9]*)/subscribe/$', views.subscribe, name="subscribe"),

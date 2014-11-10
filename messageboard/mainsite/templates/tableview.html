@@ -24,10 +24,6 @@
                         <p>Author: {{ topic.creator }}</p>
                         <p>Date: {{ topic.pub_date }}</p>
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
-                        <p>Tags: {% for tag in tags %}
-                            <p> {{topic.tags }}</p>
-                            {% endfor %}
-                        </p>
                     </div>
                     <div class="messages" align="left">
                         {% for msg in messages %}

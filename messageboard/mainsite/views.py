@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group
+from mainsite.models import Topic, Message, UserProfile, Group, Tag
 #from PIL import Image as PImage
 from os.path import join as pjoin
 
@@ -195,6 +195,8 @@ def create_topic(request):
 
 @login_required(login_url='/mainsite/login')
 def topic(request, topicid):
+    this_topic = Topic.objects.get(id=topicid)
+
     if request.method == 'POST':
         # Post a message to the topic.
         if "POST" in request.POST:
@@ -215,14 +217,36 @@ def topic(request, topicid):
         elif "REMOVE" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.delete()
-   
-    this_topic = Topic.objects.get(id=topicid)
+        elif "add_tag" in request.POST:
+            tag_name = request.POST['tag_name']
+            if tag_name:
+                tag, created = Tag.objects.get_or_create(tag_name=tag_name)
+                this_topic.tags.add(tag)
+
+        elif "remove_tag" in request.POST:
+            tag_name = request.POST['tag_name']
+            if tag_name:
+                try:
+                    tag = Tag.objects.get(tag_name=tag_name)
+                    this_topic.tags.remove(tag)
+
+                    # Remove both sides of the relation
+                    this_topic.tags.remove(tag)
+                    tag.tagged_topics.remove(this_topic)
+
+                    # Delete tag if not in use
+                    if not tag.tagged_topics.all():
+                        tag.delete()
+                except Tag.DoesNotExist:
+                    pass  # Do nothing is tag doesn't exist
+
+
     messagelist = Message.objects.filter(topic__id=this_topic.id)
-    return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': this_topic, 'form': MessageForm()})
-
-
-
-
+    return render(request, 'topics/topic.html', {
+        'messages': messagelist,
+        'topic': this_topic,
+        'form': MessageForm(),
+        'tags': this_topic.tags.all})
 
 
 @login_required(login_url='/mainsite/login')
