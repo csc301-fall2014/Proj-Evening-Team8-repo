@@ -45,3 +45,10 @@ class Group(models.Model):
 
     def __str__(self):
         return str(self.id) + ": " + str(self.group_name)
+
+class Tag(models.Model):
+    tag_name = models.CharField(max_length=200)
+    tagged_topics = models.ManyToManyField(Topic, related_name='tags')
+
+    def __str__(self):
+        return self.tag_name
