@@ -1,8 +1,6 @@
 import hashlib
 import random
-from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm, UserProfileForm
 from django.contrib.auth import authenticate, logout
@@ -18,7 +16,7 @@ from mainsite.models import Topic, Message, UserProfile, Group, Tag
 from os.path import join as pjoin
 
 
-# Not a view, helper function for notices (a more verbose HttpResponse)
+# Not a view, helper function for notices (a richer and more customizable HttpResponse)
 def response(request, title, message, link, button):
     return render(request, 'response.html', {
         'title': title,
@@ -87,7 +85,7 @@ def send_activation_email(new_user, activation_key):
 http://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
     send_mail(email_subject,
               email_body,
-              'no-reply@messageboard.com',
+              'no-reply@messageboard.ca',
               [new_user.email],
               fail_silently=False)
 
