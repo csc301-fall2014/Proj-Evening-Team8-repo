@@ -23,13 +23,15 @@ function hideorshow(obj) {
         {% for tag in tags %}
             {{ tag }}
         {% endfor %}
-        <form action="" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="topicID" value="{{ topic.id }}">
-            <input type="text" name="tag_name">
-            <input type="submit" name="add_tag" value="Add Tag">
-            <input type="submit" name="remove_tag" value="Remove Tag">
-        </form>
+        {% if topic.creator.username == user.username %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="text" name="tag_name">
+                <input type="submit" name="add_tag" value="Add Tag">
+                <input type="submit" name="remove_tag" value="Remove Tag">
+            </form>
+        {% endif %}
+        <p>{{ tag_error }}</p>
     </p>
 </div>
 <div id="messages" align="center">
