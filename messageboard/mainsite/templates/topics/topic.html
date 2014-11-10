@@ -17,6 +17,21 @@ function hideorshow(obj) {
 	}
 }
 </script>
+<div id="tags" align="center">
+    <p>
+        Tags:
+        {% for tag in tags %}
+            {{ tag }}
+        {% endfor %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="topicID" value="{{ topic.id }}">
+            <input type="text" name="tag_name">
+            <input type="submit" name="add_tag" value="Add Tag">
+            <input type="submit" name="remove_tag" value="Remove Tag">
+        </form>
+    </p>
+</div>
 <div id="messages" align="center">
     {% for msg in messages %}
         <p>{{msg.message_content}}
