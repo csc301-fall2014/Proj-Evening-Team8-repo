@@ -181,16 +181,17 @@ def index(request):
 def messageboard(request):
     topic_list = Topic.objects.all()
     if request.method == 'POST':
-        try:
-            tag_name = request.POST['tag_name']
-            tag = Tag.objects.get(tag_name=tag_name)
-            topic_list = tag.tagged_topics.all()
-        except Tag.DoesNotExist:
-            return response(request,
-                            'Nonexistent Tag',
-                            'Tag does not exist.',
-                            '/mainsite/messageboard/',
-                            'Back')
+        tag_name = request.POST['tag_name']
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                topic_list = tag.tagged_topics.all()
+            except Tag.DoesNotExist:
+                return response(request,
+                                'Nonexistent Tag',
+                                'Tag does not exist.',
+                                '/mainsite/messageboard/',
+                                'Back')
     return render(request, 'messageboard.html', {'topics': topic_list})
 
 
