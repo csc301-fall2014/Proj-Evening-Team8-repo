@@ -187,7 +187,7 @@ def messageboard(request):
             topic_list = tag.tagged_topics.all()
         except Tag.DoesNotExist:
             return response(request,
-                            'Nonexistant Tag',
+                            'Nonexistent Tag',
                             'Tag does not exist.',
                             '/mainsite/messageboard/',
                             'Back')
