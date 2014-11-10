@@ -11,11 +11,11 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view, name='logout_view'),
 
     # Topics and main page
-    url(r'^messageboard/$', views.messageboard, name='messageboard'),
+    url(r'^messageboard/$', views.tableview, name='messageboard'),
     url(r'^messageboard/create/$', views.create_topic, name='create_topic'),
     url(r'^messageboard/(?P<topicid>[0-9]*)/$', views.topic, name='topic'),
 
- 
+
     # Subscriptions
     url(r'^messageboard/(?P<topicid>[0-9]*)/subscribe/$', views.subscribe, name="subscribe"),
     url(r'^messageboard/subscriptions/$', views.subscribed_topics, name='subscribed_topics'),
@@ -25,9 +25,6 @@ urlpatterns = [
     url(r'^messageboard/group/(?P<groupid>[0-9]*)/$', views.group, name='group'),
     url(r'^messageboard/joinedgroups/$', views.joined_groups, name='joined_groups'),
     url(r'^messageboard/joingroup/$', views.join_group, name='join_group'),
-
-    # Table view
-    url(r'^messageboard/myview/$', views.myview, name='myview'),
 
     # User profiles
     url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/$', views.userprofile, name='userprofile'),

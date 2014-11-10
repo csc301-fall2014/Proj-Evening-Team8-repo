@@ -30,12 +30,16 @@
 }
 .allTopics{
 	float: left;
-	
+
     display:-moz-box;
     display:box;
 
 	-moz-box-pack: center;
 	box-pack: center;
+}
+.navBar{
+    float: left;
+    width: 220px;
 }
 h1{
 	text-align: center;
