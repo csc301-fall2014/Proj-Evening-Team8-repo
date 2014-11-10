@@ -26,10 +26,10 @@ def response(request, title, message, link, button):
         'button': button})
 
 
-def myview(request):
+def tableview(request):
     message_list = Message.objects.all().order_by('pub_date')[:5]
     topic_list = Topic.objects.all()
-    return render(request, 'myview.html', {'topics': topic_list, 'messages': message_list})
+    return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
 
 
 def registration(request):

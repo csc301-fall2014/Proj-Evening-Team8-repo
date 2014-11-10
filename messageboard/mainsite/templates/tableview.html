@@ -4,7 +4,7 @@
     {% load staticfiles %}
     <meta charset="UTF-8">
     <title>{{ "Table List View" }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/myview.css'%}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -24,6 +24,10 @@
                         <p>Author: {{ topic.creator }}</p>
                         <p>Date: {{ topic.pub_date }}</p>
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
+                        <p>Tags: {% for tag in tags %}
+                            <p> {{topic.tags }}</p>
+                            {% endfor %}
+                        </p>
                     </div>
                     <div class="messages" align="left">
                         {% for msg in messages %}
