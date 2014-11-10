@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^messageboard/joingroup/$', views.join_group, name='join_group'),
 
     # Table view
-    url(r'^messageboard/myview/$', views.myview, name='myview'),
+    url(r'^messageboard/myview/$', views.tableview, name='myview'),
 
     # User profiles
     url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/$', views.userprofile, name='userprofile'),
