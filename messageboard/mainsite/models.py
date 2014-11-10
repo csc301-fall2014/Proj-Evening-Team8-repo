@@ -48,7 +48,7 @@ class Group(models.Model):
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=200)
+    tag_name = models.CharField(max_length=200, blank=False, unique=True)
     tagged_topics = models.ManyToManyField(Topic, related_name='tags')
 
     def __str__(self):
