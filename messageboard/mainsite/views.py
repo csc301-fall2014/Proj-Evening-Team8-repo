@@ -174,7 +174,7 @@ def topic(request, topicid):
         elif "REMOVE" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.delete()
-   
+
     this_topic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=this_topic.id)
     return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': this_topic, 'form': MessageForm()})
@@ -212,7 +212,7 @@ def create_group(request):
         return redirect('/mainsite/messageboard/')
     else:
         return render(request, 'groups/create_group.html', {'form': GroupForm})
-    
+
 
 @login_required(login_url='/mainsite/login')
 def group(request, groupid):
@@ -262,15 +262,14 @@ def edituserprofile(request, userid):
     userprofile = user.user_profile
     img = None
     if request.method == "POST":
-        form = UserProfileForm(request.POST, request.FILES, instance=user)
+        form = UserProfileForm(request.POST, instance=user)
         if form.is_valid():
-            form.save()
             #get data from form
-            #data = form.cleaned_data
+            data = form.cleaned_data
 
-            #userprofile.user_description = data['user_description']
-            #userprofile.school = data['school']
-            #userprofile.save():
+            userprofile.user_description = data['user_description']
+            userprofile.school = data['school']
+            userprofile.save()
             return render(request, 'userprofile/userprofile.html', {'user': user})
     else:
         form = UserProfileForm(instance=user,
@@ -278,6 +277,3 @@ def edituserprofile(request, userid):
 
     args['form'] = form
     return render(request, "userprofile/edituserprofile.html", args)
-
-
-

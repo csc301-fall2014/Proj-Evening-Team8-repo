@@ -10,8 +10,6 @@
 <h1>Edit your profile</h1>
 	<form action="" method="post" enctype="multipart/form-data"> <!--Send form data back to same view via POST-->
 	    {% csrf_token %}
-	    {% if img %} <p><img border="0" alt="Profile Pic" src="{{ img }}" /></p> {% endif %}
-	    Profile Pic: {{ pf.avatar }}
 	    {{ form.as_p }}
 	    <p>
 	        <input type="submit" value="Submit" />
