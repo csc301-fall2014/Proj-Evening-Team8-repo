@@ -23,13 +23,18 @@ class UserForm(forms.ModelForm):
 
 
 class MessageForm(forms.ModelForm):
+    topic = forms.IntegerField(widget=forms.HiddenInput())
+
     class Meta:
         model = Message
-        exclude = ('pub_date', 'topic', 'creator')
+        exclude = ('pub_date', 'creator')
+        fields = ('message_content', 'topic')
         widgets ={
             'message_content': forms.Textarea(attrs={'cols': 40, 'rows': 3,
                                                      'placeholder': "Write your message here...",
-                                                     'required': 'True'})
+                                                     'required': 'True'}),
+            'topic': forms.HiddenInput()
+
         }
 
 

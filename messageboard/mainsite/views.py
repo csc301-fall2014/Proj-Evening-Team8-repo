@@ -1,7 +1,7 @@
 import hashlib
 import random
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm
 from django.contrib.auth import authenticate, logout
@@ -10,10 +10,20 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group
 
+@login_required(login_url='/mainsite/login')
 def tableview(request):
+    if "POST" in request.POST:
+        message = Message()
+        message.creator = request.user
+        current_topic = Topic.objects.get(id=request.POST['topic'])
+        message.topic = current_topic
+        message.message_content = request.POST['message_content']
+        message.save()
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
     topic_list = Topic.objects.all()
     message_list = Message.objects.all()
     return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
@@ -154,24 +164,24 @@ def topic(request, topicid):
     if request.method == 'POST':
         # Post a message to the topic.
         if "POST" in request.POST:
-            filled_form = MessageForm(request.POST)
-            if filled_form.is_valid():
-                data = filled_form.cleaned_data
-                message = Message()
-                message.creator = request.user
-                message.topic = Topic.objects.get(id=topicid)
-                message.message_content = data['message_content']
-                message.save()
+            message = Message()
+            message.creator = request.user
+            current_topic = Topic.objects.get(id=topicid)
+            message.topic = current_topic
+            message.message_content = request.POST['message_content']
+            message.save()
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
         # Edit a message.
         elif "save" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.message_content = request.POST['message_content']
             message.save()
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
         # Delete a message.
         elif "REMOVE" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.delete()
-   
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
     this_topic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=this_topic.id)
     return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': this_topic, 'form': MessageForm()})
@@ -183,11 +193,19 @@ def subscribe(request, topicid):
     user = request.user
     user.subscribed_topics.add(Topic.objects.get(id=topicid))
     # After subscribing, redirect to the user's subscription list.
-    return redirect('/mainsite/messageboard/subscriptions')
+    return redirect(reverse('mainsite:topic', args=(topicid,)))
 
 
 @login_required(login_url='/mainsite/login')
 def subscribed_topics(request):
+    if "POST" in request.POST:
+            message = Message()
+            message.creator = request.user
+            current_topic = Topic.objects.get(id=request.POST['topic'])
+            message.topic = current_topic
+            message.message_content = request.POST['message_content']
+            message.save()
+            return HttpResponseRedirect(reverse('mainsite:subscriptions'))
     user = request.user
     topic_list = user.subscribed_topics.all()
     message_list = Message.objects.filter(topic__in=topic_list)
@@ -204,7 +222,7 @@ def create_group(request):
         group.save()
         group.user_set.add(user)
         user.joined_groups.add(group)
-        return redirect('/mainsite/messageboard/')
+        return redirect(reverse('mainsite:messageboard'))
     else:
         return render(request, 'groups/create_group.html', {'form': GroupForm})
     
@@ -241,10 +259,6 @@ def join_group(request):
             user.joined_groups.add(this_group)
         else:
             return HttpResponse('Password is invalid')
-        return redirect('/mainsite/messageboard/')
+        return redirect(reverse('mainsite:messageboard'))
     else:
         return render(request, 'groups/join_group.html', {'form': GroupForm})
-
-
-
-
