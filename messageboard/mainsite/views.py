@@ -214,13 +214,18 @@ def create_group(request):
 
 @login_required(login_url='/mainsite/login')
 def group(request, groupid):
-    this_group = Group.objects.get(id=groupid)
-    group_creator = this_group.creator
-    user_list = this_group.user_set.all()
-    return render(request, 'groups/group.html', {'group': this_group,
-                                                 'creator': group_creator,
-                                                 'users': user_list})
-
+	if request.method == 'POST':
+		if "REMOVE" in request.POST:
+			this_group = Group.objects.get(id=groupid)
+			this_group.delete()
+			return redirect('/mainsite/messageboard/')
+	else:
+		this_group = Group.objects.get(id=groupid)
+		group_creator = this_group.creator
+		user_list = this_group.user_set.all()
+		return render(request, 'groups/group.html', {'group': this_group,
+													'creator': group_creator,
+													'users': user_list})
 
 @login_required(login_url='/mainsite/login')
 def joined_groups(request):
