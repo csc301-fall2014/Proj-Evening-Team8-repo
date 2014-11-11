@@ -11,9 +11,17 @@
 
 <div id="creator" align="center">
     <p>Administrator: {{ creator.user_profile }}</p>
+	{% if creator.username == user.username %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<input type="SUBMIT" name="REMOVE" value="Delete Group">
+		<p></p>
+	</form>
+	{% endif %}
 </div>
 
 <div id="users" align="center">
+	<u>Members</u>
     {% for user in users %}
         <p>{{ user.user_profile }}</p>
     {% empty %}
