@@ -47,9 +47,9 @@
         {% endfor %}
     </div>
     <div id="textbox" align="center">
-        <form action= "" method="post">
+        <form id="new_message" action= "" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            <textarea style="resize:none" cols="40" id="new_message_content" name="message_content" rows="3"></textarea>
             <p> <input type="SUBMIT" name="POST" value="Post"></p>
         </form>
     </div>
