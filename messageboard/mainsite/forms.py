@@ -22,22 +22,6 @@ class UserForm(forms.ModelForm):
         return email
 
 
-class MessageForm(forms.ModelForm):
-    topic = forms.IntegerField(widget=forms.HiddenInput())
-
-    class Meta:
-        model = Message
-        exclude = ('pub_date', 'creator')
-        fields = ('message_content', 'topic')
-        widgets ={
-            'message_content': forms.Textarea(attrs={'cols': 40, 'rows': 3,
-                                                     'placeholder': "Write your message here...",
-                                                     'required': 'True'}),
-            'topic': forms.HiddenInput()
-
-        }
-
-
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic

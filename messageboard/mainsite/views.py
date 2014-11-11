@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm
+from mainsite.forms import UserForm, TopicForm, GroupForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
@@ -184,7 +184,7 @@ def topic(request, topicid):
             return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
     this_topic = Topic.objects.get(id=topicid)
     messagelist = Message.objects.filter(topic__id=this_topic.id)
-    return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': this_topic, 'form': MessageForm()})
+    return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': this_topic})
 
 
 @login_required(login_url='/mainsite/login')
