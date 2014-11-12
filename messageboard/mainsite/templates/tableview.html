@@ -36,6 +36,24 @@
                         <p>Author: {{ topic.creator }}</p>
                         <p>Date: {{ topic.pub_date }}</p>
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
+                        <p>
+                            Tags:
+                            {% for tag in topic.tags.all %}
+                                {{ tag }}
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {% if topic.creator.username == user.username %}
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="topic" value="{{ topic.id }}"/>
+                                    <input type="text" name="tag_name" size="10"/>
+                                    <input type="submit" name="add_tag" value="Add"/>
+                                    <input type="submit" name="remove_tag" value="Remove"/>
+                                </form>
+                                <p>{{ tag_error }}</p>
+                            {% endif %}
+                        </p>
                     </div>
                     <div class="messages" align="left">
                         {% for msg in messages %}
@@ -51,8 +69,8 @@
                          <form id="new_message" action= "" method="post">
                             {% csrf_token %}
                             <input type="text" id="message_content" name="message_content" size="38" autocomplete="off" placeholder="Enter a message to chat..."/>
-                            <input name="topic" type="HIDDEN" value="{{ topic.id }}"/>
-                            <input type="SUBMIT" name="POST" value="Post" hidden="true"/>
+                            <input type="hidden" name="topic" value="{{ topic.id }}"/>
+                            <input type="submit" name="post" value="Post" hidden="true"/>
                         </form>
                     </div>
                 </div>

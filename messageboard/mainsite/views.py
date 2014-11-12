@@ -20,7 +20,8 @@ from os.path import join as pjoin
 
 @login_required(login_url='/mainsite/login')
 def tableview(request):
-    if "POST" in request.POST:
+    tag_error = ""  # Displayed error message when creating/deleting tags.
+    if "post" in request.POST:
         message = Message()
         message.creator = request.user
         current_topic = Topic.objects.get(id=request.POST['topic'])
@@ -28,9 +29,46 @@ def tableview(request):
         message.message_content = request.POST['message_content']
         message.save()
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
+    elif "add_tag" in request.POST:
+        tag_name = request.POST['tag_name']
+        current_topic = Topic.objects.get(id=request.POST['topic'])
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                current_topic.tags.add(tag)
+            except Tag.DoesNotExist:
+                tag = Tag()
+                tag.tag_name = tag_name
+                try:
+                    tag.full_clean()  # Validate tag, not done automatically
+                    tag.save()
+                    current_topic.tags.add(tag)
+                except ValidationError as e:
+                    tag_error = str(e.message_dict['tag_name'])[2:-2]  # Trim [' and ']
+    elif "remove_tag" in request.POST:
+        tag_name = request.POST['tag_name']
+        current_topic = Topic.objects.get(id=request.POST['topic'])
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                current_topic.tags.remove(tag)
+
+                # Remove both sides of the relation
+                current_topic.tags.remove(tag)
+                tag.tagged_topics.remove(current_topic)
+
+                # Delete tag if not in use
+                if not tag.tagged_topics.all():
+                    tag.delete()
+            except Tag.DoesNotExist:
+                pass  # Do nothing is tag doesn't exist
+
     topic_list = Topic.objects.all()
     message_list = Message.objects.all()
-    return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
+    return render(request, 'tableview.html', {
+        'topics': topic_list,
+        'messages': message_list,
+        'tag_error': tag_error})
 
 
 # Not a view, helper function for notices (a richer and more customizable HttpResponse)
