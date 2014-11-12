@@ -1,7 +1,7 @@
 .info {
 	background-color: lightblue;
 	float: left;
-	width: 90px;
+	width: 89px;
 	height: 288px;
 	border: 1px solid #000000;
 	margin: 0px;
@@ -15,10 +15,16 @@
 }
 .messages{
 	float: left;
-	width: 298px;
-	height:296px;
+	width: 299px;
+	height: 273px;
 	overflow-y: scroll;
 	border: 1px solid #000000;
+}
+.textbox{
+    float: left;
+    width: 299px;
+    height: 21px;
+    border: 1px solid #000000;
 }
 .logout{
 	clear: both;
