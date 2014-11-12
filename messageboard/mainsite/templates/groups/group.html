@@ -17,7 +17,16 @@
 		<input type="SUBMIT" name="REMOVE" value="Delete Group">
 		<p></p>
 	</form>
-	{% endif %}
+</div>
+
+<div id="mods" align="center">
+    <u>Moderators</u>
+    {% endif %}
+    {% for user in mods %}
+        <p>{{ user.user_profile }}</p>
+    {% empty %}
+        <p> No moderators </p>
+    {% endfor %}
 </div>
 
 <div id="users" align="center">
