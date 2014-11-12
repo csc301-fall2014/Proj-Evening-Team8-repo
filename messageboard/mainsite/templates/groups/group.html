@@ -21,6 +21,16 @@
     {% endfor %}
 </div>
 
+<div id="topics" align="center">
+    {% for topic in topics %}
+        <p>
+            <a href="{{ topic.id }}">{{ topic.topic_name }}</a>
+        </p>
+    {% empty %}
+        <p> No topics to display </p>
+    {% endfor %}
+</div>
+
 <div id="logout" align="center">
 	<a href="/mainsite/messageboard/">Back</a>
     <a href="/mainsite/logout/">Logout</a>
