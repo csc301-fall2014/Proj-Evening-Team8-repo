@@ -17,6 +17,23 @@
             }
         }
     </script>
+    <div id="tags" align="center">
+        <p>
+            Tags:
+            {% for tag in tags %}
+                {{ tag }}
+            {% endfor %}
+            {% if topic.creator.username == user.username %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="tag_name">
+                    <input type="submit" name="add_tag" value="Add Tag">
+                    <input type="submit" name="remove_tag" value="Remove Tag">
+                </form>
+            {% endif %}
+            <p>{{ tag_error }}</p>
+        </p>
+    </div>
     <div id="messages" align="center">
         {% for msg in messages %}
             <p>{{msg.message_content}}
@@ -27,7 +44,6 @@
                         <input type="SUBMIT" name="REMOVE" value="Remove">
                         <input type="button" value="Edit" onClick="hideorshow({{ msg.id }})">
                     </form>
-
                     <form id="{{ msg.id }}" action="" method="post" style="display:none">
                         {% csrf_token %}
                         <p>
