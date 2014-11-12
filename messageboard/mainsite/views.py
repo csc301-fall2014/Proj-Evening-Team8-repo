@@ -20,15 +20,10 @@ from os.path import join as pjoin
 
 @login_required(login_url='/mainsite/login')
 def tableview(request):
-    topic_list = Topic.objects.all()
-    message_list = Message.objects.all()
 
-    if "POST_post" in request.POST:
-        message = Message()
-        message.creator = request.user
-        message.topic = Topic.objects.get(id=request.POST['topic_id'])
-        message.message_content = request.POST['message_content']
-        message.save()
+    if "POST" in request.POST:
+        post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic']), request.user)
+
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
     elif "POST_subscribe" in request.POST:
         current_topic = Topic.objects.get(id=request.POST['topic_id'])
@@ -293,17 +288,7 @@ def topic(request, topicid):
 
         # Post a message to the topic.
         if "POST" in request.POST:
-            message = Message()
-            message.creator = request.user
-            message.topic = this_topic
-            message.message_content = request.POST['message_content']
-            message.save()
-
-            # Hand out subscription notifications (currently synchronous)
-            subscribers = current_topic.subscriptions.all()
-            for subscriber in subscribers:
-                if subscriber != message.creator:
-                    notify_subscriber(current_topic, subscriber)
+            post_message(request.POST['message_content'], Topic.objects.get(id=topicid), request.user)
             return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
 
         # Edit a message.
@@ -358,6 +343,19 @@ def topic(request, topicid):
         'tags': this_topic.tags.all,
         'tag_error': tag_error})
 
+
+def post_message(content, topic, creator):
+    message = Message()
+    message.creator = creator
+    message.topic = topic
+    message.message_content = content
+    message.save()
+
+    # Hand out subscription notifications (currently synchronous)
+    subscribers = topic.subscriptions.all()
+    for subscriber in subscribers:
+        if subscriber != message.creator:
+            notify_subscriber(topic, subscriber)
 
 # Helper function for subscription notifications.
 # No loginrequired header is needed here, its not an actual view function.
