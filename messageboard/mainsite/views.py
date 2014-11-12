@@ -20,17 +20,87 @@ from os.path import join as pjoin
 
 @login_required(login_url='/mainsite/login')
 def tableview(request):
-    if "POST" in request.POST:
+    topic_list = Topic.objects.all()
+    message_list = Message.objects.all()
+
+    if "POST_post" in request.POST:
         message = Message()
         message.creator = request.user
-        current_topic = Topic.objects.get(id=request.POST['topic'])
-        message.topic = current_topic
+        message.topic = Topic.objects.get(id=request.POST['topic_id'])
         message.message_content = request.POST['message_content']
         message.save()
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
-    topic_list = Topic.objects.all()
-    message_list = Message.objects.all()
-    return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
+    elif "POST_subscribe" in request.POST:
+        current_topic = Topic.objects.get(id=request.POST['topic_id'])
+        # If subscribed, unsubscribe
+        if current_topic.subscriptions.filter(username=request.user.username).exists():
+            # Need to remove both sides of the relation manually
+            current_topic.subscriptions.remove(request.user)
+            request.user.subscribed_topics.remove(current_topic)
+        # If not subscribed, subscribe
+        else:
+            # No need to add to both sides of the relation
+            current_topic.subscriptions.add(request.user)
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
+    elif "POST_add_tag" in request.POST:
+        tag_name = request.POST['tag_name']
+        current_topic = Topic.objects.get(id=request.POST['topic_id'])
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                # No need to add to both sides of the relation
+                current_topic.tags.add(tag)
+            except Tag.DoesNotExist:
+                tag = Tag()
+                tag.tag_name = tag_name
+                try:
+                    tag.full_clean()  # Validate tag, not done automatically
+                    tag.save()
+                    current_topic.tags.add(tag)
+                except ValidationError as e:
+                    return response(request,
+                                    'Invalid Tag',
+                                    str(e.message_dict['tag_name'])[2:-2],  # Trim [' and ']
+                                    '/mainsite/messageboard/',
+                                    'Back')
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
+    elif "POST_remove_tag" in request.POST:
+        tag_name = request.POST['tag_name']
+        current_topic = Topic.objects.get(id=request.POST['topic_id'])
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                current_topic.tags.remove(tag)
+
+                # Need to remove both sides of the relation manually
+                current_topic.tags.remove(tag)
+                tag.tagged_topics.remove(current_topic)
+
+                # Delete tag if not in use
+                if not tag.tagged_topics.all():
+                    tag.delete()
+            except Tag.DoesNotExist:
+                pass  # Do nothing is tag doesn't exist
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
+    elif "POST_filter" in request.POST:
+        tag_name = request.POST['tag_name']
+        # If tag field is not empty, filter by tag if it exists.
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                topic_list = tag.tagged_topics.all()
+            except Tag.DoesNotExist:
+                topic_list = []
+        # If 'subscriptions only' checked, (further) filter by subscribed only.
+        if "subscribed" in request.POST:
+            topic_list = topic_list & request.user.subscribed_topics.all()
+        return render(request, 'tableview.html', {
+            'topics': topic_list,
+            'messages': message_list})
+
+    return render(request, 'tableview.html', {
+        'topics': topic_list,
+        'messages': message_list})
 
 
 # Not a view, helper function for notices (a richer and more customizable HttpResponse)
