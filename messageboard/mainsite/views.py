@@ -14,6 +14,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag
+from datetime import datetime, timedelta
 from os.path import join as pjoin
 
 
@@ -289,6 +290,7 @@ def topic(request, topicid):
     this_topic = Topic.objects.get(id=topicid)
     tag_error = ""
     if request.method == 'POST':
+
         # Post a message to the topic.
         if "POST" in request.POST:
             message = Message()
@@ -296,13 +298,21 @@ def topic(request, topicid):
             message.topic = this_topic
             message.message_content = request.POST['message_content']
             message.save()
+
+            # Hand out subscription notifications (currently synchronous)
+            subscribers = current_topic.subscriptions.all()
+            for subscriber in subscribers:
+                if subscriber != message.creator:
+                    notify_subscriber(current_topic, subscriber)
             return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
+
         # Edit a message.
         elif "save" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.message_content = request.POST['message_content']
             message.save()
             return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
+
         # Delete a message.
         elif "REMOVE" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
@@ -347,6 +357,35 @@ def topic(request, topicid):
         'topic': this_topic,
         'tags': this_topic.tags.all,
         'tag_error': tag_error})
+
+
+# Helper function for subscription notifications.
+# No loginrequired header is needed here, its not an actual view function.
+def notify_subscriber(topic, subscriber):
+    profile = subscriber.user_profile
+
+    # Add a topic to the user's notification queue.
+    profile.notification_queue.add(topic)
+    profile.save()
+
+    # Check if its been long enough since the last email.
+    if datetime.now() > (profile.last_notified.replace(tzinfo=None) + timedelta(seconds=profile.notification_delay)):
+
+        # Start composing the email.
+        email_subject = 'Subscription Update!'
+        email_body = "Dear %s,\n\nA new message has been posted to a topic you're subscribed to!\n\n" \
+                     % subscriber.username
+
+        # Dump all the topic links into the email.
+        for t in profile.notification_queue.all():
+            email_body += "http://127.0.0.1:8000/mainsite/messageboard/%d\n" % t.id
+        email_body += "\n\nYours,\nTeam8s"
+        send_mail(email_subject, email_body, 'no-reply@messageboard.com', [subscriber.email], fail_silently=False)
+
+        # Clear the notification queue, set the last_notified time.
+        profile.notification_queue.clear()
+        profile.last_notified = timezone.now()
+        profile.save()
 
 
 @login_required(login_url='/mainsite/login')
