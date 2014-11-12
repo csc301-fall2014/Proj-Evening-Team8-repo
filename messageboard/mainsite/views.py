@@ -20,7 +20,6 @@ from os.path import join as pjoin
 
 @login_required(login_url='/mainsite/login')
 def tableview(request):
-    tag_error = ""  # Displayed error message when creating/deleting tags.
     topic_list = Topic.objects.all()
 
     if "POST_post" in request.POST:
@@ -30,7 +29,7 @@ def tableview(request):
         message.topic = current_topic
         message.message_content = request.POST['message_content']
         message.save()
-        return HttpResponseRedirect(reverse('mainsite:messageboard'))
+        # return HttpResponseRedirect(reverse('mainsite:messageboard'))
     elif "POST_subscribe" in request.POST:
         current_topic = Topic.objects.get(id=request.POST['topic_id'])
         # If subscribed, unsubscribe
@@ -58,7 +57,11 @@ def tableview(request):
                     tag.save()
                     current_topic.tags.add(tag)
                 except ValidationError as e:
-                    tag_error = str(e.message_dict['tag_name'])[2:-2]  # Trim [' and ']
+                    return response(request,
+                                    'Invalid Tag',
+                                    str(e.message_dict['tag_name'])[2:-2],  # Trim [' and ']
+                                    '/mainsite/messageboard/',
+                                    'Back')
     elif "POST_remove_tag" in request.POST:
         tag_name = request.POST['tag_name']
         current_topic = Topic.objects.get(id=request.POST['topic_id'])
@@ -89,13 +92,10 @@ def tableview(request):
         if "subscribed" in request.POST:
             topic_list = topic_list & request.user.subscribed_topics.all()
 
-    currently_subscribed = request.user.subscribed_topics.values_list('id', flat=True)
     message_list = Message.objects.all()
     return render(request, 'tableview.html', {
         'topics': topic_list,
-        'currently_subscribed': currently_subscribed,
-        'messages': message_list,
-        'tag_error': tag_error})
+        'messages': message_list})
 
 
 # Not a view, helper function for notices (a richer and more customizable HttpResponse)

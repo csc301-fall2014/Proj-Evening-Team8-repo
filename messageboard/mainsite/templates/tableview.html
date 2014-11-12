@@ -52,7 +52,7 @@
                         <form action="" Method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                            {% if topic.id in currently_subscribed %}
+                            {% if topic in user.subscribed_topics.all %}
                                 <input type="submit" name="POST_subscribe" value="Unsubscribe"/>
                             {% else %}
                                 <input type="submit" name="POST_subscribe" value="Subscribe"/>
@@ -73,7 +73,6 @@
                                     <input type="submit" name="POST_add_tag" value="Add"/><br>
                                     <input type="submit" name="POST_remove_tag" value="Remove"/>
                                 </form>
-                                <p>{{ tag_error }}</p>
                             {% endif %}
                         </p>
                     </div>
