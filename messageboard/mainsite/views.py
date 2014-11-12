@@ -346,7 +346,7 @@ def topic(request, topicid):
     return render(request, 'topics/topic.html', {
         'messages': messagelist,
         'topic': this_topic,
-        'tags': this_topic.tags.all(),
+        'tags': this_topic.tags.all,
         'tag_error': tag_error})
 
 
@@ -384,7 +384,6 @@ def create_group(request):
                       group_password=request.POST['group_password'], creator=request.user)
         group.save()
         group.user_set.add(user)
-        group.mod_set.add(user)
         user.joined_groups.add(group)
         return redirect(reverse('mainsite:messageboard'))
     else:
@@ -398,6 +397,16 @@ def group(request, groupid):
         if "REMOVE" in request.POST:
             this_group.delete()
             return redirect('/mainsite/messageboard/')
+        elif "ADDMOD" in request.POST:
+            mod_name = request.POST['mod_name']
+            try:
+                if mod_name != this_group.creator.username:
+                    mod_user = this_group.user_set.get(username=mod_name)
+                    this_group.mod_set.add(mod_user)
+                    mod_user.moderated_groups.add(this_group)
+            except User.DoesNotExist:
+                return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))                    
+            return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
     else:
         group_creator = this_group.creator
         user_list = this_group.user_set.all()

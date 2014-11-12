@@ -17,11 +17,16 @@
 		<input type="SUBMIT" name="REMOVE" value="Delete Group">
 		<p></p>
 	</form>
+    <form action="" method="POST">
+        {% csrf_token %}
+        Add Moderator: <input type="text" name="mod_name"/>
+        <input type="submit" name="ADDMOD" value="Submit"/><p/>
+    </form>
+    {% endif %}
 </div>
 
 <div id="mods" align="center">
     <u>Moderators</u>
-    {% endif %}
     {% for user in mods %}
         <p>{{ user.user_profile }}</p>
     {% empty %}
