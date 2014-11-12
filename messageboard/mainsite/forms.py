@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from mainsite.models import Message, Topic, Group, UserProfile
 
 
-
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -23,7 +22,6 @@ class UserForm(forms.ModelForm):
         return email
 
 
-
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -36,19 +34,6 @@ class UserProfileForm(forms.ModelForm):
         if email and User.objects.filter(email=email).exclude(username=username).count():
             raise forms.ValidationError(u'Email addresses must be unique.')
         return email
-
-    
-
-
-class MessageForm(forms.ModelForm):
-    class Meta:
-        model = Message
-        exclude = ('pub_date', 'topic', 'creator')
-        widgets ={
-            'message_content': forms.Textarea(attrs={'cols': 40, 'rows': 3,
-                                                     'placeholder': "Write your message here...",
-                                                     'required': 'True'})
-        }
 
 
 class TopicForm(forms.ModelForm):

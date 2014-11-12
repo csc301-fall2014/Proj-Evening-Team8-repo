@@ -1,25 +1,45 @@
 import hashlib
 import random
-from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, MessageForm, TopicForm, GroupForm, UserProfileForm
+from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.core.exceptions import ValidationError
 from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group
-from PIL import Image as PImage
+from mainsite.models import Topic, Message, UserProfile, Group, Tag
+#from PIL import Image as PImage
 from os.path import join as pjoin
 
+
+@login_required(login_url='/mainsite/login')
 def tableview(request):
+    if "POST" in request.POST:
+        message = Message()
+        message.creator = request.user
+        current_topic = Topic.objects.get(id=request.POST['topic'])
+        message.topic = current_topic
+        message.message_content = request.POST['message_content']
+        message.save()
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
     topic_list = Topic.objects.all()
     message_list = Message.objects.all()
     return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
+
+
+# Not a view, helper function for notices (a richer and more customizable HttpResponse)
+def response(request, title, message, link, button):
+    return render(request, 'response.html', {
+        'title': title,
+        'message': message,
+        'link': link,
+        'button': button})
 
 
 def registration(request):
@@ -44,14 +64,7 @@ def registration(request):
             key_expires = timezone.now() + timezone.timedelta(2)  # 48 hours
 
             # Send activation key
-            email_subject = 'Account Activation'
-            email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, go to the link below.\
-\n\nhttp://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
-            send_mail(email_subject,
-                      email_body,
-                      'no-reply@messageboard.com',
-                      [new_user.email],
-                      fail_silently=False)
+            send_activation_email(new_user, activation_key)
 
             # E-mail sent, safe to save to database
             new_user.save()
@@ -65,11 +78,27 @@ def registration(request):
             return render(request, 'registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
-            return HttpResponse('Invalid registration information.' + str(form.errors))
+            return response(request,
+                            'Invalid Registration Information',
+                            str(form.errors),
+                            '/mainsite/registration/',
+                            'Back')
     else:
         # Registration not completed, initialize form
         return render(request, 'registration/registration.html',
                       {'form': UserForm(initial={'email': '@mail.utoronto.ca'})})
+
+
+# Not a view, helper function
+def send_activation_email(new_user, activation_key):
+    email_subject = 'Account Activation'
+    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, access to the link below.\n\n\
+http://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
+    send_mail(email_subject,
+              email_body,
+              'no-reply@messageboard.ca',
+              [new_user.email],
+              fail_silently=False)
 
 
 def email_activation(request, activation_key):
@@ -77,22 +106,39 @@ def email_activation(request, activation_key):
     try:
         user_profile = UserProfile.objects.get(activation_key=activation_key)
     except UserProfile.DoesNotExist:
-        return HttpResponse('Invalid activation link.')
+        return response(request,
+                        'Invalid Activation Link',
+                        'The activation link you have provided does not correspond to any account.\n' +
+                        'Double check you have the correct link.',
+                        '/mainsite/',
+                        'Back')
 
     user = user_profile.user
 
     # If already activated, do nothing
     if user.is_active:
-        return HttpResponse('Account already activated.')
+        return response(request,
+                        'Account already activated',
+                        'The account is already activated.\n',
+                        '/mainsite/',
+                        'Back')
 
     # Check if activation_key has expired
     if user_profile.key_expires < timezone.now():
         user.delete()  # Delete User, dependant UserProfile automatically deleted as well
-        return HttpResponse('Key has expired. Please register again.')
+        return response(request,
+                        'Expired Activation Link',
+                        'The activation link has expired. Please register again.',
+                        '/mainsite/registration/',
+                        'Register')
 
     user.is_active = True
     user.save()
-    return HttpResponse('Account has been activated.')
+    return response(request,
+                    'Account Activated',
+                    'Your account has been activated. You may now login.',
+                    '/mainsite/login/',
+                    'Login')
 
 
 def login(request):
@@ -106,21 +152,26 @@ def login(request):
             else:
                 if user.user_profile.key_expires < timezone.now():
                     user.delete()  # Delete User, dependant UserProfile automatically deleted as well
-                    return HttpResponse('Account was not activated in time and is deleted. Please register again.')
+                    return response(request,
+                                    'Expired Unactivated Account',
+                                    'Account was not activated in time and has been deleted. Please register again.',
+                                    '/mainsite/registration/',
+                                    'Register')
                 else:
                     # Resend activation key
-                    email_subject = 'Account Activation'
-                    email_body = "Dear %s,\n\nThank you for signing up. To complete your registration, go to the link below.\
-\n\nhttp://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (user.username, user.user_profile.activation_key)
-                    send_mail(email_subject,
-                              email_body,
-                              'no-reply@messageboard.com',
-                              [user.email],
-                              fail_silently=False)
-                    return HttpResponse('Account not activated. Another activation e-mail has been sent.')
+                    send_activation_email(user, user.user_profile.activation_key)
+                    return response(request,
+                                    'Account Unactivated',
+                                    'Account not activated. Another activation e-mail has been sent.',
+                                    '/mainsite/login/',
+                                    'Back')
         else:
             # Incorrect user or password
-            return HttpResponse('User does not exist or password is incorrect.')
+            return response(request,
+                            'Incorrect Login',
+                            'User does not exist or password is incorrect.',
+                            '/mainsite/login/',
+                            'Back')
     else:
         return render(request, 'registration/login.html', {'form': AuthenticationForm()})
 
@@ -138,6 +189,18 @@ def index(request):
 @login_required(login_url='/mainsite/login')
 def messageboard(request):
     topic_list = Topic.objects.all()
+    if request.method == 'POST':
+        tag_name = request.POST['tag_name']
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                topic_list = tag.tagged_topics.all()
+            except Tag.DoesNotExist:
+                return response(request,
+                                'Nonexistent Tag',
+                                'Tag does not exist.',
+                                '/mainsite/messageboard/',
+                                'Back')
     return render(request, 'messageboard.html', {'topics': topic_list})
 
 
@@ -154,30 +217,67 @@ def create_topic(request):
 
 @login_required(login_url='/mainsite/login')
 def topic(request, topicid):
+    this_topic = Topic.objects.get(id=topicid)
+    tag_error = ""
     if request.method == 'POST':
         # Post a message to the topic.
         if "POST" in request.POST:
-            filled_form = MessageForm(request.POST)
-            if filled_form.is_valid():
-                data = filled_form.cleaned_data
-                message = Message()
-                message.creator = request.user
-                message.topic = Topic.objects.get(id=topicid)
-                message.message_content = data['message_content']
-                message.save()
+            message = Message()
+            message.creator = request.user
+            message.topic = this_topic
+            message.message_content = request.POST['message_content']
+            message.save()
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
         # Edit a message.
         elif "save" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.message_content = request.POST['message_content']
             message.save()
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
         # Delete a message.
         elif "REMOVE" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.delete()
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
+        elif "add_tag" in request.POST:
+            tag_name = request.POST['tag_name']
+            if tag_name:
+                try:
+                    tag = Tag.objects.get(tag_name=tag_name)
+                    this_topic.tags.add(tag)
+                except Tag.DoesNotExist:
+                    tag = Tag()
+                    tag.tag_name = tag_name
+                    try:
+                        tag.full_clean()  # Validate tag, not done automatically
+                        tag.save()
+                        this_topic.tags.add(tag)
+                    except ValidationError as e:
+                        tag_error = str(e.message_dict['tag_name'])[2:-2]  # Trim [' and ']
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
+        elif "remove_tag" in request.POST:
+            tag_name = request.POST['tag_name']
+            if tag_name:
+                try:
+                    tag = Tag.objects.get(tag_name=tag_name)
+                    this_topic.tags.remove(tag)
 
-    this_topic = Topic.objects.get(id=topicid)
+                    # Remove both sides of the relation
+                    this_topic.tags.remove(tag)
+                    tag.tagged_topics.remove(this_topic)
+
+                    # Delete tag if not in use
+                    if not tag.tagged_topics.all():
+                        tag.delete()
+                except Tag.DoesNotExist:
+                    pass  # Do nothing is tag doesn't exist
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
     messagelist = Message.objects.filter(topic__id=this_topic.id)
-    return render(request, 'topics/topic.html', {'messages': messagelist, 'topic': this_topic, 'form': MessageForm()})
+    return render(request, 'topics/topic.html', {
+        'messages': messagelist,
+        'topic': this_topic,
+        'tags': this_topic.tags.all,
+        'tag_error': tag_error})
 
 
 @login_required(login_url='/mainsite/login')
@@ -186,11 +286,19 @@ def subscribe(request, topicid):
     user = request.user
     user.subscribed_topics.add(Topic.objects.get(id=topicid))
     # After subscribing, redirect to the user's subscription list.
-    return redirect('/mainsite/messageboard/subscriptions')
+    return redirect(reverse('mainsite:topic', args=(topicid,)))
 
 
 @login_required(login_url='/mainsite/login')
 def subscribed_topics(request):
+    if "POST" in request.POST:
+            message = Message()
+            message.creator = request.user
+            current_topic = Topic.objects.get(id=request.POST['topic'])
+            message.topic = current_topic
+            message.message_content = request.POST['message_content']
+            message.save()
+            return HttpResponseRedirect(reverse('mainsite:subscriptions'))
     user = request.user
     topic_list = user.subscribed_topics.all()
     message_list = Message.objects.filter(topic__in=topic_list)
@@ -207,7 +315,7 @@ def create_group(request):
         group.save()
         group.user_set.add(user)
         user.joined_groups.add(group)
-        return redirect('/mainsite/messageboard/')
+        return redirect(reverse('mainsite:messageboard'))
     else:
         return render(request, 'groups/create_group.html', {'form': GroupForm})
 
@@ -242,21 +350,31 @@ def join_group(request):
         try:
             this_group = Group.objects.get(group_name=request.POST['group_name'])
         except Group.DoesNotExist:
-            return HttpResponse('Group does not exist')
+            return response(request,
+                            'Nonexistent Group',
+                            'Group does not exist.',
+                            '/mainsite/messageboard/joingroup/',
+                            'Back')
         # Add the user to the group if the password is correct
         if this_group.group_password == request.POST['group_password']:
             this_group.user_set.add(user)
             user.joined_groups.add(this_group)
         else:
-            return HttpResponse('Password is invalid')
-        return redirect('/mainsite/messageboard/')
+            return response(request,
+                            'Incorrect Password',
+                            'Password is incorrect.',
+                            '/mainsite/messageboard/joingroup/',
+                            'Back')
+        return redirect(reverse('mainsite:messageboard'))
     else:
         return render(request, 'groups/join_group.html', {'form': GroupForm})
+
 
 @login_required(login_url='/mainsite/login')
 def userprofile(request, userid):
     user = User.objects.get(id=userid)
     return render(request, 'userprofile/userprofile.html', {'user': user})
+
 
 @login_required(login_url='/mainsite/login')
 def edituserprofile(request, userid):
@@ -280,3 +398,4 @@ def edituserprofile(request, userid):
 
     args['form'] = form
     return render(request, "userprofile/edituserprofile.html", args)
+

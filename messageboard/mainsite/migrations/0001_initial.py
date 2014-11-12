@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 from django.conf import settings
-import datetime
 import django.utils.timezone
+import django.core.validators
 
 
 class Migration(migrations.Migration):
@@ -15,9 +15,22 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Group',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('group_name', models.CharField(max_length=200)),
+                ('group_password', models.CharField(max_length=20)),
+                ('creator', models.ForeignKey(related_name='groups_created', to=settings.AUTH_USER_MODEL)),
+                ('user_set', models.ManyToManyField(related_name='joined_groups', to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Message',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
                 ('message_content', models.TextField()),
                 ('pub_date', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date published')),
                 ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
@@ -27,13 +40,23 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Tag',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('tag_name', models.CharField(unique=True, validators=[django.core.validators.RegexValidator(code='invalid_tag', message='Only alphanumeric characters and underscores are allowed.', regex='^[0-9a-zA-Z_]*$')], max_length=200)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Topic',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
                 ('topic_name', models.CharField(max_length=200)),
                 ('pub_date', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date published')),
-                ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='topics_created')),
-                ('subscriptions', models.ManyToManyField(to=settings.AUTH_USER_MODEL, related_name='subscribed_topics')),
+                ('creator', models.ForeignKey(related_name='topics_created', to=settings.AUTH_USER_MODEL)),
+                ('subscriptions', models.ManyToManyField(related_name='subscribed_topics', to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -42,14 +65,23 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
-                ('activation_key', models.CharField(max_length=40, blank=True)),
-                ('key_expires', models.DateTimeField(default=datetime.date(2014, 10, 22))),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('activation_key', models.CharField(unique=True, blank=True, max_length=40)),
+                ('key_expires', models.DateTimeField(default=django.utils.timezone.now)),
+                ('user_description', models.CharField(default='', blank=True, max_length=200)),
+                ('school', models.CharField(null=True, default='', blank=True, max_length=200)),
+                ('timejoined', models.DateTimeField(default=django.utils.timezone.now)),
+                ('user', models.OneToOneField(related_name='user_profile', to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='tag',
+            name='tagged_topics',
+            field=models.ManyToManyField(related_name='tags', to='mainsite.Topic'),
+            preserve_default=True,
         ),
         migrations.AddField(
             model_name='message',
