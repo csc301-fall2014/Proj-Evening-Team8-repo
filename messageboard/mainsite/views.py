@@ -34,14 +34,12 @@ def tableview(request):
     elif "POST_subscribe" in request.POST:
         current_topic = Topic.objects.get(id=request.POST['topic_id'])
         # If subscribed, unsubscribe
-        try:
-            # Try to get, exception means empty query, otherwise user is subscribed.
-            current_topic.subscriptions.get(username=request.user.username)
+        if current_topic.subscriptions.filter(username=request.user.username).exists():
             # Need to remove both sides of the relation manually
             current_topic.subscriptions.remove(request.user)
             request.user.subscribed_topics.remove(current_topic)
         # If not subscribed, subscribe
-        except User.DoesNotExist:
+        else:
             # No need to add to both sides of the relation
             current_topic.subscriptions.add(request.user)
     elif "POST_add_tag" in request.POST:
@@ -89,11 +87,13 @@ def tableview(request):
                 topic_list = []
         # If subscriptions only checked, (further) filter by subscribed only.
         if "subscribed" in request.POST:
-            topic_list = topic_list & request.user.subscribed_topics.all
+            topic_list = topic_list & request.user.subscribed_topics.all()
 
+    currently_subscribed = request.user.subscribed_topics.values_list('id', flat=True)
     message_list = Message.objects.all()
     return render(request, 'tableview.html', {
         'topics': topic_list,
+        'currently_subscribed': currently_subscribed,
         'messages': message_list,
         'tag_error': tag_error})
 

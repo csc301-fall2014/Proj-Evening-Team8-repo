@@ -51,9 +51,12 @@
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
                         <form action="" Method="POST">
                             {% csrf_token %}
-                                <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                                <!--button text should change based on whether user is subscribed to this topic-->
-                                <input type="submit" name="POST_subscribe" value="(Un)Subscribe"/>
+                            <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
+                            {% if topic.id in currently_subscribed %}
+                                <input type="submit" name="POST_subscribe" value="Unsubscribe"/>
+                            {% else %}
+                                <input type="submit" name="POST_subscribe" value="Subscribe"/>
+                            {% endif %}
                         </form>
                         <p>
                             Tags:
