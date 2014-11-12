@@ -14,7 +14,6 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag
-#from PIL import Image as PImage
 from os.path import join as pjoin
 
 

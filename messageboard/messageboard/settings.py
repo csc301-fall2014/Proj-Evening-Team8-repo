@@ -95,10 +95,10 @@ STATIC_URL = '/static/'
 # E-mail Settings
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'myname@gmail.com'
-EMAIL_HOST_PASSWORD = 'mypassword'
+EMAIL_HOST_USER = 'messageboard.notifications@gmail.com'
+EMAIL_HOST_PASSWORD = '***REMOVED***'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'myname@gmail.com'
+DEFAULT_FROM_EMAIL = 'messageboard.notifications@gmail.com'
 # Send e-mails to console backend
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
