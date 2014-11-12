@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from mainsite.models import Message, Topic, Group, UserProfile
 
 
-
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
