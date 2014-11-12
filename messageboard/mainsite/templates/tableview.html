@@ -69,7 +69,7 @@
                                 <form action="" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                                    <input type="text" name="tag_name" size="10"/><br>
+                                    <input type="text" name="tag_name" size="8"/><br>
                                     <input type="submit" name="POST_add_tag" value="Add"/><br>
                                     <input type="submit" name="POST_remove_tag" value="Remove"/>
                                 </form>
@@ -89,7 +89,7 @@
                     <div class="textbox" align="center">
                          <form id="new_message" action= "" method="post">
                             {% csrf_token %}
-                            <input type="text" id="message_content" name="message_content" size="38" autocomplete="off" placeholder="Enter a message to chat..."/>
+                            <input type="text" id="message_content" name="message_content" size="36" autocomplete="off" placeholder="Enter a message to chat..."/>
                             <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
                             <input type="submit" name="POST_post" value="Post" hidden="true"/>
                         </form>
