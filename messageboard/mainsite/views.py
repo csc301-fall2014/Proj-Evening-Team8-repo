@@ -82,9 +82,7 @@ def tableview(request):
                     tag.delete()
             except Tag.DoesNotExist:
                 pass  # Do nothing is tag doesn't exist
-        return render(request, 'tableview.html', {
-            'topics': topic_list,
-            'messages': message_list})
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
     elif "POST_filter" in request.POST:
         tag_name = request.POST['tag_name']
         # If tag field is not empty, filter by tag if it exists.
