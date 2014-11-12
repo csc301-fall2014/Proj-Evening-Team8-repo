@@ -21,6 +21,8 @@ from os.path import join as pjoin
 @login_required(login_url='/mainsite/login')
 def tableview(request):
     tag_error = ""  # Displayed error message when creating/deleting tags.
+    topic_list = Topic.objects.all()
+
     if "post" in request.POST:
         message = Message()
         message.creator = request.user
@@ -62,8 +64,15 @@ def tableview(request):
                     tag.delete()
             except Tag.DoesNotExist:
                 pass  # Do nothing is tag doesn't exist
+    elif "filter_tag" in request.POST:
+        tag_name = request.POST['tag_name']
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                topic_list = tag.tagged_topics.all()
+            except Tag.DoesNotExist:
+                topic_list = []
 
-    topic_list = Topic.objects.all()
     message_list = Message.objects.all()
     return render(request, 'tableview.html', {
         'topics': topic_list,

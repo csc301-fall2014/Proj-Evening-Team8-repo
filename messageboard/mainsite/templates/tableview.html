@@ -21,8 +21,15 @@
                 <li><a href="{% url 'mainsite:create_topic' %}">Create a Topic</a></li>
                 <li><a href="{% url 'mainsite:subscribed_topics' %}">My Subscribed Topics</a></li>
             </ul>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="text" name="tag_name">
+                <input type="submit" name="filter_tag" value="Filter by Tag">
+                <p>Leave blank to show all.</p>
+            </form>
         </div>
         <div class="allTopics" align="center">
+
             {% for topic in topics %}
                 <div class="topicBox">
                     <div class="title">
@@ -39,7 +46,7 @@
                         <p>
                             Tags:
                             {% for tag in topic.tags.all %}
-                                {{ tag }}
+                                [{{ tag }}]
                             {% endfor %}
                         </p>
                         <p>
