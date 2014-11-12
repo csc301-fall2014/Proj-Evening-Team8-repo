@@ -21,6 +21,7 @@ from os.path import join as pjoin
 @login_required(login_url='/mainsite/login')
 def tableview(request):
     topic_list = Topic.objects.all()
+    message_list = Message.objects.all()
 
     if "POST_post" in request.POST:
         message = Message()
@@ -29,7 +30,7 @@ def tableview(request):
         message.topic = current_topic
         message.message_content = request.POST['message_content']
         message.save()
-        # return HttpResponseRedirect(reverse('mainsite:messageboard'))
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
     elif "POST_subscribe" in request.POST:
         current_topic = Topic.objects.get(id=request.POST['topic_id'])
         # If subscribed, unsubscribe
@@ -41,6 +42,7 @@ def tableview(request):
         else:
             # No need to add to both sides of the relation
             current_topic.subscriptions.add(request.user)
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
     elif "POST_add_tag" in request.POST:
         tag_name = request.POST['tag_name']
         current_topic = Topic.objects.get(id=request.POST['topic_id'])
@@ -62,6 +64,7 @@ def tableview(request):
                                     str(e.message_dict['tag_name'])[2:-2],  # Trim [' and ']
                                     '/mainsite/messageboard/',
                                     'Back')
+        return HttpResponseRedirect(reverse('mainsite:messageboard'))
     elif "POST_remove_tag" in request.POST:
         tag_name = request.POST['tag_name']
         current_topic = Topic.objects.get(id=request.POST['topic_id'])
@@ -79,6 +82,9 @@ def tableview(request):
                     tag.delete()
             except Tag.DoesNotExist:
                 pass  # Do nothing is tag doesn't exist
+        return render(request, 'tableview.html', {
+            'topics': topic_list,
+            'messages': message_list})
     elif "POST_filter" in request.POST:
         tag_name = request.POST['tag_name']
         # If tag field is not empty, filter by tag if it exists.
@@ -88,11 +94,13 @@ def tableview(request):
                 topic_list = tag.tagged_topics.all()
             except Tag.DoesNotExist:
                 topic_list = []
-        # If subscriptions only checked, (further) filter by subscribed only.
+        # If 'subscriptions only' checked, (further) filter by subscribed only.
         if "subscribed" in request.POST:
             topic_list = topic_list & request.user.subscribed_topics.all()
+        return render(request, 'tableview.html', {
+            'topics': topic_list,
+            'messages': message_list})
 
-    message_list = Message.objects.all()
     return render(request, 'tableview.html', {
         'topics': topic_list,
         'messages': message_list})
