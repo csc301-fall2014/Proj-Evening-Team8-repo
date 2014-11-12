@@ -46,7 +46,7 @@ class TopicForm(forms.ModelForm):
 class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
-        exclude = ('creator', 'user_set')
+        exclude = ('creator', 'mod_set', 'user_set')
         fields = ('group_name', 'group_password')
         widgets = {
             'group_password': forms.PasswordInput(attrs={'required': 'True'}),
