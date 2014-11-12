@@ -26,8 +26,7 @@ def tableview(request):
     if "POST_post" in request.POST:
         message = Message()
         message.creator = request.user
-        current_topic = Topic.objects.get(id=request.POST['topic_id'])
-        message.topic = current_topic
+        message.topic = Topic.objects.get(id=request.POST['topic_id'])
         message.message_content = request.POST['message_content']
         message.save()
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
