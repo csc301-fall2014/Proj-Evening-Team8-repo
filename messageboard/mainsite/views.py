@@ -362,6 +362,9 @@ def post_message(content, topic, creator):
 def notify_subscriber(topic, subscriber):
     profile = subscriber.user_profile
 
+    if not profile.notifications_enabled:
+        return
+
     # Add a topic to the user's notification queue.
     profile.notification_queue.add(topic)
     profile.save()
