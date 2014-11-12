@@ -23,7 +23,7 @@ class UserProfile(models.Model):
     # Subscribed topics that have been updated since last notification
     notification_queue = models.ManyToManyField('Topic', related_name='users_to_notify')
 
-    notifications_enabled = models.BooleanField('enable notifications', default=True)
+    notifications_enabled = models.BooleanField('subscription notifications', default=True)
 
     #avatar = AvatarField(upload_to='avatars', width=100, height=100)
 
