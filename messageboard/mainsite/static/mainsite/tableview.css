@@ -1,11 +1,12 @@
 .info {
 	background-color: lightblue;
 	float: left;
-	width: 89px;
-	height: 288px;
+	width: 109px;
+	height: 296px;
 	border: 1px solid #000000;
 	margin: 0px;
-	padding: 4px;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 .topicBox{
 	float: left;
@@ -15,14 +16,14 @@
 }
 .messages{
 	float: left;
-	width: 299px;
+	width: 287px;
 	height: 273px;
 	overflow-y: scroll;
 	border: 1px solid #000000;
 }
 .textbox{
     float: left;
-    width: 299px;
+    width: 287px;
     height: 21px;
     border: 1px solid #000000;
 }
@@ -36,16 +37,11 @@
 }
 .allTopics{
 	float: left;
-	
-    display:-moz-box;
-    display:box;
-
-	-moz-box-pack: center;
-	box-pack: center;
+	width: 80%;
 }
 .navBar{
     float: left;
-    width: 220px;
+    width: 20%;
 }
 h1{
 	text-align: center;
