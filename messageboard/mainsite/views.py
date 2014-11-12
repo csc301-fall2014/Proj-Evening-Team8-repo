@@ -276,7 +276,7 @@ def topic(request, topicid):
     return render(request, 'topics/topic.html', {
         'messages': messagelist,
         'topic': this_topic,
-        'tags': this_topic.tags.all,
+        'tags': this_topic.tags.all(),
         'tag_error': tag_error})
 
 
