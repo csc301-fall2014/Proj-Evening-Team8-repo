@@ -23,20 +23,34 @@ def tableview(request):
     tag_error = ""  # Displayed error message when creating/deleting tags.
     topic_list = Topic.objects.all()
 
-    if "post" in request.POST:
+    if "POST_post" in request.POST:
         message = Message()
         message.creator = request.user
-        current_topic = Topic.objects.get(id=request.POST['topic'])
+        current_topic = Topic.objects.get(id=request.POST['topic_id'])
         message.topic = current_topic
         message.message_content = request.POST['message_content']
         message.save()
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
-    elif "add_tag" in request.POST:
+    elif "POST_subscribe" in request.POST:
+        current_topic = Topic.objects.get(id=request.POST['topic_id'])
+        # If subscribed, unsubscribe
+        try:
+            # Try to get, exception means empty query, otherwise user is subscribed.
+            current_topic.subscriptions.get(username=request.user.username)
+            # Need to remove both sides of the relation manually
+            current_topic.subscriptions.remove(request.user)
+            request.user.subscribed_topics.remove(current_topic)
+        # If not subscribed, subscribe
+        except User.DoesNotExist:
+            # No need to add to both sides of the relation
+            current_topic.subscriptions.add(request.user)
+    elif "POST_add_tag" in request.POST:
         tag_name = request.POST['tag_name']
-        current_topic = Topic.objects.get(id=request.POST['topic'])
+        current_topic = Topic.objects.get(id=request.POST['topic_id'])
         if tag_name:
             try:
                 tag = Tag.objects.get(tag_name=tag_name)
+                # No need to add to both sides of the relation
                 current_topic.tags.add(tag)
             except Tag.DoesNotExist:
                 tag = Tag()
@@ -47,15 +61,15 @@ def tableview(request):
                     current_topic.tags.add(tag)
                 except ValidationError as e:
                     tag_error = str(e.message_dict['tag_name'])[2:-2]  # Trim [' and ']
-    elif "remove_tag" in request.POST:
+    elif "POST_remove_tag" in request.POST:
         tag_name = request.POST['tag_name']
-        current_topic = Topic.objects.get(id=request.POST['topic'])
+        current_topic = Topic.objects.get(id=request.POST['topic_id'])
         if tag_name:
             try:
                 tag = Tag.objects.get(tag_name=tag_name)
                 current_topic.tags.remove(tag)
 
-                # Remove both sides of the relation
+                # Need to remove both sides of the relation manually
                 current_topic.tags.remove(tag)
                 tag.tagged_topics.remove(current_topic)
 
@@ -64,14 +78,18 @@ def tableview(request):
                     tag.delete()
             except Tag.DoesNotExist:
                 pass  # Do nothing is tag doesn't exist
-    elif "filter_tag" in request.POST:
+    elif "POST_filter" in request.POST:
         tag_name = request.POST['tag_name']
+        # If tag field is not empty, filter by tag if it exists.
         if tag_name:
             try:
                 tag = Tag.objects.get(tag_name=tag_name)
                 topic_list = tag.tagged_topics.all()
             except Tag.DoesNotExist:
                 topic_list = []
+        # If subscriptions only checked, (further) filter by subscribed only.
+        if "subscribed" in request.POST:
+            topic_list = topic_list & request.user.subscribed_topics.all
 
     message_list = Message.objects.all()
     return render(request, 'tableview.html', {
