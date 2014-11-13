@@ -5,7 +5,7 @@ The table below indicates which team member reviewed which other team member's c
 | Reviewer | Coder |
 | -------- | ----- |
 | ***REMOVED*** |  ***REMOVED*** |
-| ***REMOVED*** |  ***REMOVED*** |
+| GitHub username 2 |  Github username 3 |
 | GitHub username 3 |  GitHub username 4 |
 | GitHub username 4 |  GitHub username 5 |
 | GitHub username 5 |  GitHub username 6 |
@@ -38,10 +38,7 @@ You can see all of my comments by searching for issues with the label _code-revi
 
 -----
 
-## Reviewer : ***REMOVED***
- * Overall easy-to-read code, meaningful varialbe names. Maybe just a little bit of whitespace to seperate if elif else statements.
- * Didn't find any bugs, and was intuitive code. There was a little piece of unnecessary code I removed in views.py of [this code](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/tree/subadmins50). When using a Many To Many Relation, you only need to add to one side of it, although you have to remove from both sides.
- * I thought the way that Allen implemented the sub-admins for groups allows for a lot of extension. He didn't restrict the powers that they can have, so it would be simple to give or take away the privelages. For example, if a new group feature is added that only admins and sub-admins should have, it would take almost no code to allow them access to the feature.
+## Reviewer : GitHub username 3
 
 -----
 
