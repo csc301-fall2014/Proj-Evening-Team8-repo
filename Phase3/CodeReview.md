@@ -45,7 +45,8 @@ The table below indicates which team member reviewed which other team member's c
 -----
 
 ## Reviewer : ***REMOVED***
-
+ * Very clean code with many comments, easy to read and understand.
+ * Didn't find any bugs, too.
 -----
 
 ## Reviewer : ***REMOVED***
