@@ -41,7 +41,14 @@ class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
         exclude = ('pub_date', 'creator', 'subscriptions')
-        fields = ['topic_name']
+        fields = ('topic_name', 'group_set')
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(TopicForm, self).__init__(*args, **kwargs)
+        self.fields['group_set'].widget = forms.CheckboxSelectMultiple()
+        self.fields['group_set'].help_text = "Select which group's users are allowed to see this topic, or none to make this topic public."
+        self.fields['group_set'].queryset = user.joined_groups
 
 
 class GroupForm(forms.ModelForm):
