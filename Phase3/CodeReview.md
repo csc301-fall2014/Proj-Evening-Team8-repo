@@ -34,6 +34,8 @@ The table below indicates which team member reviewed which other team member's c
 
 ## Reviewer : ***REMOVED***
 
+Apparently my review dissapeared somewhere so screw it im rewriting it...
+
 -----
 
 ## Reviewer : ***REMOVED***
