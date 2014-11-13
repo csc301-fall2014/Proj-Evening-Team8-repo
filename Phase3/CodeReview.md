@@ -8,7 +8,7 @@ The table below indicates which team member reviewed which other team member's c
 | ***REMOVED*** |  ***REMOVED*** |
 | ***REMOVED*** |  ***REMOVED*** |
 | ***REMOVED*** |  ***REMOVED*** |
-| GitHub username 5 |  GitHub username 6 |
+| ***REMOVED*** |  ***REMOVED*** |
 | GitHub username 6 |  GitHub username 7 |
 | GitHub username 7 |  GitHub username 1 |
 
@@ -54,7 +54,7 @@ You can see all of my comments by searching for issues with the label _code-revi
 
 -----
 
-## Reviewer : GitHub username 5
+## Reviewer : ***REMOVED***
 
 -----
 
