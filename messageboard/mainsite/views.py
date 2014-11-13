@@ -428,9 +428,10 @@ def viewinvites(request, userid):
     requests  = Requests.objects.all()
     if request.method == "POST":
         if "accept" in request.POST:
-            this_group = request.POST['accept_request']
-            this_group = Group.objects.get(id=this_group)
-            this_group.user_set.add(user)
+            this_request = request.POST['accept_request']
+            this_request = Request.objects.get(id=this_request)
+            this_request.group.user_set.add(user)
+            Request.object.delete(id=this_request)
             #return render(request, 'groups/groupacceptconfirmation.html',
             # {'group': this_request.group})
 
