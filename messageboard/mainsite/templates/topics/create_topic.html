@@ -11,11 +11,38 @@
 </div>
 
 <div id="name" align="center">
-    <form action= "" method="post">
+
+	Without a Poll<input type="radio" id="myradio1" name="onlyorboth" checked="checked"><br />
+	With a Poll<input type="radio" id="myradio2" name="onlyorboth">
+
+    <form action= "" method="post" id="mysform1">
         {% csrf_token %}
-        {{ form.as_p }}
-        <p> <input type="SUBMIT" value="Post"></p>
+        {{ form.as_p }} 
+        <p> <input type="SUBMIT" name="withoutpoll" value="Post"></p>
     </form>
+
+    <form action= "" method="post" id="mysform2" style="display:none">
+        {% csrf_token %}
+        {{ form.as_p }} 
+		<p><label>Poll Question:</label><input type="text" name="question_text"></p>
+		<p><label>Choice 1:</label><input type="text" name="choice1"></p>
+		<p><label>Choice 2:</label><input type="text" name="choice2"></p>
+		<p><label>Choice 3:</label><input type="text" name="choice3"></p>
+		<p><label>Choice 4:</label><input type="text" name="choice4"></p>
+        <p> <input type="SUBMIT" name="withpoll" value="Post"></p>
+    </form>
+	
+	<script type="text/javascript">
+		document.getElementById('myradio1').onclick = function () {
+			document.getElementById('mysform1').style.display = 'block';
+			document.getElementById('mysform2').style.display = 'none';
+		}
+		
+		document.getElementById('myradio2').onclick = function () {
+			document.getElementById('mysform1').style.display = 'none';
+			document.getElementById('mysform2').style.display = 'block';
+		}
+	</script>
 </div>
 
 </body>

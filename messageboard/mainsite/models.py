@@ -21,7 +21,7 @@ class Topic(models.Model):
     pub_date = models.DateTimeField('date published', default=timezone.now)
     creator = models.ForeignKey(User, related_name='topics_created')
     subscriptions = models.ManyToManyField(User, related_name='subscribed_topics')
-
+    poll_id = models.IntegerField(default=99999)
     def __str__(self):
         return str(self.id) + ": " + str(self.topic_name)
 
@@ -43,3 +43,16 @@ class Group(models.Model):
 
     def __str__(self):
         return str(self.id) + ": " + str(self.group_name)
+
+
+class Poll(models.Model):
+    question_text = models.CharField(max_length=200)
+    def __str__(self):
+	return self.question_text
+
+class Choice(models.Model):
+    poll = models.ForeignKey(Poll)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+    def __str__(self):
+	return self.choice_text
