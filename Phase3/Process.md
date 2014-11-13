@@ -24,3 +24,7 @@ For example, the Kanban item for notifications (issue #37) started with a 'featu
 **Comparison with Scrum:**
 
 Overall our team preferred Kanban over scrum. The main reason being how much more restricting scrums were, through sprint backlogs and the number of meetings. It was hard to get all 7 of us in one place for scrum meetings, due to conflicting schedules and other matters. In Kanban we were free to work at whatever pace each of us could handle, and while that left the group more open for procrastination it also allowed us to more easily work around our other courses. Kanban was also helpful in testing and monitoring progress of features, using the issues allowed us to flag branches ready for testing and merging rather than hoping everyone had their parts under control.
+
+Despite this, we also found that Kanban may not have worked as well for Phase 2 as it did for Phase 3.  By the start of phase 3, our project had become very modular, and it was easy to divide the work into independent tasks to fit Kanban.  In phase 2, however, there was a lot of groundwork that needed to be done before we could start expanding into new features, so having daily meetings to explore how the infrastructure of our project was developing was extermely helpful, as we couldn't work independently on a large number of tasks.
+
+All in all, for the reasons mentioned above, we preferred Kanban in the context of Phase 3, but Scrum was probably more effective in the context of Phase 2..
