@@ -58,3 +58,8 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.tag_name
+
+class Requests(models.Model):
+    user_profile = models.ForeignKey(UserProfile, related_name='user_profile')
+    group = models.ForeignKey(Group, related_name='invited_group')
+    user_that_invited = models.ForeignKey(UserProfile, related_name='user_that_invited')

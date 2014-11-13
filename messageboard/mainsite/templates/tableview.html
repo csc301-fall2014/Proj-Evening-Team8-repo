@@ -15,27 +15,15 @@
         <div class="navBar" align="left">
             <ul>
                 <li><a href="userprofile/{{ user.id }}">Your Profile</a></li>
+                <li><a href="viewinvites/{{ user.id }}">View Invites</a></li>
                 <li><a href="{% url 'mainsite:create_group' %}">Create a Group</a></li>
                 <li><a href="{% url 'mainsite:joined_groups' %}">My Joined Groups</a></li>
                 <li><a href="{% url 'mainsite:join_group' %}">Join a Group</a></li>
                 <li><a href="{% url 'mainsite:create_topic' %}">Create a Topic</a></li>
                 <li><a href="{% url 'mainsite:subscribed_topics' %}">My Subscribed Topics</a></li>
             </ul>
-            <!--Filter-->
-            <form action="" method="POST">
-                {% csrf_token %}
-                Tag (blank to show all): <input type="text" name="tag_name"/><br>
-                <input type="checkbox" name="subscribed"/>Subscriptions only<br>
-                <input type="submit" name="POST_filter" value="Filter"/>
-            </form>
-            <!--Show all-->
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="Clear Filter"/>
-            </form>
         </div>
         <div class="allTopics" align="center">
-
             {% for topic in topics %}
                 <div class="topicBox">
                     <div class="title">
@@ -49,32 +37,6 @@
                         <p>Author: {{ topic.creator }}</p>
                         <p>Date: {{ topic.pub_date }}</p>
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
-                        <form action="" Method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                            {% if topic in user.subscribed_topics.all %}
-                                <input type="submit" name="POST_subscribe" value="Unsubscribe"/>
-                            {% else %}
-                                <input type="submit" name="POST_subscribe" value="Subscribe"/>
-                            {% endif %}
-                        </form>
-                        <p>
-                            Tags:
-                            {% for tag in topic.tags.all %}
-                                [{{ tag }}]
-                            {% endfor %}
-                        </p>
-                        <p>
-                            {% if topic.creator.username == user.username %}
-                                <form action="" method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                                    <input type="text" name="tag_name" size="8"/><br>
-                                    <input type="submit" name="POST_add_tag" value="Add"/><br>
-                                    <input type="submit" name="POST_remove_tag" value="Remove"/>
-                                </form>
-                            {% endif %}
-                        </p>
                     </div>
                     <div class="messages" align="left">
                         {% for msg in messages %}
@@ -89,9 +51,9 @@
                     <div class="textbox" align="center">
                          <form id="new_message" action= "" method="post">
                             {% csrf_token %}
-                            <input type="text" id="message_content" name="message_content" size="36" autocomplete="off" placeholder="Enter a message to chat..."/>
-                            <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                            <input type="submit" name="POST_post" value="Post" hidden="true"/>
+                            <input type="text" id="message_content" name="message_content" size="38" autocomplete="off" placeholder="Enter a message to chat..."/>
+                            <input name="topic" type="HIDDEN" value="{{ topic.id }}"/>
+                            <input type="SUBMIT" name="POST" value="Post" hidden="true"/>
                         </form>
                     </div>
                 </div>
