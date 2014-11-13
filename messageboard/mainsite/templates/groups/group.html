@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>{{ group.group_name }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
 <div id="header" align="center">

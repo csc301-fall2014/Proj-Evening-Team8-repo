@@ -472,10 +472,12 @@ def group(request, groupid):
         group_creator = this_group.creator
         user_list = this_group.user_set.all()
         mod_list = this_group.mod_set.all()
+        topic_list = this_group.viewable_topics.all()
         return render(request, 'groups/group.html', {'group': this_group,
                                                      'creator': group_creator,
                                                      'mods': mod_list,
-                                                     'users': user_list})    
+                                                     'users': user_list,
+                                                     'topics': topic_list})
 
 @login_required(login_url='/mainsite/login')
 def joined_groups(request):
