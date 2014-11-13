@@ -19,16 +19,8 @@ from datetime import datetime, timedelta
 
 @login_required(login_url='/mainsite/login')
 def tableview(request):
-    if "POST" in request.POST:
-        message = Message()
-        message.creator = request.user
-        current_topic = Topic.objects.get(id=request.POST['topic'])
-        message.topic = current_topic
-        message.message_content = request.POST['message_content']
-        message.save()
     topic_list = Topic.objects.all()
     message_list = Message.objects.all()
-
     # Filtering for private topics
     user = request.user
     rm = True
