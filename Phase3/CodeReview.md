@@ -34,7 +34,10 @@ The table below indicates which team member reviewed which other team member's c
 
 ## Reviewer : ***REMOVED***
 
-Apparently my review dissapeared somewhere so screw it im rewriting it...
+ * This review was conducted on code corresponding to the following issues [#37](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/37) [#49](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/49).
+ * There was only one small issue with the implementation of notifications; after sending the registration email to a default gmail account, the webpage would show a smtp error. This was referenced in this [issue](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/63), and fixed in this [commit](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/e8b152293099935ff0858065888beee2000e90a9) to revert back to our previous implementation.
+ * All possible improvements were already noted by Dylan in issue [#37](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/37). The only small change that can be made is to make the "subscription notifications" checkbox in user profiles (from [views.py](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/messageboard/mainsite/views.py)) to actually stay unchecked when toggled off.
+ * I think that notifications were implemented very well. Dylan's code was easy to read, well commented, and well structured. Overall, the implementation is very similar to what you'd expect from actual notifications.
 
 -----
 
