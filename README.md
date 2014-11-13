@@ -1,4 +1,17 @@
-### Links to team deliverables
+### Links to team deliverables, Phase 3
+
+Project, as usual, is located in the [messageboard] (https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/tree/master/messageboard) folder.
+
+Note that some WIP or completed tasks may not have been able to be merged with master before the deadline.  These instances can be found in NotesForTA.md, below.
+
+[NotesForTA.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase3/NotesForTA.md) - Explanation of personal contributions versus commits, and other personal contribution concerns.
+
+[Process.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase3/Process.md)
+
+[CodeReview.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase3/CodeReview.md)
+
+
+### Links to team deliverables, Phase 2
 
 [Product.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase2/Product.md)
 
