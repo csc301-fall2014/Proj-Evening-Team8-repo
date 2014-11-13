@@ -20,6 +20,8 @@ from os.path import join as pjoin
 
 @login_required(login_url='/mainsite/login')
 def tableview(request):
+    topic_list = Topic.objects.all()
+    message_list = Message.objects.all()
 
     if "POST_post" in request.POST:
         post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)

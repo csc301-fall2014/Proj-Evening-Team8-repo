@@ -3,8 +3,9 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 from django.conf import settings
-import django.utils.timezone
+import datetime
 import django.core.validators
+import django.utils.timezone
 
 
 class Migration(migrations.Migration):
@@ -17,11 +18,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Group',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
                 ('group_name', models.CharField(max_length=200)),
                 ('group_password', models.CharField(max_length=20)),
-                ('creator', models.ForeignKey(related_name='groups_created', to=settings.AUTH_USER_MODEL)),
-                ('user_set', models.ManyToManyField(related_name='joined_groups', to=settings.AUTH_USER_MODEL)),
+                ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='groups_created')),
+                ('user_set', models.ManyToManyField(to=settings.AUTH_USER_MODEL, related_name='joined_groups')),
             ],
             options={
             },
@@ -30,9 +31,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Message',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
                 ('message_content', models.TextField()),
-                ('pub_date', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date published')),
+                ('pub_date', models.DateTimeField(verbose_name='date published', default=django.utils.timezone.now)),
                 ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -42,8 +43,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tag',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
-                ('tag_name', models.CharField(unique=True, validators=[django.core.validators.RegexValidator(code='invalid_tag', message='Only alphanumeric characters and underscores are allowed.', regex='^[0-9a-zA-Z_]*$')], max_length=200)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('tag_name', models.CharField(max_length=200, unique=True, validators=[django.core.validators.RegexValidator(code='invalid_tag', regex='^[0-9a-zA-Z_]*$', message='Only alphanumeric characters and underscores are allowed.')])),
             ],
             options={
             },
@@ -52,11 +53,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Topic',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
                 ('topic_name', models.CharField(max_length=200)),
-                ('pub_date', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date published')),
-                ('creator', models.ForeignKey(related_name='topics_created', to=settings.AUTH_USER_MODEL)),
-                ('subscriptions', models.ManyToManyField(related_name='subscribed_topics', to=settings.AUTH_USER_MODEL)),
+                ('pub_date', models.DateTimeField(verbose_name='date published', default=django.utils.timezone.now)),
+                ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='topics_created')),
+                ('subscriptions', models.ManyToManyField(to=settings.AUTH_USER_MODEL, related_name='subscribed_topics')),
             ],
             options={
             },
@@ -65,13 +66,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
-                ('activation_key', models.CharField(unique=True, blank=True, max_length=40)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('activation_key', models.CharField(max_length=40, unique=True, blank=True)),
                 ('key_expires', models.DateTimeField(default=django.utils.timezone.now)),
-                ('user_description', models.CharField(default='', blank=True, max_length=200)),
-                ('school', models.CharField(null=True, default='', blank=True, max_length=200)),
+                ('user_description', models.CharField(max_length=200, blank=True, default='')),
+                ('school', models.CharField(max_length=200, null=True, blank=True, default='')),
                 ('timejoined', models.DateTimeField(default=django.utils.timezone.now)),
-                ('user', models.OneToOneField(related_name='user_profile', to=settings.AUTH_USER_MODEL)),
+                ('notification_delay', models.FloatField(default=21600.0)),
+                ('last_notified', models.DateTimeField(default=datetime.datetime(1990, 11, 12, 19, 38, 7, 417172))),
+                ('notifications_enabled', models.BooleanField(verbose_name='subscription notifications', default=True)),
+                ('notification_queue', models.ManyToManyField(to='mainsite.Topic', related_name='users_to_notify')),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, related_name='user_profile')),
             ],
             options={
             },
@@ -80,7 +85,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='tag',
             name='tagged_topics',
-            field=models.ManyToManyField(related_name='tags', to='mainsite.Topic'),
+            field=models.ManyToManyField(to='mainsite.Topic', related_name='tags'),
             preserve_default=True,
         ),
         migrations.AddField(
