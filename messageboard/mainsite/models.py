@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import RegexValidator
-#from awesome_avatar.fields import AvatarField
 
 
 class UserProfile(models.Model):
@@ -12,7 +11,6 @@ class UserProfile(models.Model):
     user_description = models.CharField(max_length=200, blank=True, default="")
     school = models.CharField(max_length=200, blank=True, default="", unique=False, null=True)
     timejoined = models.DateTimeField(default=timezone.now)
-    #avatar = AvatarField(upload_to='avatars', width=100, height=100)
     
     def __str__(self):
         return self.user.username
