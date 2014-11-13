@@ -21,8 +21,8 @@ from os.path import join as pjoin
 @login_required(login_url='/mainsite/login')
 def tableview(request):
 
-    if "POST" in request.POST:
-        post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic']), request.user)
+    if "POST_post" in request.POST:
+        post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
 
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
     elif "POST_subscribe" in request.POST:
