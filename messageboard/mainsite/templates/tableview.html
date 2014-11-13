@@ -24,9 +24,8 @@
             <!--Filter-->
             <form action="" method="POST">
                 {% csrf_token %}
-                Tag (blank to show all): <input type="text" name="tag_name"/><br>
-                <input type="checkbox" name="subscribed"/>Subscriptions only<br>
-                <input type="submit" name="POST_filter" value="Filter"/>
+                Add Moderator: <input type="text" name="tag_name"/><br>
+                <input type="submit" name="POST_filter" value="Submit"/>
             </form>
             <!--Show all-->
             <form action="" method="POST">

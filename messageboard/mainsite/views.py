@@ -434,12 +434,27 @@ def create_group(request):
 @login_required(login_url='/mainsite/login')
 def group(request, groupid):
     this_group = Group.objects.get(id=groupid)
-    group_creator = this_group.creator
-    user_list = this_group.user_set.all()
-    return render(request, 'groups/group.html', {'group': this_group,
-                                                 'creator': group_creator,
-                                                 'users': user_list})
-
+    if request.method == 'POST':
+        if "REMOVE" in request.POST:
+            this_group.delete()
+            return redirect('/mainsite/messageboard/')
+        elif "ADDMOD" in request.POST:
+            mod_name = request.POST['mod_name']
+            try:
+                if mod_name != this_group.creator.username:
+                    mod_user = this_group.user_set.get(username=mod_name)
+                    this_group.mod_set.add(mod_user)
+            except User.DoesNotExist:
+                return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))                    
+            return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
+    else:
+        group_creator = this_group.creator
+        user_list = this_group.user_set.all()
+        mod_list = this_group.mod_set.all()
+        return render(request, 'groups/group.html', {'group': this_group,
+                                                     'creator': group_creator,
+                                                     'mods': mod_list,
+                                                     'users': user_list})    
 
 @login_required(login_url='/mainsite/login')
 def joined_groups(request):
