@@ -22,3 +22,5 @@ For example, the Kanban item for notifications (issue #37) started with a 'featu
 
 
 **Comparison with Scrum:**
+
+Overall our team preferred Kanban over scrum. The main reason being how much more restricting scrums were, through sprint backlogs and the number of meetings. It was hard to get all 7 of us in one place for scrum meetings, due to conflicting schedules and other matters. In Kanban we were free to work at whatever pace each of us could handle, and while that left the group more open for procrastination it also allowed us to more easily work around our other courses. Kanban was also helpful in testing and monitoring progress of features, using the issues allowed us to flag branches ready for testing and merging rather than hoping everyone had their parts under control.
