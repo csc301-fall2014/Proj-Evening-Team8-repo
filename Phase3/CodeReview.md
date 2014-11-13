@@ -10,7 +10,7 @@ The table below indicates which team member reviewed which other team member's c
 | ***REMOVED*** |  ***REMOVED*** |
 | ***REMOVED*** |  ***REMOVED*** |
 | ***REMOVED*** |  ***REMOVED*** |
-| GitHub username 7 |  GitHub username 1 |
+| ***REMOVED*** |  ***REMOVED*** |
 
 ------
 
@@ -45,8 +45,7 @@ The table below indicates which team member reviewed which other team member's c
 -----
 
 ## Reviewer : ***REMOVED***
- * Very clean code with many comments, easy to read and understand.
- * Didn't find any bugs, too.
+
 -----
 
 ## Reviewer : ***REMOVED***
