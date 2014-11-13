@@ -13,94 +13,24 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group, Tag
+from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests
 #from PIL import Image as PImage
 from os.path import join as pjoin
 
 
 @login_required(login_url='/mainsite/login')
 def tableview(request):
-    topic_list = Topic.objects.all()
-    message_list = Message.objects.all()
-
-    if "POST_post" in request.POST:
+    if "POST" in request.POST:
         message = Message()
         message.creator = request.user
-        message.topic = Topic.objects.get(id=request.POST['topic_id'])
+        current_topic = Topic.objects.get(id=request.POST['topic'])
+        message.topic = current_topic
         message.message_content = request.POST['message_content']
         message.save()
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
-    elif "POST_subscribe" in request.POST:
-        current_topic = Topic.objects.get(id=request.POST['topic_id'])
-        # If subscribed, unsubscribe
-        if current_topic.subscriptions.filter(username=request.user.username).exists():
-            # Need to remove both sides of the relation manually
-            current_topic.subscriptions.remove(request.user)
-            request.user.subscribed_topics.remove(current_topic)
-        # If not subscribed, subscribe
-        else:
-            # No need to add to both sides of the relation
-            current_topic.subscriptions.add(request.user)
-        return HttpResponseRedirect(reverse('mainsite:messageboard'))
-    elif "POST_add_tag" in request.POST:
-        tag_name = request.POST['tag_name']
-        current_topic = Topic.objects.get(id=request.POST['topic_id'])
-        if tag_name:
-            try:
-                tag = Tag.objects.get(tag_name=tag_name)
-                # No need to add to both sides of the relation
-                current_topic.tags.add(tag)
-            except Tag.DoesNotExist:
-                tag = Tag()
-                tag.tag_name = tag_name
-                try:
-                    tag.full_clean()  # Validate tag, not done automatically
-                    tag.save()
-                    current_topic.tags.add(tag)
-                except ValidationError as e:
-                    return response(request,
-                                    'Invalid Tag',
-                                    str(e.message_dict['tag_name'])[2:-2],  # Trim [' and ']
-                                    '/mainsite/messageboard/',
-                                    'Back')
-        return HttpResponseRedirect(reverse('mainsite:messageboard'))
-    elif "POST_remove_tag" in request.POST:
-        tag_name = request.POST['tag_name']
-        current_topic = Topic.objects.get(id=request.POST['topic_id'])
-        if tag_name:
-            try:
-                tag = Tag.objects.get(tag_name=tag_name)
-                current_topic.tags.remove(tag)
-
-                # Need to remove both sides of the relation manually
-                current_topic.tags.remove(tag)
-                tag.tagged_topics.remove(current_topic)
-
-                # Delete tag if not in use
-                if not tag.tagged_topics.all():
-                    tag.delete()
-            except Tag.DoesNotExist:
-                pass  # Do nothing is tag doesn't exist
-        return HttpResponseRedirect(reverse('mainsite:messageboard'))
-    elif "POST_filter" in request.POST:
-        tag_name = request.POST['tag_name']
-        # If tag field is not empty, filter by tag if it exists.
-        if tag_name:
-            try:
-                tag = Tag.objects.get(tag_name=tag_name)
-                topic_list = tag.tagged_topics.all()
-            except Tag.DoesNotExist:
-                topic_list = []
-        # If 'subscriptions only' checked, (further) filter by subscribed only.
-        if "subscribed" in request.POST:
-            topic_list = topic_list & request.user.subscribed_topics.all()
-        return render(request, 'tableview.html', {
-            'topics': topic_list,
-            'messages': message_list})
-
-    return render(request, 'tableview.html', {
-        'topics': topic_list,
-        'messages': message_list})
+    topic_list = Topic.objects.all()
+    message_list = Message.objects.all()
+    return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
 
 
 # Not a view, helper function for notices (a richer and more customizable HttpResponse)
@@ -463,4 +393,47 @@ def edituserprofile(request, userid):
 
     args['form'] = form
     return render(request, "userprofile/edituserprofile.html", args)
+
+#invite users to a specific group
+@login_required(login_url='/mainsite/login')
+def groupinvite(request, groupid):
+    this_group = Group.objects.get(id=groupid)
+    group_creator = this_group.creator
+    user_list = User.objects.all()
+
+    return render(request, 'groups/groupinvite.html', {'group': this_group,
+                                                 'creator': group_creator,
+                                                 'users': user_list})
+#confirm invite
+@login_required(login_url='/mainsite/login')
+def confirmation(request, groupid, userid):
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    user_to_invite = User.objects.get(id=userid)
+    user_to_invite_profile = UserProfile.objects.get(user=user_to_invite)
+
+    this_group = Group.objects.get(id=groupid)
+    new_request = Requests(user_profile=user_to_invite_profile,
+                                  group=this_group,
+                                  user_that_invited=user_profile)
+    new_request.save()
+
+    return render(request, 'groups/groupinviteconfirmation.html', {'user': user_to_invite})
+
+
+#view invites
+@login_required(login_url='/mainsite/login')
+def viewinvites(request, userid):
+    user = request.user
+    requests  = Requests.objects.all()
+    if request.method == "POST":
+        if "accept" in request.POST:
+            this_group = request.POST['accept_request']
+            this_group = Group.objects.get(id=this_group)
+            this_group.user_set.add(user)
+            #return render(request, 'groups/groupacceptconfirmation.html',
+            # {'group': this_request.group})
+
+    return render(request, 'groups/viewgroupinvites.html', {'user': user, 'requests': requests})
+
 
