@@ -43,6 +43,40 @@
     {% endfor %}
 </div>
 
+<div class="page">
+    <div class="allTopics" align="center">
+        {% for topic in topics %}
+            <div class="topicBox">
+                <div class="title">
+                    <p>
+                        <a href="{% url 'mainsite:topic' topic.id %}">
+                            <font size="6" color="grey">{{ topic.topic_name }}</font>
+                        </a>
+                    </p>
+                </div>
+                <div class="info" align="left">
+                    <p>Author: {{ topic.creator }}</p>
+                    <p>Date: {{ topic.pub_date }}</p>
+                    <p>Subscribers: {{ topic.subscriptions.count }}</p>
+                </div>
+                <div class="messages" align="left">
+                    {% for msg in messages %}
+                        {% if msg.topic.id  == topic.id %}
+                            <div class="message">
+                                <p> {{msg.creator}} @ {{msg.pub_date|date:"M d g:i a"}}</p>
+                                <p>{{ msg.message_content }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <p> No topics to display </p>
+        {% endfor %}
+    </div>
+</div>
+
+
 <div id="logout" align="center">
 	<a href="/mainsite/messageboard/">Back</a>
     <a href="/mainsite/logout/">Logout</a>
