@@ -23,6 +23,21 @@ def tableview(request):
     topic_list = Topic.objects.all()
     message_list = Message.objects.all()
 
+    # Filtering for private topics
+    user = request.user
+    rm = True
+    # In each topic, check if it is private
+    for topic in topic_list:
+        if topic.group_set.exists():
+            # In each group, check if the user belongs to it.
+            for group in topic.group_set.all():
+                if group.user_set.filter(id=user.id).exists():
+                    rm = False
+                    break
+            # If they are not in the right group, exclude this topic
+            if rm:
+                topic_list = topic_list.exclude(id=topic.id)
+
     if "POST_post" in request.POST:
         message = Message()
         message.creator = request.user
@@ -271,18 +286,24 @@ def messageboard(request):
                                 'Tag does not exist.',
                                 '/mainsite/messageboard/',
                                 'Back')
+
     return render(request, 'messageboard.html', {'topics': topic_list})
 
 
 @login_required(login_url='/mainsite/login')
 def create_topic(request):
+    form = TopicForm(request.user)
     if request.method == 'POST':
         topic = Topic(topic_name=request.POST['topic_name'], creator=request.user)
         topic.save()
+        if "group_set" in request.POST:
+            for group in request.POST['group_set']:
+                topic.group_set.add(group)
+            topic.save()
         return redirect('/mainsite/messageboard/')
     else:
         return render(request, 'topics/create_topic.html',
-                        {'form': TopicForm})
+                        {'form': form})
 
 
 @login_required(login_url='/mainsite/login')

@@ -23,7 +23,7 @@ class Topic(models.Model):
     pub_date = models.DateTimeField('date published', default=timezone.now)
     creator = models.ForeignKey(User, related_name='topics_created')
     subscriptions = models.ManyToManyField(User, related_name='subscribed_topics')
-    group_set = models.ManyToManyField('Group', related_name='')
+    group_set = models.ManyToManyField('Group', related_name='viewable_topics')
 
     def __str__(self):
         return str(self.id) + ": " + str(self.topic_name)
