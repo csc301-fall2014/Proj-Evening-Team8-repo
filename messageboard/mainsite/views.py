@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests
-#from PIL import Image as PImage
+from datetime import datetime, timedelta
 from os.path import join as pjoin
 
 
@@ -27,6 +27,27 @@ def tableview(request):
         message.topic = current_topic
         message.message_content = request.POST['message_content']
         message.save()
+    topic_list = Topic.objects.all()
+    message_list = Message.objects.all()
+
+    # Filtering for private topics
+    user = request.user
+    rm = True
+    # In each topic, check if it is private
+    for topic in topic_list:
+        if topic.group_set.exists():
+            # In each group, check if the user belongs to it.
+            for group in topic.group_set.all():
+                if group.user_set.filter(id=user.id).exists():
+                    rm = False
+                    break
+            # If they are not in the right group, exclude this topic
+            if rm:
+                topic_list = topic_list.exclude(id=topic.id)
+
+    if "POST_post" in request.POST:
+        post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
+
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
     topic_list = Topic.objects.all()
     message_list = Message.objects.all()
@@ -201,18 +222,24 @@ def messageboard(request):
                                 'Tag does not exist.',
                                 '/mainsite/messageboard/',
                                 'Back')
+
     return render(request, 'messageboard.html', {'topics': topic_list})
 
 
 @login_required(login_url='/mainsite/login')
 def create_topic(request):
+    form = TopicForm(request.user)
     if request.method == 'POST':
         topic = Topic(topic_name=request.POST['topic_name'], creator=request.user)
         topic.save()
+        if "group_set" in request.POST:
+            for group in request.POST['group_set']:
+                topic.group_set.add(group)
+            topic.save()
         return redirect('/mainsite/messageboard/')
     else:
         return render(request, 'topics/create_topic.html',
-                        {'form': TopicForm})
+                        {'form': form})
 
 
 @login_required(login_url='/mainsite/login')
@@ -220,20 +247,19 @@ def topic(request, topicid):
     this_topic = Topic.objects.get(id=topicid)
     tag_error = ""
     if request.method == 'POST':
+
         # Post a message to the topic.
         if "POST" in request.POST:
-            message = Message()
-            message.creator = request.user
-            message.topic = this_topic
-            message.message_content = request.POST['message_content']
-            message.save()
+            post_message(request.POST['message_content'], Topic.objects.get(id=topicid), request.user)
             return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
+
         # Edit a message.
         elif "save" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
             message.message_content = request.POST['message_content']
             message.save()
             return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
+
         # Delete a message.
         elif "REMOVE" in request.POST:
             message = get_object_or_404(Message, pk=request.POST['msgID'])
@@ -280,6 +306,51 @@ def topic(request, topicid):
         'tag_error': tag_error})
 
 
+def post_message(content, topic, creator):
+    message = Message()
+    message.creator = creator
+    message.topic = topic
+    message.message_content = content
+    message.save()
+
+    # Hand out subscription notifications (currently synchronous)
+    subscribers = topic.subscriptions.all()
+    for subscriber in subscribers:
+        if subscriber != message.creator:
+            notify_subscriber(topic, subscriber)
+
+# Helper function for subscription notifications.
+# No loginrequired header is needed here, its not an actual view function.
+def notify_subscriber(topic, subscriber):
+    profile = subscriber.user_profile
+
+    if not profile.notifications_enabled:
+        return
+
+    # Add a topic to the user's notification queue.
+    profile.notification_queue.add(topic)
+    profile.save()
+
+    # Check if its been long enough since the last email.
+    if datetime.now() > (profile.last_notified.replace(tzinfo=None) + timedelta(seconds=profile.notification_delay)):
+
+        # Start composing the email.
+        email_subject = 'Subscription Update!'
+        email_body = "Dear %s,\n\nA new message has been posted to a topic you're subscribed to!\n\n" \
+                     % subscriber.username
+
+        # Dump all the topic links into the email.
+        for t in profile.notification_queue.all():
+            email_body += "http://127.0.0.1:8000/mainsite/messageboard/%d\n" % t.id
+        email_body += "\n\nYours,\nTeam8s"
+        send_mail(email_subject, email_body, 'no-reply@messageboard.com', [subscriber.email], fail_silently=False)
+
+        # Clear the notification queue, set the last_notified time.
+        profile.notification_queue.clear()
+        profile.last_notified = timezone.now()
+        profile.save()
+
+
 @login_required(login_url='/mainsite/login')
 def subscribe(request, topicid):
     # Associate the topic and user to create a subscription
@@ -323,12 +394,29 @@ def create_group(request):
 @login_required(login_url='/mainsite/login')
 def group(request, groupid):
     this_group = Group.objects.get(id=groupid)
-    group_creator = this_group.creator
-    user_list = this_group.user_set.all()
-    return render(request, 'groups/group.html', {'group': this_group,
-                                                 'creator': group_creator,
-                                                 'users': user_list})
-
+    if request.method == 'POST':
+        if "REMOVE" in request.POST:
+            this_group.delete()
+            return redirect('/mainsite/messageboard/')
+        elif "ADDMOD" in request.POST:
+            mod_name = request.POST['mod_name']
+            try:
+                if mod_name != this_group.creator.username:
+                    mod_user = this_group.user_set.get(username=mod_name)
+                    this_group.mod_set.add(mod_user)
+            except User.DoesNotExist:
+                return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))                    
+            return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
+    else:
+        group_creator = this_group.creator
+        user_list = this_group.user_set.all()
+        mod_list = this_group.mod_set.all()
+        topic_list = this_group.viewable_topics.all()
+        return render(request, 'groups/group.html', {'group': this_group,
+                                                     'creator': group_creator,
+                                                     'mods': mod_list,
+                                                     'users': user_list,
+                                                     'topics': topic_list})
 
 @login_required(login_url='/mainsite/login')
 def joined_groups(request):

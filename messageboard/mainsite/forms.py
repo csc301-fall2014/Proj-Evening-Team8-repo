@@ -25,7 +25,8 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        exclude = ('user', 'activation_key', 'key_expires', 'timejoined')
+        exclude = ('user', 'activation_key', 'key_expires', 'timejoined', 'notification_delay',
+                   'last_notified', 'notification_queue')
 
     # Ensure e-mail is unique.
     def clean_email(self):
@@ -40,13 +41,20 @@ class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
         exclude = ('pub_date', 'creator', 'subscriptions')
-        fields = ['topic_name']
+        fields = ('topic_name', 'group_set')
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(TopicForm, self).__init__(*args, **kwargs)
+        self.fields['group_set'].widget = forms.CheckboxSelectMultiple()
+        self.fields['group_set'].help_text = "Select which group's users are allowed to see this topic, or none to make this topic public."
+        self.fields['group_set'].queryset = user.joined_groups
 
 
 class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
-        exclude = ('creator', 'user_set')
+        exclude = ('creator', 'mod_set', 'user_set')
         fields = ('group_name', 'group_password')
         widgets = {
             'group_password': forms.PasswordInput(attrs={'required': 'True'}),
