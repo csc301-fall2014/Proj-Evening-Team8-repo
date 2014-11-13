@@ -6,7 +6,7 @@ The table below indicates which team member reviewed which other team member's c
 | -------- | ----- |
 | ***REMOVED*** |  ***REMOVED*** |
 | ***REMOVED*** |  ***REMOVED*** |
-| GitHub username 3 |  GitHub username 4 |
+| ***REMOVED*** |  ***REMOVED*** |
 | GitHub username 4 |  GitHub username 5 |
 | GitHub username 5 |  GitHub username 6 |
 | GitHub username 6 |  GitHub username 7 |
@@ -35,6 +35,10 @@ You can see all of my comments by searching for issues with the label _code-revi
  * I changed the name attribute of the submit type input in [this commit](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/f27671831f6133e6be8ac6c3776ea9df4da3b863) and appended POST_ before the name to ensure that any POST requests sent from [tableview.html](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/tagsintables59/messageboard/mainsite/templates/tableview.html) are interpreted by the view tableview in [views.py](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/tagsintables59/messageboard/mainsite/views.py) correctly as it only checks if a name is present in the entire POST, which contains many other names referring to actual data inputs.
  * I think Spencer's implementation of messaging in [table view](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/tagsintables59/messageboard/mainsite/templates/tableview.html) is really creative. He uses hidden inputs to allow users to simply press Enter and have the message sent to the server then have the page update and show the message.
  * Overall I am impressed with how Spencer follows PEP-8 throughout all his code. His work was simple, intuitive, easy to read, and made extending them with tags and filters easy in [this branch](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/tree/tagsintables59). His code also had no major bugs at all, showing that he had done some testing himself on top of the testing done by another member.
+
+-----
+
+## Reviewer : ***REMOVED***
 
 -----
 
