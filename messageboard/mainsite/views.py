@@ -403,7 +403,6 @@ def group(request, groupid):
                 if mod_name != this_group.creator.username:
                     mod_user = this_group.user_set.get(username=mod_name)
                     this_group.mod_set.add(mod_user)
-                    mod_user.moderated_groups.add(this_group)
             except User.DoesNotExist:
                 return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))                    
             return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
