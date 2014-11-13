@@ -24,6 +24,10 @@ urlpatterns = [
     url(r'^messageboard/group/(?P<groupid>[0-9]*)/$', views.group, name='group'),
     url(r'^messageboard/joinedgroups/$', views.joined_groups, name='joined_groups'),
     url(r'^messageboard/joingroup/$', views.join_group, name='join_group'),
+    url(r'^messageboard/group/(?P<groupid>[0-9]*)/inviteuser/$', views.groupinvite, name='groupinvite'),
+    url(r'^messageboard/group/(?P<groupid>[0-9]*)/inviteuser/confirmation/(?P<userid>[0-9]*)/$', views.confirmation, name='confirmation'),
+    url(r'^messageboard/viewinvites/(?P<userid>[0-9]*)/$', views.viewinvites, name='view_invites'),
+
 
     # User profiles
     url(r'^messageboard/userprofile/(?P<userid>[0-9]*)/$', views.userprofile, name='userprofile'),
