@@ -55,6 +55,10 @@ The table below indicates which team member reviewed which other team member's c
 * Izzy's implementation of deletion and editing of messages was very well done;  I don't think we made any changes to it after its early implementation.  Editing and deletion are both implemented on the topic view page ([commit 8aa1d6c](8aa1d6c4fd1763d3e1c7d52423353941c4bb631e)) in a very robust and intutive way.  Edit and delete buttons only appear to users who are eligible to perform these actions, which makes the process very clear and user-friendly.
 
 -----
-
-## Reviewer : GitHub username 7
+## Reviewer : ***REMOVED***
+* Very meaningful commit messages.
+* When creating tags (the largest of his contributions) he covered most use cases such as: adding, removing, and searching for tags.
+* A very good thing that he did was fix his implementations of tagging to work with the new table view as seen here ([link] (https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/8ae751c0e13f2f62b8a649e6cd2bced3dd9f523f)). We had a large shift when we decided to do table views as our default view and Benson dealt with it.
+* Went above and beyond and implemented error handling methods as seen in this ([commit](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/7f44e068475c6b6d88a4f950a111aec990b882f8)). 
+* I would like to see a little more comments from Benson though as it would make it easier for me and other teammates to decipher what he is doing in more complicated sequences.
 
