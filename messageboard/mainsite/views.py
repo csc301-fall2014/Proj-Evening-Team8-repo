@@ -14,7 +14,11 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests
+<<<<<<< HEAD
 from datetime import datetime, timedelta
+=======
+#from PIL import Image as PImage
+>>>>>>> realInvitesMaster
 from os.path import join as pjoin
 
 
@@ -27,6 +31,7 @@ def tableview(request):
         message.topic = current_topic
         message.message_content = request.POST['message_content']
         message.save()
+<<<<<<< HEAD
     topic_list = Topic.objects.all()
     message_list = Message.objects.all()
 
@@ -48,6 +53,8 @@ def tableview(request):
     if "POST_post" in request.POST:
         post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
 
+=======
+>>>>>>> realInvitesMaster
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
     topic_list = Topic.objects.all()
     message_list = Message.objects.all()

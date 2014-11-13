@@ -5,7 +5,6 @@ from django.core.validators import RegexValidator
 from datetime import datetime, timedelta
 
 
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
     activation_key = models.CharField(max_length=40, blank=True, unique=True)
@@ -71,7 +70,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.tag_name
-        
+
 class Requests(models.Model):
     user_profile = models.ForeignKey(UserProfile, related_name='user_profile')
     group = models.ForeignKey(Group, related_name='invited_group')
