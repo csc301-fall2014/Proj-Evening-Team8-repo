@@ -106,8 +106,6 @@ def tableview(request):
         return render(request, 'tableview.html', {
             'topics': topic_list,
             'messages': message_list})
-    topic_list = Topic.objects.all()
-    message_list = Message.objects.all()
     return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
 
 
