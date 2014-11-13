@@ -12,10 +12,10 @@
     <div id="users" align="center">
         {% for request in requests %}
             {% if request.user_profile == user.user_profile %}
-                <p>{{ request.user_that_invited }} has invited you to join</p>
+                <p>{{ request.user_that_invited }} has invited you to join {{ request.group.group_name }}</p>
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <input type="HIDDEN" name="accept_request" id="the_request" value="{{ request.group.id }}"/>
+                    <input type="HIDDEN" name="accept_request" id="the_request" value="{{ request.id }}"/>
                     <input id="SUBMIT" type="submit" name="accept" value="Accept" />
                 </form>
             {% endif %}
