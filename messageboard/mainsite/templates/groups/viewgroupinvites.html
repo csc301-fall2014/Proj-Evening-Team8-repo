@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>View Group Invites</title>
+</head>
+<body>
+    <div id="header" align="center">
+        <h3>View Group Invites</h3>
+    </div>
+
+    <div id="users" align="center">
+        {% for request in requests %}
+            {% if request.user_profile == user.user_profile %}
+                <p>{{ request.user_that_invited }} has invited you to join</p>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="HIDDEN" name="accept_request" id="the_request" value="{{ request.group.id }}"/>
+                    <input id="SUBMIT" type="submit" name="accept" value="Accept" />
+                </form>
+            {% endif %}
+        {% empty %}
+            <p> No invites! </p>
+        {% endfor %}
+    </div>
+
+
+    <div id="logout" align="center">
+      <a href="/mainsite/messageboard/">Back</a>
+        <a href="/mainsite/logout/">Logout</a>
+    </div>
+</body>
+</html>

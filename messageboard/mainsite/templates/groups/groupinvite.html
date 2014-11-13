@@ -15,25 +15,17 @@
 
 <div id="users" align="center">
     {% for user in users %}
-        <p>{{ user.user_profile }}</p>
+        {% if user not in group.user_set.all %}
+            <a href="/mainsite/messageboard/group/{{ group.id }}/inviteuser/confirmation/{{ user.id }}">{{ user.user_profile }}</a> 
+        {% endif %}
     {% empty %}
-        <p> No users in the group </p>
+        <p> No users to invite! </p>
     {% endfor %}
 </div>
 
-<div id='admin panel' align='center'>
-  <!-- if this user is the admin of this group then
-  show this panel -->
-  {% if user == group.creator %}
-    <p> Because you are admin, you get a bunch of cool options! </p>
-    <a href="/mainsite/messageboard/group/{{ group.id }}/inviteuser">Invite users</a>
-    <!-- create group topic -->
-  {% endif %}
-
-</div>
 
 <div id="logout" align="center">
-	<a href="/mainsite/messageboard/">Back</a>
+  <a href="/mainsite/messageboard/">Back</a>
     <a href="/mainsite/logout/">Logout</a>
 </div>
 </body>
