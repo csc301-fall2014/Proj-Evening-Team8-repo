@@ -40,6 +40,11 @@ You can see all of my comments by searching for issues with the label _code-revi
 
 ## Reviewer : ***REMOVED***
 
+* Alec's use of a Django form in edituserprofile.html and forms.py in [this commit](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/a2e6263c868f7239d344f6889ee0d5d33fa116cd) allow for very readable code that has a very clear purpose
+* On the topic of readability there is a lot of inconsistent white spacing in Alec's edituserprofile.html and userprofile.html which make quick scans of the code, additionally his commit messages, while funny, made my code review substantially more time consuming
+* On [this commit](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/2b818c542ddaae44605b89eb529b7ad0c50a710b) Alec implements accepting group invites. His code in general for invites is good but the commented out code and the lack of an HttpResponseRedirect after working with the POST request need fixes.
+* Overall while some of his code is not optimal, it has all of the required functionality
+
 -----
 
 ## Reviewer : ***REMOVED***
