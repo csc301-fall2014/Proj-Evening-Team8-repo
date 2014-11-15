@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -9,18 +12,7 @@
 </head>
 <body>
     <div class="page">
-        <div class="header" align="center">
-            <h1>Your Subscribed Topics</h1>
-        </div>
-        <div class="navBar" align="left">
-            <ul>
-                <li><a href="{% url 'mainsite:create_group' %}">Create a Group</a></li>
-                <li><a href="{% url 'mainsite:joined_groups' %}">My Joined Groups</a></li>
-                <li><a href="{% url 'mainsite:join_group' %}">Join a Group</a></li>
-                <li><a href="{% url 'mainsite:create_topic' %}">Create a Topic</a></li>
-                <li><a href="{% url 'mainsite:messageboard' %}">All Topics</a></li>
-            </ul>
-        </div>
+        
         <div class="allTopics" align="center">
             {% for topic in topics %}
                 <div class="topicBox">
@@ -73,3 +65,4 @@
     </script>
 </body>
 </html>
+{% endblock %}

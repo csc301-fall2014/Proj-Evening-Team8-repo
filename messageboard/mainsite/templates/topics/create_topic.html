@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Create a topic</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<div id="title" align="center">
-    <p>Create a topic</p>
+{% block content %}
+<div id="header" align="center">
+    <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
+    <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
+    <div class="page-header" ><h2>Create a topic</h2></div>
 </div>
 
 <div id="name" align="center">
@@ -17,6 +14,4 @@
         <p> <input type="SUBMIT" value="Post"></p>
     </form>
 </div>
-
-</body>
-</html>
+{% endblock %}

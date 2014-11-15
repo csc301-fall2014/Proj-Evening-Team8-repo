@@ -1,36 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    {% load staticfiles %}
-    <meta charset="UTF-8">
-    <title>{{ group.group_name }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-</head>
-<body>
-<div id="header" align="center">
-    <h2>{{ group.group_name }}</h2>
-</div>
+{% extends 'base.html' %}
 
+{% block content %}
 <div id="creator" align="center">
     <p>Administrator: <b>{{ creator.user_profile }}</b></p>
-	{% if creator.username == user.username %}
+    {% if creator.username == user.username %}
         <p>Admin options:</p>  
         <form action="" method="POST">
             {% csrf_token %}
             Add Moderator: <input type="text" name="mod_name"/>
-            <input type="submit" name="ADDMOD" value="Submit"/><p/>
+            <input type="submit" name="ADDMOD" value="Submit" class="btn btn-default"/><p/>
         </form>
         <form action="" method="post">
             {% csrf_token %}
-            <input type="SUBMIT" name="INVITE" value="Invite Users">
+            <input type="SUBMIT" name="INVITE" value="Invite Users" class="btn btn-default">
         </form>
         <form action="" method="post">
             {% csrf_token %}
-            <input type="SUBMIT" name="REMOVE" value="Delete Group">
+            <input type="SUBMIT" name="REMOVE" value="Delete Group" class="btn btn-default">
         </form>
 
     {% endif %}<br>
+</div>
+
+<div id="header" align="center">
+    <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
+    <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
+    <div class="page-header" ><h2>{{ group.group_name }}</h2></div>
 </div>
 
 <div id="mods" align="center">
@@ -43,13 +38,24 @@
 </div>
 
 <div id="users" align="center">
-	<u>Members</u>
+    <u>Members</u>
     {% for user in users %}
         <p>{{ user.user_profile }}</p>
     {% empty %}
         <p> No users in the group </p>
     {% endfor %}
 </div>
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>{{ group.group_name }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body>
 
 <div class="page">
     <div class="allTopics" align="center">
@@ -83,10 +89,10 @@
         {% endfor %}
     </div>
 </div>
-
-<div id="logout" align="center">
-	<a href="/mainsite/messageboard/">Back</a>
-    <a href="/mainsite/logout/">Logout</a>
-</div>
 </body>
 </html>
+
+<div id="logout" align="center">
+    <a href="/mainsite/messageboard/">Back</a>
+</div>
+{% endblock %}

@@ -451,7 +451,7 @@ def group(request, groupid):
     this_group = Group.objects.get(id=groupid)
     if request.method == 'POST':
         if "INVITE" in request.POST:
-            return render(request, '/mainsite/messageboard/group/{{ group.id }}/inviteuser')
+            return redirect('inviteuser/')
         if "REMOVE" in request.POST:
             this_group.delete()
             return redirect('/mainsite/messageboard/group/{{ group.id }}/inviteuser')

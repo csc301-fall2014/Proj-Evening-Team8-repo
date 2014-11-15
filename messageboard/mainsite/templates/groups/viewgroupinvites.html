@@ -1,30 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div id="header" align="center">
+<div id="header" align="center">
     <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
     <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
     <div class="page-header" ><h2>View group invites</h2></div>
 </div>
 
-    <div id="users" align="center">
-        {% for request in requests %}
-            {% if request.user_profile == user.user_profile %}
-                <p>{{ request.user_that_invited }} has invited you to join {{ request.group.group_name }}</p>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <input type="HIDDEN" name="accept_request" id="the_request" value="{{ request.id }}"/>
-                    <input id="SUBMIT" type="submit" name="accept" value="Accept" class="btn btn-default"/>
-                </form>
-            {% endif %}
-        {% empty %}
-            <p> No invites! </p>
-        {% endfor %}
-    </div>
+<div id="users" align="center">
+    {% for request in requests %}
+        {% if request.user_profile == user.user_profile %}
+            <p>{{ request.user_that_invited }} has invited you to join {{ request.group.group_name }}</p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="HIDDEN" name="accept_request" id="the_request" value="{{ request.id }}"/>
+                <input id="SUBMIT" type="submit" name="accept" value="Accept" class="btn btn-default"/>
+            </form>
+        {% endif %}
+    {% empty %}
+        <p> No invites! </p>
+    {% endfor %}
+</div>
 
 
-    <div id="logout" align="center">
-      <a href="/mainsite/messageboard/">Back</a>
-        <a href="/mainsite/logout/">Logout</a>
-    </div>
+<div id="logout" align="center">
+  <a href="/mainsite/messageboard/">Back</a>
+</div>
 {% endblock %}
