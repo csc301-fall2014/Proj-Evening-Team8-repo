@@ -13,19 +13,24 @@
 </div>
 
 <div id="creator" align="center">
-    <p>Administrator: {{ creator.user_profile }}</p>
+    <p>Administrator: <b>{{ creator.user_profile }}</b></p>
 	{% if creator.username == user.username %}
-	<form action="" method="post">
-		{% csrf_token %}
-		<input type="SUBMIT" name="REMOVE" value="Delete Group">
-		<p></p>
-	</form>
-    <form action="" method="POST">
-        {% csrf_token %}
-        Add Moderator: <input type="text" name="mod_name"/>
-        <input type="submit" name="ADDMOD" value="Submit"/><p/>
-    </form>
-    {% endif %}
+        <p>Admin options:</p>  
+        <form action="" method="POST">
+            {% csrf_token %}
+            Add Moderator: <input type="text" name="mod_name"/>
+            <input type="submit" name="ADDMOD" value="Submit"/><p/>
+        </form>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="SUBMIT" name="INVITE" value="Invite Users">
+        </form>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="SUBMIT" name="REMOVE" value="Delete Group">
+        </form>
+
+    {% endif %}<br>
 </div>
 
 <div id="mods" align="center">
@@ -77,17 +82,6 @@
             <p> No topics to display </p>
         {% endfor %}
     </div>
-</div>
-
-<div id='admin panel' align='center'>
-  <!-- if this user is the admin of this group then
-  show this panel -->
-  {% if user == group.creator %}
-    <p> Because you are admin, you get a bunch of cool options! </p>
-    <a href="/mainsite/messageboard/group/{{ group.id }}/inviteuser">Invite users</a>
-    <!-- create group topic -->
-  {% endif %}
-
 </div>
 
 <div id="logout" align="center">

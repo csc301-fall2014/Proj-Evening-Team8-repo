@@ -450,9 +450,11 @@ def create_group(request):
 def group(request, groupid):
     this_group = Group.objects.get(id=groupid)
     if request.method == 'POST':
+        if "INVITE" in request.POST:
+            return render(request, '/mainsite/messageboard/group/{{ group.id }}/inviteuser')
         if "REMOVE" in request.POST:
             this_group.delete()
-            return redirect('/mainsite/messageboard/')
+            return redirect('/mainsite/messageboard/group/{{ group.id }}/inviteuser')
         elif "ADDMOD" in request.POST:
             mod_name = request.POST['mod_name']
             try:
@@ -543,6 +545,7 @@ def groupinvite(request, groupid):
     this_group = Group.objects.get(id=groupid)
     group_creator = this_group.creator
     user_list = User.objects.all()
+    
 
     return render(request, 'groups/groupinvite.html', {'group': this_group,
                                                  'creator': group_creator,

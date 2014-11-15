@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -9,20 +13,8 @@
 </head>
 <body>
     <div class="page">
-        <div class="Page Header" align="center">
-            <h1> Message Board </h1>
-        </div>
-        <div class="navBar" align="left">
-            <ul>
-                <li><a href="userprofile/{{ user.id }}">Your Profile</a></li>
-                <li><a href="viewinvites/{{ user.id }}">View Invites</a></li>
-                <li><a href="{% url 'mainsite:create_group' %}">Create a Group</a></li>
-                <li><a href="{% url 'mainsite:joined_groups' %}">My Joined Groups</a></li>
-                <li><a href="{% url 'mainsite:join_group' %}">Join a Group</a></li>
-                <li><a href="{% url 'mainsite:create_topic' %}">Create a Topic</a></li>
-                <li><a href="{% url 'mainsite:subscribed_topics' %}">My Subscribed Topics</a></li>
-            </ul>
-        </div>
+
+
         <!--Filter-->
             <form action="" method="POST">
                 {% csrf_token %}
