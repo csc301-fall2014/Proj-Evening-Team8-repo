@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-
+{% block content %}
 
 <!DOCTYPE html>
 <html>
@@ -14,19 +14,6 @@
 <body>
     <div class="page">
 
-
-        <!--Filter-->
-            <form action="" method="POST">
-                {% csrf_token %}
-                Tag (blank to show all): <input type="text" name="tag_name"/><br>
-                <input type="checkbox" name="subscribed"/>Subscriptions only<br>
-                <input type="submit" name="POST_filter" value="Filter"/>
-            </form>
-            <!--Show all-->
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="Clear Filter"/>
-            </form>
         <div class="allTopics" align="center">
             {% for topic in topics %}
                 <div class="topicBox">
@@ -67,9 +54,6 @@
         </div>
     </div>
 
-    <div class="logout" align="center">
-        <a href="{% url 'mainsite:logout_view' %}">Logout</a>
-    </div>
 
     <script >
         $(function(){
@@ -79,3 +63,4 @@
     </script>
 </body>
 </html>
+{% endblock %}

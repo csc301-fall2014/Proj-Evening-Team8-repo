@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>View Group Invites</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
     <div id="header" align="center">
-        <h3>View Group Invites</h3>
-    </div>
+    <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
+    <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
+    <div class="page-header" ><h2>View group invites</h2></div>
+</div>
 
     <div id="users" align="center">
         {% for request in requests %}
@@ -16,7 +14,7 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input type="HIDDEN" name="accept_request" id="the_request" value="{{ request.id }}"/>
-                    <input id="SUBMIT" type="submit" name="accept" value="Accept" />
+                    <input id="SUBMIT" type="submit" name="accept" value="Accept" class="btn btn-default"/>
                 </form>
             {% endif %}
         {% empty %}
@@ -29,5 +27,4 @@
       <a href="/mainsite/messageboard/">Back</a>
         <a href="/mainsite/logout/">Logout</a>
     </div>
-</body>
-</html>
+{% endblock %}
