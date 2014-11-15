@@ -1,3 +1,11 @@
+### Installation
+
+* install pip
+* `pip install Django`
+* `pip install Pillow`
+* `pip install django-bootstrap3`
+
+
 ### Links to team deliverables, Phase 3
 
 Project, as usual, is located in the [messageboard] (https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/tree/master/messageboard) folder.
