@@ -454,7 +454,7 @@ def group(request, groupid):
             return redirect('inviteuser/')
         if "REMOVE" in request.POST:
             this_group.delete()
-            return redirect('/mainsite/messageboard/group/{{ group.id }}/inviteuser')
+            return redirect(reverse('mainsite:messageboard'))
         elif "ADDMOD" in request.POST:
             mod_name = request.POST['mod_name']
             try:
