@@ -15,6 +15,27 @@
     </form>
 </div>
 
+<div class="page-header" >
+    <div class="page-header" ><h3>List of existing groups: </h3></div>
+
+    {% for group in all_groups %}
+        <h4> {{ group.group_name }} </h4>
+        <form action="" method="post">
+            {% csrf_token %}
+            <p> 
+                <input type="HIDDEN" name="group_name" id="the_request" value="{{ group.group_name }}"/>
+                <input type="text" name="group_password" placeholder="group_password" /> 
+                <input type="SUBMIT" value="Join">
+            </p>
+        </form>
+    {% empty %}
+        <p> No groups. </p>
+    {% endfor %}
+</div>
+
+
+
+
 <div id="logout" align="center">
 	<p>
 		<a href="/mainsite/messageboard/">Back</a>
