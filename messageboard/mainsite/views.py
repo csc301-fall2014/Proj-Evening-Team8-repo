@@ -484,6 +484,7 @@ def joined_groups(request):
 
 @login_required(login_url='/mainsite/login')
 def join_group(request):
+    all_groups = Group.objects.all()
     if request.method == 'POST':
         # Get the user and group object
         user = request.user
@@ -507,7 +508,7 @@ def join_group(request):
                             'Back')
         return redirect(reverse('mainsite:messageboard'))
     else:
-        return render(request, 'groups/join_group.html', {'form': GroupForm})
+        return render(request, 'groups/join_group.html', {'form': GroupForm, 'groups': all_groups})
 
 
 @login_required(login_url='/mainsite/login')
