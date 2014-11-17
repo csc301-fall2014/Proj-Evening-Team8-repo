@@ -28,7 +28,8 @@
                 <li><a href="viewinvites/{{ user.id }}">Invites</a></li>
                 <li><a href="{% url 'mainsite:joined_groups' %}">Joined Groups</a></li>
                 <li><a href="subscriptions">Subscribed Topics</a></li>
-                <li class="divider"></li>
+                <li><a href="/mainsite/messageboard/directmessage/{{ user.id }}">Direct Messages</a><li>
+		<li class="divider"></li>
                 <li><a href="{% url 'mainsite:logout_view' %}">Logout</a></li>
               </ul>
             </li>
