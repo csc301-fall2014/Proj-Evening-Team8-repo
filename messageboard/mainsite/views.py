@@ -436,11 +436,15 @@ def subscribed_topics(request):
 def create_group(request):
     if request.method == 'POST':
         user = request.user
-        group = Group(group_name=request.POST['group_name'],
-                      group_password=request.POST['group_password'], creator=request.user)
-        group.save()
-        group.user_set.add(user)
-        user.joined_groups.add(group)
+        try:
+            existing_group = Group.objects.get(group_name=request.POST['group_name'])
+            group = Group(group_name=request.POST['group_name'],
+                          group_password=request.POST['group_password'], creator=request.user)
+            group.save()
+            group.user_set.add(user)
+            user.joined_groups.add(group)
+        except Group.DoesNotExist:
+            return redirect(reverse('mainsite:messageboard'))    
         return redirect(reverse('mainsite:messageboard'))
     else:
         return render(request, 'groups/create_group.html', {'form': GroupForm})
@@ -450,9 +454,11 @@ def create_group(request):
 def group(request, groupid):
     this_group = Group.objects.get(id=groupid)
     if request.method == 'POST':
+        if "INVITE" in request.POST:
+            return redirect('inviteuser/')
         if "REMOVE" in request.POST:
             this_group.delete()
-            return redirect('/mainsite/messageboard/')
+            return redirect(reverse('mainsite:messageboard'))
         elif "ADDMOD" in request.POST:
             mod_name = request.POST['mod_name']
             try:
@@ -482,6 +488,7 @@ def joined_groups(request):
 
 @login_required(login_url='/mainsite/login')
 def join_group(request):
+    all_groups = Group.objects.all()
     if request.method == 'POST':
         # Get the user and group object
         user = request.user
@@ -505,7 +512,7 @@ def join_group(request):
                             'Back')
         return redirect(reverse('mainsite:messageboard'))
     else:
-        return render(request, 'groups/join_group.html', {'form': GroupForm})
+        return render(request, 'groups/join_group.html', {'form': GroupForm, 'groups': all_groups})
 
 
 @login_required(login_url='/mainsite/login')
@@ -543,6 +550,7 @@ def groupinvite(request, groupid):
     this_group = Group.objects.get(id=groupid)
     group_creator = this_group.creator
     user_list = User.objects.all()
+    
 
     return render(request, 'groups/groupinvite.html', {'group': this_group,
                                                  'creator': group_creator,

@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
-<div id="container" align="center">
-    <h2>Message Board</h2>
-    <p><a href="/mainsite/login/">Login</a></p>
-    <p><a href="/mainsite/registration/">Register</a></p>
-</div>
 
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load url from future %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_content %}
+
+    <div class="page-header" align="center">
+        <h1><a href="/mainsite/login/">Login</a></h1>
+        <h1><a href="/mainsite/registration/">Register</a></h1>
+    </div>
+{% endblock %}

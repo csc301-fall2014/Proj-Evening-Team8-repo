@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainsite',
-    #'awesome_avatar',
+    'bootstrap3',
 )
 
 MIDDLEWARE_CLASSES = (
