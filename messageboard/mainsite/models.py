@@ -24,6 +24,9 @@ class UserProfile(models.Model):
 
     notifications_enabled = models.BooleanField('subscription notifications', default=True)
 
+    # direct messages
+    direct_messages = models.ManyToManyField('Topic', related_name='direct_messages')
+
     def __str__(self):
         return self.user.username
 
@@ -34,6 +37,7 @@ class Topic(models.Model):
     creator = models.ForeignKey(User, related_name='topics_created')
     subscriptions = models.ManyToManyField(User, related_name='subscribed_topics')
     group_set = models.ManyToManyField('Group', related_name='viewable_topics')
+    is_direct_message = false
 
     def __str__(self):
         return str(self.id) + ": " + str(self.topic_name)
@@ -75,3 +79,4 @@ class Requests(models.Model):
     user_profile = models.ForeignKey(UserProfile, related_name='user_profile')
     group = models.ForeignKey(Group, related_name='invited_group')
     user_that_invited = models.ForeignKey(UserProfile, related_name='user_that_invited')
+
