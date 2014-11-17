@@ -5,6 +5,10 @@
 * `pip install Pillow`
 * `pip install django-bootstrap3`
 
+### Getting Started
+
+* Inside of messageboard folder run `python manage.py runserver`
+* Navigate the browser to `127.0.0.1:8000/mainsite`
 
 ### Links to team deliverables, Phase 3
 
