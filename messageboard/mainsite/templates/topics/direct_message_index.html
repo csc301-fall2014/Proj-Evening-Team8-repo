@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="header" align="center">
+    <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
+    <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
+    <div class="page-header" ><h2>Create a group</h2></div>
+</div>
+<body>
+    <div class="page">
+
+        <div class="allTopics" align="center">
+            {% for topic in directmessages %}
+                <div class="topicBox">
+                    <div class="title">
+                        <p>
+                            <a href="{% url 'mainsite:topic' topic.id %}">
+                                <font size="6" color="grey">{{ topic.recipient }}</font>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="messages" align="left">
+                        {% for msg in messages %}
+                            {% if msg.topic.id  == topic.id %}
+                                <div class="message">
+                                    <p> {{msg.creator}} @ {{msg.pub_date|date:"M d g:i a"}}</p>
+                                    <p>{{ msg.message_content }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="textbox" align="center">
+                         <form id="new_message" action= "" method="post">
+                            {% csrf_token %}
+                            <input type="text" id="message_content" name="message_content" size="36" autocomplete="off" placeholder="Enter a message to chat..."/>
+                            <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
+                            <input type="submit" name="POST_post" value="Post" hidden="true"/>
+                        </form>
+                    </div>
+                </div>
+            {% empty %}
+                <p> No direct messages to display </p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+{% endblock %}
