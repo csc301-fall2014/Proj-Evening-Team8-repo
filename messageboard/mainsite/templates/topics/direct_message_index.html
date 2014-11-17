@@ -8,7 +8,6 @@
 </div>
 <body>
     <div class="page">
-
         <div class="allTopics" align="center">
             {% for topic in directmessages %}
                 <div class="topicBox">
@@ -43,7 +42,10 @@
             {% endfor %}
         </div>
     </div>
-
+<div id="footer" align="center">
+    <a href="/mainsite/messageboard/directmessage/{{ user.id }}/create">Create a new chat</a><br>
+	<a href="/mainsite/messageboard/">Back</a>
+</div>
 
 </body>
 </html>
