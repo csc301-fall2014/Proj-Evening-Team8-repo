@@ -611,7 +611,8 @@ def createmessage(request, userid):
             #save dm to user profile set of dm's
             user.user_profile.direct_messages.add(new_dm)
             user.save
+            #redirect back to dm index
             return redirect(reverse('mainsite:messageboard/directmessages'))    
-
+    #render the create new dm page 
     return render(request, 'topics/new_direct_message.html', {'user': user, 'all_users': all_users})
 
