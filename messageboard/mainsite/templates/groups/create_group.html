@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Create a group</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<div id="title" align="center">
-    <p>Create a group</p>
+{% block content %}
+<div id="header" align="center">
+    <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
+    <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
+    <div class="page-header" ><h2>Create a group</h2></div>
 </div>
 
 <div id="name" align="center">
@@ -21,9 +18,6 @@
 <div id="logout" align="center">
 	<p>
 		<a href="/mainsite/messageboard/">Back</a>
-		<a href="/mainsite/logout/">Logout</a>
 	</p>
 </div>
-
-</body>
-</html>
+{% endblock %}

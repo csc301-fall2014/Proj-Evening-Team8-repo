@@ -1,15 +1,14 @@
-<!--This template is a richer and more customizable HttpResponse.-->
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
-</head>
+<{% extends 'bootstrap.html' %}
+
+{% load url from future %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_content %}
 <body>
     <div align="center">
         <h2>{{title}}</h2>
         <p>{{message}}</p>
         <p><a href="{{link}}">{{button}}</a></p>
     </div>
-</body>
-</html>
+{% endblock %}
