@@ -593,24 +593,25 @@ def viewinvites(request, userid):
 def viewdirectmessages(request, userid):
     user = request.user
     direct_messages_user = user.user_profile.direct_messages.all()
-    return render(request, 'topics/direct_message.html', {'user': user})
+    return render(request, 'topics/direct_message.html', {'user': user, 'directmessages': direct_messages_user})
 
 #create new dm or view existing
 @login_required(login_url='/mainsite/login')
 def createmessage(request, userid):
     user = request.user
+    all_users = User.objects.all()
     if request.method == "POST":
         if "new" in request.POST:
             #create new dm
             new_dm = Topic(topic_name=request.POST['recipient'],
                 creator=user,
                 subscriptions=user,
-                is_direct_message=true)
+                is_direct_message=True)
             new_dm.save
             #save dm to user profile set of dm's
             user.user_profile.direct_messages.add(new_dm)
             user.save
             return redirect(reverse('mainsite:messageboard/directmessages'))    
 
-    return render(request, 'topics/new_direct_message.html', {'user': user, 'directmessages': direct_messages_user})
+    return render(request, 'topics/new_direct_message.html', {'user': user, 'all_users': all_users})
 
