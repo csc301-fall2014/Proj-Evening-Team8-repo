@@ -15,6 +15,10 @@ urlpatterns = [
     url(r'^messageboard/create/$', views.create_topic, name='create_topic'),
     url(r'^messageboard/(?P<topicid>[0-9]*)/$', views.topic, name='topic'),
 
+    # Direct messages
+    url(r'^messageboard/directmessages/$', views.viewdirectmessages, name='viewdirectmessages'),
+    url(r'^messageboard/directmessages/createnew/$', views.createmessage, name='createmessage'),
+
     # Subscriptions
     url(r'^messageboard/(?P<topicid>[0-9]*)/subscribe/$', views.subscribe, name="subscribe"),
     url(r'^messageboard/subscriptions/$', views.subscribed_topics, name='subscribed_topics'),
