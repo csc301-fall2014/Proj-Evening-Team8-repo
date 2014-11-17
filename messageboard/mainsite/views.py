@@ -588,4 +588,38 @@ def viewinvites(request, userid):
 
     return render(request, 'groups/viewgroupinvites.html', {'user': user, 'requests': requests})
 
+#view dm's
+@login_required(login_url='/mainsite/login')
+def viewdirectmessages(request, userid):
+    user = request.user
+    direct_messages_user = user.user_profile.direct_messages.all()
+    return render(request, 'topics/direct_message.html', {'user': user, 'directmessages': direct_messages_user})
+
+#create new dm or view existing
+@login_required(login_url='/mainsite/login')
+def createmessage(request, userid):
+    user = request.user
+    all_users = User.objects.all()
+    #find all existing direct message recipients
+    all_existing_users = User.objects.none()
+    for i in user.user_profile.direct_messages.all():
+        tempUser = User.objects.get(username=i.topic_name)
+        all_existing_users.add(tempUser)
+
+    if request.method == "POST":
+        if "new" in request.POST:
+            #create new dm
+            new_dm = Topic(topic_name=request.POST['recipient'],
+                creator=user,
+                subscriptions=user,
+                is_direct_message=True)
+            new_dm.save
+            #save dm to user profile set of dm's
+            user.user_profile.direct_messages.add(new_dm)
+            user.save
+            #redirect back to dm index
+            return redirect(reverse('mainsite:messageboard/directmessages'))    
+    #render the create new dm page 
+    return render(request, 'topics/new_direct_message.html', {'user': user, 'all_users': all_users,
+     'all_existing_users', all_existing_users})
 
