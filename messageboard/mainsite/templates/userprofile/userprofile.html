@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Your Profile</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
 <div id="header" align="center">
 	<!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
 	<img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
-    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+    <div class="page-header" ><h2>{{ user.first_name }} {{ user.last_name }}</h2></div>
 </div>
 
 <div id="userinfo" align="center">
@@ -23,5 +19,4 @@
     <a href="/mainsite/messageboard/userprofile/{{ user.id }}/edit">Edit your profile</a><br>
 	<a href="/mainsite/messageboard/">Back</a>
 </div>
-</body>
-</html>
+{% endblock %}
