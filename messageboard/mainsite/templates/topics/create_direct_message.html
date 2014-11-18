@@ -14,7 +14,7 @@
             <form action="" method="post">
                 {% csrf_token %}
                 <p> 
-                    <input type="HIDDEN" name="user_id" id="the_request" value="{{ user.id }}"/> 
+                    <input type="HIDDEN" name="recipient" id="the_request" value="{{ user.id }}"/> 
                     <input type="SUBMIT" value="Chat">
                 </p>
             </form>
@@ -23,4 +23,5 @@
         <p> No users. </p>
     {% endfor %}
 </div>
+{% endblock %}
 
