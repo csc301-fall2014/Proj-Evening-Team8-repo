@@ -600,24 +600,27 @@ def viewdirectmessages(request):
 def createmessage(request):
     user = request.user
     all_users = User.objects.all()
+
     #find all existing direct message recipients
     all_existing_users = User.objects.none()
     for i in user.user_profile.direct_messages.all():
         tempUser = User.objects.get(id=i.topic_name)
         all_existing_users.add(tempUser)
 
+
     if request.method == "POST":
-        #create new dm
-        new_dm = Topic(topic_name=request.POST['recipient'],
-            creator=user,
-            is_direct_message=True)
-        new_dm.save
-        #save dm to user profile set of dm's
-        user.user_profile.direct_messages.add(new_dm)
-        user.save
-        #redirect back to dm index
-        return redirect(reverse('mainsite:messageboard/directmessages'))    
-    #render the create new dm page 
-    return render(request, 'topics/create_direct_message.html', {'user': user, 'all_users': all_users,
-     'all_existing_users': all_existing_users})
+        if "new_message" in request.POST:
+            #create new dm
+            #topic_name=request.POST['recipient']
+            new_dm = Topic(topic_name='testingname', creator=user)
+            new_dm.save
+            #save dm to user profile set of dm's
+            user.user_profile.direct_messages.add(new_dm)
+            user.save
+            #redirect back to dm index
+            return redirect(reverse('mainsite:messageboard/directmessages')) 
+    else:   
+        #render the create new dm page 
+        return render(request, 'topics/create_direct_message.html', {'user': user, 'all_users': all_users,
+         'all_existing_users': all_existing_users})
 
