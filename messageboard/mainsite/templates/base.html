@@ -24,10 +24,10 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user}}<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="userprofile/{{ user.id }}">Profile</a></li>
-                <li><a href="viewinvites/{{ user.id }}">Invites</a></li>
+                <li><a href="{% url 'mainsite:userprofile' user.id %}">Profile</a></li>
+                <li><a href="{% url 'mainsite:view_invites' user.id %}">Invites</a></li>
                 <li><a href="{% url 'mainsite:joined_groups' %}">Joined Groups</a></li>
-                <li><a href="subscriptions">Subscribed Topics</a></li>
+                <li><a href="{% url 'mainsite:subscribed_topics' %}">Subscribed Topics</a></li>
                 <li class="divider"></li>
                 <li><a href="{% url 'mainsite:logout_view' %}">Logout</a></li>
               </ul>
