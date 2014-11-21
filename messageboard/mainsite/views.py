@@ -612,7 +612,7 @@ def createmessage(request):
         if "new_message" in request.POST:
             #create new dm
             #topic_name=request.POST['recipient']
-            new_dm = Topic(topic_name='testingname', creator=user)
+            new_dm = Topic(topic_name=request.POST['recipient'], creator=user)
             new_dm.save
             #save dm to user profile set of dm's
             user.user_profile.direct_messages.add(new_dm)
