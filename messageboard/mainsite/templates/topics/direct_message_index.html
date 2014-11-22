@@ -13,11 +13,7 @@
                 <div>
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <h3>
-                    {% for user_in_convo in convo.user_set %}
-                        {% if user_in_convo != user %}
-                            {{ user_in_convo.username }}
-                        {% endif %}
-                    {% endfor %}
+                        {{ convo.recipient }}
                     </h3>
                     <a href="/mainsite/messageboard/directmessages/{{ convo.id }}">
                         <button type="button" class="btn btn-default">View Convo</button>
