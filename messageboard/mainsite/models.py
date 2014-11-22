@@ -24,9 +24,6 @@ class UserProfile(models.Model):
 
     notifications_enabled = models.BooleanField('subscription notifications', default=True)
 
-    # direct messages
-    direct_messages = models.ManyToManyField('Topic', related_name='direct_messages')
-
     def __str__(self):
         return self.user.username
 
@@ -51,7 +48,6 @@ class Message(models.Model):
     def __str__(self):
         return str(self.id)
 
-
 class Group(models.Model):
     group_name = models.CharField(max_length=200)
     group_password = models.CharField(max_length=20)
@@ -61,7 +57,6 @@ class Group(models.Model):
 
     def __str__(self):
         return str(self.id) + ": " + str(self.group_name)
-
 
 class Tag(models.Model):
     alphanumeric = RegexValidator(regex=r'^[0-9a-zA-Z_]*$',
@@ -79,3 +74,15 @@ class Requests(models.Model):
     group = models.ForeignKey(Group, related_name='invited_group')
     user_that_invited = models.ForeignKey(UserProfile, related_name='user_that_invited')
 
+class Conversation(models.Model):
+    convo_name = models.CharField(max_length=200)
+    user_set = models.ManyToManyField(User, related_name='viewable_conversations')
+
+class DirectMessage(models.Model):
+    message_content = models.TextField()
+    pub_date = models.DateTimeField('date published', default=timezone.now)
+    creator = models.ForeignKey(User)
+    conversation= models.ForeignKey(Conversation)
+
+    def __str__(self):
+        return str(self.id)

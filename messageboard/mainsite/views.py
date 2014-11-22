@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests
+from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation
 from datetime import datetime, timedelta
 
 
@@ -592,8 +592,20 @@ def viewinvites(request, userid):
 @login_required(login_url='/mainsite/login')
 def viewdirectmessages(request):
     user = request.user
-    direct_messages_user = user.user_profile.direct_messages.all()
-    return render(request, 'topics/direct_message_index.html', {'user': user, 'directmessages': direct_messages_user})
+    conversation_list = user.viewable_conversations.all()
+    return render(request, 'topics/direct_message_index.html', {'user': user, 'conversations': conversation_list})
+
+#view dm
+@login_required(login_url='/mainsite/login')
+def viewdirectmessage(request, convoid):
+    user = request.user
+    convo = Conversation.objects.get(id=convoid)
+
+    #post request
+
+
+    return render(request, 'topics/direct_message_view.html', {'user': user, 'conversation': convo, 'messages': messagelist})
+
 
 #create new dm or view existing
 @login_required(login_url='/mainsite/login')
@@ -601,26 +613,19 @@ def createmessage(request):
     user = request.user
     all_users = User.objects.all()
 
-    #find all existing direct message recipients
-    all_existing_users = User.objects.none()
-    for i in user.user_profile.direct_messages.all():
-        tempUser = User.objects.get(id=i.topic_name)
-        all_existing_users.add(tempUser)
-
 
     if request.method == "POST":
         if "new_message" in request.POST:
             #create new dm
-            #topic_name=request.POST['recipient']
-            new_dm = Topic(topic_name=request.POST['recipient'], creator=user)
-            new_dm.save
-            #save dm to user profile set of dm's
-            user.user_profile.direct_messages.add(new_dm)
-            user.save
-            #redirect back to dm index
-            return redirect(reverse('mainsite:messageboard/directmessages')) 
+            recipient = User.objects.get(id=request.POST['recipient'])
+            new_dm = Conversation(convo_name='testing')
+            new_dm.save()
+            new_dm.user_set.add(user)
+            new_dm.user_set.add(recipient)
+            #go to new convo view
+            return render(request, 'topics/direct_message_view.html', {'user': user, 'conversation': new_dm})
+
     else:   
         #render the create new dm page 
-        return render(request, 'topics/create_direct_message.html', {'user': user, 'all_users': all_users,
-         'all_existing_users': all_existing_users})
+        return render(request, 'topics/create_direct_message.html', {'user': user, 'all_users': all_users})
 
