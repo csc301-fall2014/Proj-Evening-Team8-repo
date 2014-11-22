@@ -9,34 +9,21 @@
 <body>
     <div class="page">
         <div class="allTopics" align="center">
-            {% for topic in directmessages %}
-                <div class="topicBox">
-                    <div class="title">
-                        <p>
-                            <a href="{% url 'mainsite:topic' topic.id %}">
-                                <font size="6" color="grey">{{ topic.recipient }}</font>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="messages" align="left">
-                        {% for msg in messages %}
-                            {% if msg.topic.id  == topic.id %}
-                                <div class="message">
-                                    <p> {{msg.creator}} @ {{msg.pub_date|date:"M d g:i a"}}</p>
-                                    <p>{{ msg.message_content }}</p>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <div class="textbox" align="center">
-                         <form id="new_message" action= "" method="post">
-                            {% csrf_token %}
-                            <input type="text" id="message_content" name="message_content" size="36" autocomplete="off" placeholder="Enter a message to chat..."/>
-                            <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                            <input type="submit" name="POST_post" value="Post" hidden="true"/>
-                        </form>
-                    </div>
+            {% for convo in conversations %}
+                <div>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <h3>
+                    {% for user_in_convo in convo.user_set %}
+                        {% if user_in_convo != user %}
+                            {{ user_in_convo.username }}
+                        {% endif %}
+                    {% endfor %}
+                    </h3>
+                    <a href="/mainsite/messageboard/directmessages/{{ convo.id }}">
+                        <button type="button" class="btn btn-default">View Convo</button>
+                    </a>
                 </div>
+                <br>
             {% empty %}
                 <p> No direct messages to display </p>
             {% endfor %}

@@ -15,9 +15,9 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     <p> 
-                        <input type="HIDDEN" name="recipient" value="{{ usr.username }}"/> 
-                        <input type="SUBMIT" name="new_message" value="Chat">
-                    </p>
+                        <input type="HIDDEN" name="recipient" value="{{ usr.id }}"/> 
+                        <input type="SUBMIT" name="new_message" value="Chat" class="btn btn-default"/>
+                    </p>    
                 </form>
             {% endif %}
     	{% endif %}
