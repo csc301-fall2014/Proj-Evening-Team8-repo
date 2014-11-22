@@ -77,12 +77,13 @@ class Requests(models.Model):
 class Conversation(models.Model):
     convo_name = models.CharField(max_length=200)
     user_set = models.ManyToManyField(User, related_name='viewable_conversations')
+    recipient = models.ForeignKey(User, related_name='recipient ')
 
 class DirectMessage(models.Model):
     message_content = models.TextField()
     pub_date = models.DateTimeField('date published', default=timezone.now)
     creator = models.ForeignKey(User)
-    conversation= models.ForeignKey(Conversation)
+    conversation= models.ForeignKey(Conversation, related_name="conversation")
 
     def __str__(self):
         return str(self.id)

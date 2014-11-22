@@ -600,9 +600,18 @@ def viewdirectmessages(request):
 def viewdirectmessage(request, convoid):
     user = request.user
     convo = Conversation.objects.get(id=convoid)
+    messagelist = DirectMessage.objects.filter(conversation=convo)
 
     #post request
-
+    if request.method == 'POST':
+        filledForm = DirectMessageForm(request.POST)
+        if filledForm.is_valid():
+            data = filledForm.cleaned_data
+            message = DirectMessage()
+            message.creator = request.user
+            message.conversation = Conversation.objects.get(id=convo.id)
+            message.message_content = data['message_content']
+            message.save()
 
     return render(request, 'topics/direct_message_view.html', {'user': user, 'conversation': convo, 'messages': messagelist})
 
@@ -613,19 +622,25 @@ def createmessage(request):
     user = request.user
     all_users = User.objects.all()
 
+    all_existing_users = User.objects.none()
+    for x in user.viewable_conversations.all():
+        if user != x.recipient:
+            all_existing_users.add(x.recipient)
 
     if request.method == "POST":
         if "new_message" in request.POST:
             #create new dm
             recipient = User.objects.get(id=request.POST['recipient'])
-            new_dm = Conversation(convo_name='testing')
+            new_dm = Conversation(convo_name='testing', recipient=recipient)
             new_dm.save()
             new_dm.user_set.add(user)
             new_dm.user_set.add(recipient)
+            user.viewable_conversations.add(new_dm)
             #go to new convo view
             return render(request, 'topics/direct_message_view.html', {'user': user, 'conversation': new_dm})
 
     else:   
         #render the create new dm page 
-        return render(request, 'topics/create_direct_message.html', {'user': user, 'all_users': all_users})
+        return render(request, 'topics/create_direct_message.html', {'user': user, 'all_users': all_users,
+            'all_existing_users': all_existing_users})
 
