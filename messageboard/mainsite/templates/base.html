@@ -38,7 +38,7 @@
             <li><a href="{% url 'mainsite:create_topic' %}">Create a Topic</a></li>
         </ul>
         <!-- filter -->
-        <form action="" method="POST" class="navbar-form navbar-right" role="search" style="padding-right: 20px;">
+        <form id="tagFilters" method="POST" class="navbar-form navbar-right" role="search" style="padding-right: 20px;">
             {% csrf_token %}
             <div class="form-group">
               <input type="text" name="tag_name" class="form-control" placeholder="Search Tags">
@@ -46,11 +46,20 @@
             <button type="submit" name="POST_filter" value="Filter" class="btn btn-default">Submit</button>
             <input type="submit" value="Clear Filter" class="btn btn-default"/>
         </form>
-        
-        
-
+       
     </div>
 </nav>
+
+<script type="text/javascript">
+function hideTagFilters() {
+    if (location.pathname == "/mainsite/messageboard/subscriptions/" ||
+        location.pathname == "/mainsite/messageboard/")
+        document.getElementById("tagFilters").style.display="block";
+    else
+        document.getElementById("tagFilters").style.display="none";
+}
+window.onload = hideTagFilters;
+</script>
 
 <div class="container">
     {% block content %}(no content){% endblock %}
