@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm
+from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm, DirectMessageForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation
+from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
 from datetime import datetime, timedelta
 
 
@@ -593,7 +593,8 @@ def viewinvites(request, userid):
 def viewdirectmessages(request):
     user = request.user
     conversation_list = user.viewable_conversations.all()
-    return render(request, 'topics/direct_message_index.html', {'user': user, 'conversations': conversation_list})
+    return render(request, 'topics/direct_message_index.html', {'user': user,
+     'conversations': conversation_list})
 
 #view dm
 @login_required(login_url='/mainsite/login')
@@ -601,7 +602,6 @@ def viewdirectmessage(request, convoid):
     user = request.user
     convo = Conversation.objects.get(id=convoid)
     messagelist = DirectMessage.objects.filter(conversation=convo)
-
     #post request
     if request.method == 'POST':
         filledForm = DirectMessageForm(request.POST)
@@ -613,7 +613,8 @@ def viewdirectmessage(request, convoid):
             message.message_content = data['message_content']
             message.save()
 
-    return render(request, 'topics/direct_message_view.html', {'user': user, 'conversation': convo, 'messages': messagelist})
+    return render(request, 'topics/direct_message_view.html', {'user': user, 
+     'conversation': convo, 'messages': messagelist, 'form': DirectMessageForm()})
 
 
 #create new dm or view existing
@@ -631,13 +632,14 @@ def createmessage(request):
         if "new_message" in request.POST:
             #create new dm
             recipient = User.objects.get(id=request.POST['recipient'])
-            new_dm = Conversation(convo_name='testing', recipient=recipient)
-            new_dm.save()
-            new_dm.user_set.add(user)
-            new_dm.user_set.add(recipient)
-            user.viewable_conversations.add(new_dm)
+            convo = Conversation(convo_name='testing', recipient=recipient, recipient2 = user)
+            convo.save()
+            convo.user_set.add(user)
+            convo.user_set.add(recipient)
+            user.viewable_conversations.add(convo)
             #go to new convo view
-            return render(request, 'topics/direct_message_view.html', {'user': user, 'conversation': new_dm})
+            return render(request, 'topics/direct_message_view.html', {'user': user, 'conversation': convo,
+             'messages': messagelist, 'form': DirectMessageForm()})
 
     else:   
         #render the create new dm page 

@@ -77,7 +77,8 @@ class Requests(models.Model):
 class Conversation(models.Model):
     convo_name = models.CharField(max_length=200)
     user_set = models.ManyToManyField(User, related_name='viewable_conversations')
-    recipient = models.ForeignKey(User, related_name='recipient ')
+    recipient = models.ForeignKey(User, related_name='recipient')
+    recipient2 = models.ForeignKey(User, related_name='recipient2')
 
 class DirectMessage(models.Model):
     message_content = models.TextField()
