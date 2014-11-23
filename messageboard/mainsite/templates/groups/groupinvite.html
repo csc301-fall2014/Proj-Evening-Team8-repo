@@ -14,18 +14,11 @@
 <div id="users" align="center">
     {% for user in users %}
         {% if user not in group.user_set.all %}
-            <a href="/mainsite/messageboard/group/{{ group.id }}/inviteuser/confirmation/{{ user.id }}"
-            style="display: block;
-              width: 115px;
-              height: 25px;
-              background: #4E9CAF;
-              padding-top: 3px;
-              text-align: center;
-              border-radius: 5px;
-              color: white;
-              font-weight: bold;">
-              {{ user.user_profile }}
-            </a> <br>
+            <a href="/mainsite/messageboard/group/{{ group.id }}/inviteuser/confirmation/{{ user.id }}">    <button type="button" class="btn btn-default">
+                  {{ user.user_profile }}
+                </button>
+            </a> 
+            <br>
         {% endif %}
     {% empty %}
         <p> No users to invite! </p>
