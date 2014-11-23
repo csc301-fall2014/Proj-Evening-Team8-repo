@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="header" align="center">
+
+    <div class="page-header" >
+        <h2>
+            {% if user == conversation.recipient %}
+                Conversation with {{ conversation.recipient2 }}
+            {% else %}
+                Conversation with {{ conversation.recipient }}
+            {% endif %}
+        </h2>
+    </div>
+</div>
+
+
+<div id="messages" align="center">
+    {% for msg in messages %}
+    <div>
+        <p>
+            <b>{{ msg.creator }}:</b>
+            {{ msg.message_content }}   
+            <font size='1'>{{ msg.pub_date }}</font>
+        </p>       
+    </div>
+    {% empty %}
+        <p> No messages to display </p>
+	{% endfor %}
+</div>
+
+<div id="textbox" align="center">
+    <form action= "" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p> 
+            <input type="SUBMIT" value="Post" class="btn btn-default"/>
+        </p>
+    </form>
+</div>
+
+{% endblock %}
