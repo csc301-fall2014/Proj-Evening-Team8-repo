@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm
+from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm, DirectMessageForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests
+from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
 from datetime import datetime, timedelta
 
 
@@ -588,4 +588,61 @@ def viewinvites(request, userid):
 
     return render(request, 'groups/viewgroupinvites.html', {'user': user, 'requests': requests})
 
+#view dm's
+@login_required(login_url='/mainsite/login')
+def viewdirectmessages(request):
+    user = request.user
+    conversation_list = user.viewable_conversations.all()
+    return render(request, 'topics/direct_message_index.html', {'user': user,
+     'conversations': conversation_list})
+
+#view dm
+@login_required(login_url='/mainsite/login')
+def viewdirectmessage(request, convoid):
+    user = request.user
+    convo = Conversation.objects.get(id=convoid)
+    messagelist = DirectMessage.objects.filter(conversation=convo)
+    #post request
+    if request.method == 'POST':
+        filledForm = DirectMessageForm(request.POST)
+        if filledForm.is_valid():
+            data = filledForm.cleaned_data
+            message = DirectMessage()
+            message.creator = request.user
+            message.conversation = Conversation.objects.get(id=convo.id)
+            message.message_content = data['message_content']
+            message.save()
+
+    return render(request, 'topics/direct_message_view.html', {'user': user, 
+     'conversation': convo, 'messages': messagelist, 'form': DirectMessageForm()})
+
+
+#create new dm or view existing
+@login_required(login_url='/mainsite/login')
+def createmessage(request):
+    user = request.user
+    all_users = User.objects.all()
+
+    all_existing_users = []
+    for x in user.viewable_conversations.all():
+        if user != x.recipient:
+            all_existing_users.append(x.recipient)
+
+    if request.method == "POST":
+        if "new_message" in request.POST:
+            #create new dm
+            recipient = User.objects.get(id=request.POST['recipient'])
+            convo = Conversation(convo_name='testing', recipient=recipient, recipient2 = user)
+            convo.save()
+            convo.user_set.add(user)
+            convo.user_set.add(recipient)
+            user.viewable_conversations.add(convo)
+            messagelist = DirectMessage.objects.filter(conversation=convo)
+            #go to new convo view
+            return HttpResponseRedirect(reverse('mainsite:viewdirectmessages'))
+
+    else:   
+        #render the create new dm page 
+        return render(request, 'topics/create_direct_message.html', {'user': user, 'all_users': all_users,
+            'all_existing_users': all_existing_users})
 

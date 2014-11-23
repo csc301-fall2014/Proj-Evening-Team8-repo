@@ -48,7 +48,6 @@ class Message(models.Model):
     def __str__(self):
         return str(self.id)
 
-
 class Group(models.Model):
     group_name = models.CharField(max_length=200)
     group_password = models.CharField(max_length=20)
@@ -58,7 +57,6 @@ class Group(models.Model):
 
     def __str__(self):
         return str(self.id) + ": " + str(self.group_name)
-
 
 class Tag(models.Model):
     alphanumeric = RegexValidator(regex=r'^[0-9a-zA-Z_]*$',
@@ -75,3 +73,18 @@ class Requests(models.Model):
     user_profile = models.ForeignKey(UserProfile, related_name='user_profile')
     group = models.ForeignKey(Group, related_name='invited_group')
     user_that_invited = models.ForeignKey(UserProfile, related_name='user_that_invited')
+
+class Conversation(models.Model):
+    convo_name = models.CharField(max_length=200)
+    user_set = models.ManyToManyField(User, related_name='viewable_conversations')
+    recipient = models.ForeignKey(User, related_name='recipient')
+    recipient2 = models.ForeignKey(User, related_name='recipient2')
+
+class DirectMessage(models.Model):
+    message_content = models.TextField()
+    pub_date = models.DateTimeField('date published', default=timezone.now)
+    creator = models.ForeignKey(User)
+    conversation= models.ForeignKey(Conversation, related_name="conversation")
+
+    def __str__(self):
+        return str(self.id)

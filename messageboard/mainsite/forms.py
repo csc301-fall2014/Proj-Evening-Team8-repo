@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from mainsite.models import Message, Topic, Group, UserProfile
+from mainsite.models import Message, Topic, Group, UserProfile, DirectMessage
 
 
 class UserForm(forms.ModelForm):
@@ -58,6 +58,16 @@ class GroupForm(forms.ModelForm):
         fields = ('group_name', 'group_password')
         widgets = {
             'group_password': forms.PasswordInput(attrs={'required': 'True'}),
+        }
+
+class DirectMessageForm(forms.ModelForm):
+    class Meta:
+        model = DirectMessage
+        exclude = ('pub_date', 'conversation', 'creator')
+        widgets ={
+            'message_content': forms.Textarea(attrs={'cols': 40, 'rows': 3,
+                                                     'placeholder': "Write your message here...",
+                                                     'required': 'True'})
         }
 
 

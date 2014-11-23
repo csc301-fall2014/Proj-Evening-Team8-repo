@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="header" align="center">
+    <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
+    <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
+    <div class="page-header" ><h2>Create a new direct message</h2></div>
+</div>
+
+<div class="page-header" >
+    {% for usr in all_users %}
+    	{% if usr not in all_existing_users %}
+            {% if usr != user %}
+                <h4> {{ usr.username }} </h4>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <p> 
+                        <input type="HIDDEN" name="recipient" value="{{ usr.id }}"/> 
+                        <input type="SUBMIT" name="new_message" value="Chat" class="btn btn-default"/>
+                    </p>    
+                </form>
+            {% endif %}
+    	{% endif %}
+    {% empty %}
+        <p> No users. </p>
+    {% endfor %}
+</div>
+{% endblock %}
+

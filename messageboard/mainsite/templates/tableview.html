@@ -13,7 +13,6 @@
 </head>
 <body>
     <div class="page">
-
         <div class="allTopics" align="center">
             {% for topic in topics %}
                 <div class="topicBox">
@@ -49,7 +48,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p> No topics to display </p>
+                <div class="page-header" ><h2>No topics to display</h2></div>
             {% endfor %}
         </div>
     </div>
