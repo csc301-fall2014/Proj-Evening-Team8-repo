@@ -3,13 +3,28 @@
 {% block content %}
 
 <div id="header" align="center">
-    <div class="page-header" ><h2>Conversation with {{ conversation.recipient }}</h2></div>
+
+    <div class="page-header" >
+        <h2>
+            {% if user == conversation.recipient %}
+                Conversation with {{ conversation.recipient2 }}
+            {% else %}
+                Conversation with {{ conversation.recipient }}
+            {% endif %}
+        </h2>
+    </div>
 </div>
 
 
 <div id="messages" align="center">
     {% for msg in messages %}
-        <p>{{ msg.message_content }}</p>
+    <div>
+        <p>
+            <b>{{ msg.creator }}:</b>
+            {{ msg.message_content }}   
+            <font size='1'>{{ msg.pub_date }}</font>
+        </p>       
+    </div>
     {% empty %}
         <p> No messages to display </p>
 	{% endfor %}
@@ -19,7 +34,9 @@
     <form action= "" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <p> <input type="SUBMIT" value="Post"></p>
+        <p> 
+            <input type="SUBMIT" value="Post" class="btn btn-default"/>
+        </p>
     </form>
 </div>
 
