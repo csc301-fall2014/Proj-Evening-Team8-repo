@@ -525,7 +525,7 @@ def userprofile(request, userid):
 def edituserprofile(request, userid):
     args = {}
     user = request.user
-    if userid != user.id:
+    if User.objects.get(id=userid).id != user.id:
         return render(request, '404error.html')
     userprofile = user.user_profile
     img = None
