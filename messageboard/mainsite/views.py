@@ -524,7 +524,9 @@ def userprofile(request, userid):
 @login_required(login_url='/mainsite/login')
 def edituserprofile(request, userid):
     args = {}
-    user = User.objects.get(id=userid)
+    user = request.user
+    if userid != user.id:
+        return render(request, '404error.html')
     userprofile = user.user_profile
     img = None
     if request.method == "POST":
