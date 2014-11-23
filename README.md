@@ -4,6 +4,8 @@
 * `pip install Django`
 * `pip install Pillow`
 * `pip install django-bootstrap3`
+* `pip install django-extensions`
+* (Gonna write something to auto install these soonish)
 
 ### Getting Started
 
