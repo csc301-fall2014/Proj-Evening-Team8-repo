@@ -45,6 +45,9 @@
 	float: left;
 	width: 80%;
 }
+.page-header{
+	margin-left: 25%;
+}
 .navBar{
     float: left;
     width: 20%;

@@ -9,7 +9,7 @@
 <div id="topics" align="center">
     {% for group in groups %}
         <p>
-            <a href="/mainsite/messageboard/group/{{ group.id }}">{{ group.group_name }}</a>
+            <a href="/mainsite/messageboard/group/{{ group.id }}" class="btn btn-default"/>{{ group.group_name }}</a>
         </p>
     {% empty %}
         <p> You are not part of any groups. </p>
@@ -17,7 +17,7 @@
 </div>
 <div id="logout" align="center">
 	<p>
-		<a href="/mainsite/messageboard/">Back</a>
+		<a href="/mainsite/messageboard/" class="btn btn-default"/>Back</a>
 	</p>
 </div>
 {% endblock %}
