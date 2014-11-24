@@ -1,0 +1,32 @@
+body {
+    background: url("images/randombuilding.png") no-repeat;
+    background-size: 100%;
+}
+
+.product-header{
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.page-header{
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+}
+
+a:link, a:visited {
+    color: white;
+}
+
+h1{
+    font-size: 42px;
+    color: white;
+}
+
+h2{
+    font-size: 30px;
+}
