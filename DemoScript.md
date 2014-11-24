@@ -46,4 +46,4 @@ Go into invites, accept group invite and show group topic privacy.
 
 Go to group and show admin options(add mod, delete group).
 
-Post in a pre-existing topic, then show subscription notifications in other users email.
+Post in a topic that the previous user subscribed to, then show subscription notifications in other users email.
