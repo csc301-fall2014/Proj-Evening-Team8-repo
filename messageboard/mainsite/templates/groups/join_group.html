@@ -9,13 +9,13 @@
 
 <div class="page-header" >
     {% for group in groups %}
-        <h4> {{ group.group_name }} </h4>
+        <h3> {{ group.group_name }} </h3>
         <form action="" method="post">
             {% csrf_token %}
             <p> 
                 <input type="HIDDEN" name="group_name" id="the_request" value="{{ group.group_name }}"/>
                 <input type="text" name="group_password" placeholder="enter group password" /> 
-                <input type="SUBMIT" value="Join">
+                <input type="SUBMIT" value="Join" class="btn btn-default">
             </p>
         </form>
     {% empty %}
@@ -28,7 +28,7 @@
 
 <div id="logout" align="center">
 	<p>
-		<a href="/mainsite/messageboard/">Back</a>
+		<a href="/mainsite/messageboard/" class="btn btn-default"/>Back</a>
 	</p>
 </div>
 
