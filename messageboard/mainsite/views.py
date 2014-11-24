@@ -522,7 +522,9 @@ def join_group(request):
 @login_required(login_url='/mainsite/login')
 def userprofile(request, userid):
     user = User.objects.get(id=userid)
-    return render(request, 'userprofile/userprofile.html', {'user': user})
+    logged_in_user = request.user
+    return render(request, 'userprofile/userprofile.html', {'user': user,
+     'logged_in_user': logged_in_user})
 
 
 @login_required(login_url='/mainsite/login')
