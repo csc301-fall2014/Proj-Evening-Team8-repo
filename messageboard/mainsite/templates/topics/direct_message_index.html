@@ -13,9 +13,12 @@
                 <div>
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     {% if user == convo.recipient %}
-                        {{ convo.recipient2 }}  
+                        <a href="{% url 'mainsite:userprofile' convo.recipient2.id %}" style="color: black;">
+                                    {{convo.recipient2}}</a>
+                                    
                     {% else %}
-                        {{ convo.recipient }}  
+                        <a href="{% url 'mainsite:userprofile' convo.recipient.id %}" style="color: black;">
+                                    {{convo.recipient}}</a> 
                     {% endif %}
                     <a href="/mainsite/messageboard/directmessages/{{ convo.id }}">
                         <button type="button" class="btn btn-default">View Convo</button>

@@ -32,7 +32,8 @@
                         {% for msg in messages %}
                             {% if msg.topic.id  == topic.id %}
                                 <div class="message">
-                                    <p> {{msg.creator}} @ {{msg.pub_date|date:"M. d, g:i a"}}</p>
+                                    <p> <a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: black;">
+                                    {{msg.creator}}</a> @ {{msg.pub_date|date:"M. d, g:i a"}}</p>
                                     <p>{{ msg.message_content }}</p>
                                 </div>
                             {% endif %}
