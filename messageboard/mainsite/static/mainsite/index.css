@@ -10,14 +10,12 @@ body {
     margin-left: auto;
     margin-right: auto;
     top: 15%;
-    transform: translate(-50%, -50%);
 }
 
 .links{
     margin-left: auto;
     margin-right: auto;
     top: 35%;
-    transform: translate(-50%, -50%);
     font-size: 30px;
 }
 
