@@ -1,63 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="creator" align="center">
-    <p>Administrator: <b>{{ creator.user_profile }}</b></p>
-    {% if creator.username == user.username %}
-        <p>Admin options:</p>  
-        <form action="" method="POST">
-            {% csrf_token %}
-            Add Moderator: <input type="text" name="mod_name"/>
-            <input type="submit" name="ADDMOD" value="Submit" class="btn btn-default"/><p/>
-        </form>
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="SUBMIT" name="INVITE" value="Invite Users" class="btn btn-default">
-        </form>
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="SUBMIT" name="REMOVE" value="Delete Group" class="btn btn-default">
-        </form>
-
-    {% endif %}<br>
-</div>
-
-<div id="header" align="center">
-    <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
-    <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
-    <div class="page-header" ><h2>{{ group.group_name }}</h2></div>
-</div>
-
-<div id="mods" align="center">
-    <u>Moderators</u>
-    {% for user in mods %}
-        <p>{{ user.user_profile }}</p>
-    {% empty %}
-        <p> No moderators </p>
-    {% endfor %}
-</div>
-
-<div id="users" align="center">
-    <u>Members</u>
-    {% for user in users %}
-        <p>{{ user.user_profile }}</p>
-    {% empty %}
-        <p> No users in the group </p>
-    {% endfor %}
-</div>
-
-<!DOCTYPE html>
-<html>
 <head lang="en">
     {% load staticfiles %}
     <meta charset="UTF-8">
     <title>{{ group.group_name }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/groupview.css'%}"/>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
+    <div id="header" align="center">
+        <!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
+        <img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
+        <div class="page-header" ><h2>{{ group.group_name }}</h2></div>
+    </div>
+    <div class=groupinfo>
+        <div id="creator" align="left">
+            <p>Administrator: <b>{{ creator.user_profile }}</b></p>
+            {% if creator.username == user.username %}
+                <p>Admin options:</p>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    Add Moderator: <input type="text" name="mod_name"/>
+                    <input type="submit" name="ADDMOD" value="Submit" class="btn btn-default"/><p/>
+                </form>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="SUBMIT" name="INVITE" value="Invite Users" class="btn btn-default">
+                </form>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="SUBMIT" name="REMOVE" value="Delete Group" class="btn btn-default">
+                </form>
 
-<div class="page">
+            {% endif %}<br>
+        </div>
+        <div id="mods" align="center">
+            <u>Moderators</u>
+            {% for user in mods %}
+                <p>{{ user.user_profile }}</p>
+            {% empty %}
+                <p> No moderators </p>
+            {% endfor %}
+        </div>
+
+        <div id="users" align="center">
+            <u>Members</u>
+            {% for user in users %}
+                <p>{{ user.user_profile }}</p>
+            {% empty %}
+                <p> No users in the group </p>
+            {% endfor %}
+        </div>
+    </div>
     <div class="allTopics" align="center">
         {% for topic in topics %}
             <div class="topicBox">
@@ -83,16 +78,18 @@
                         {% endif %}
                     {% endfor %}
                 </div>
+                <div class="textbox" align="center">
+                    <form id="new_message" action= "" method="post">
+                       {% csrf_token %}
+                       <input type="text" id="message_content" name="message_content" size="36" autocomplete="off" placeholder="Enter a message to chat..."/>
+                       <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
+                       <input type="submit" name="POSTMSG" value="Post" hidden="true"/>
+                    </form>
+                </div>
             </div>
         {% empty %}
             <p> No topics to display </p>
         {% endfor %}
     </div>
-</div>
 </body>
-</html>
-
-<div id="logout" align="center">
-    <a href="/mainsite/messageboard/">Back</a>
-</div>
 {% endblock %}
