@@ -437,7 +437,6 @@ def create_group(request):
     if request.method == 'POST':
         user = request.user
         try:
-            existing_group = Group.objects.get(group_name=request.POST['group_name'])
             group = Group(group_name=request.POST['group_name'],
                           group_password=request.POST['group_password'], creator=request.user)
             group.save()
@@ -468,16 +467,21 @@ def group(request, groupid):
             except User.DoesNotExist:
                 return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))                    
             return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
+        elif "POSTMSG" in request.POST:
+            post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
+            return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
     else:
         group_creator = this_group.creator
         user_list = this_group.user_set.all()
         mod_list = this_group.mod_set.all()
         topic_list = this_group.viewable_topics.all()
+        message_list = Message.objects.all()
         return render(request, 'groups/group.html', {'group': this_group,
                                                      'creator': group_creator,
                                                      'mods': mod_list,
                                                      'users': user_list,
-                                                     'topics': topic_list})
+                                                     'topics': topic_list,
+                                                     'messages': message_list})
 
 @login_required(login_url='/mainsite/login')
 def joined_groups(request):
