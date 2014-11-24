@@ -1,19 +1,22 @@
 body {
-    background: url("images/randombuilding.jpg") no-repeat;
-    background-size: 100%;
+    background: url("images/randombuilding.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .product-header{
-    position: fixed;
+    margin-left: auto;
+    margin-right: auto;
     top: 15%;
-    left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.page-header{
-    position: fixed;
+.links{
+    margin-left: auto;
+    margin-right: auto;
     top: 35%;
-    left: 50%;
     transform: translate(-50%, -50%);
     font-size: 30px;
 }
@@ -28,5 +31,6 @@ h1{
 }
 
 h2{
+
     font-size: 30px;
 }
