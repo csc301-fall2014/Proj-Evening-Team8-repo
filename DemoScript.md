@@ -16,7 +16,6 @@ Create/edit/delete messages.
 Add tag, go back and show tag filtering.
 
 Subscribe to some topics, show the subscribed topics filtering.
-Post in a pre-existing topic, then show subscription notifications in other users email.
 
 ## Third: Profile
 
@@ -35,3 +34,4 @@ Create and show group private topics.
 Log into pre-existing account (dwalker,asdf) to show group topic privacy.
 Go into invites, accept group invite and show group topic privacy.
 Go to group and show admin options(add mod, delete group).
+Post in a pre-existing topic, then show subscription notifications in other users email.
