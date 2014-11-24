@@ -14,6 +14,13 @@
 	height: 410px;
     margin: 2px;
 }
+.title{
+    width:fill;
+	height: 25%;
+	border-left:0.5px solid #000000;
+    border-top:0.5px solid #000000;
+    border-right:0.5px solid #000000;
+}
 .messages{
 	float: left;
 	width: 70%;
@@ -33,13 +40,6 @@
 }
 .logout{
 	clear: both;
-}
-.title{
-    width:fill;
-	height: 25%;
-	border-left:0.5px solid #000000;
-    border-top:0.5px solid #000000;
-    border-right:0.5px solid #000000;
 }
 .allTopics{
 	float: left;
