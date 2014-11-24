@@ -437,13 +437,13 @@ def create_group(request):
     if request.method == 'POST':
         user = request.user
         try:
+            existing_group = Group.objects.get(group_name__iexact=request.POST['group_name'])
+        except Group.DoesNotExist:
             group = Group(group_name=request.POST['group_name'],
                           group_password=request.POST['group_password'], creator=request.user)
             group.save()
             group.user_set.add(user)
             user.joined_groups.add(group)
-        except Group.DoesNotExist:
-            return redirect(reverse('mainsite:messageboard'))    
         return redirect(reverse('mainsite:messageboard'))
     else:
         return render(request, 'groups/create_group.html', {'form': GroupForm})
