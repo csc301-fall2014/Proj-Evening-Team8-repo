@@ -1,13 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>{{ topic.topic_name }}</title>
+    <div id="header" align="center">
+        <div class="page-header" ><h2>{{ topic.topic_name }}</h2></div>
+    </div>
 </head>
 <body>
-    <div id="header" align="center">
-        <h2>{{ topic.topic_name }}</h2>
-    </div>
     <script type="text/javascript">
         function hideorshow(obj) {
             if (document.getElementById(obj).style.display == 'none') {
@@ -27,8 +30,8 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input type="text" name="tag_name">
-                    <input type="submit" name="add_tag" value="Add Tag">
-                    <input type="submit" name="remove_tag" value="Remove Tag">
+                    <input type="submit" name="add_tag" value="Add Tag" class="btn btn-default">
+                    <input type="submit" name="remove_tag" value="Remove Tag" class="btn btn-default">
                 </form>
             {% endif %}
             <p>{{ tag_error }}</p>
@@ -66,17 +69,17 @@
         <form id="new_message" action= "" method="post">
             {% csrf_token %}
             <textarea style="resize:none" cols="40" id="new_message_content" name="message_content" rows="3"></textarea>
-            <p> <input type="SUBMIT" name="POST" value="Post"></p>
+            <p> <input type="SUBMIT" name="POST" value="Post" class="btn btn-default"></p>
         </form>
     </div>
 
     <div id="subscribe" align="center">
-        <a href="subscribe">Subscribe to this topic.</a>
+        <a href="subscribe" class="btn btn-default">Subscribe to this topic.</a>
     </div>
 
     <div id="logout" align="center">
-        <a href="/mainsite/messageboard/">Back</a>
-        <a href="/mainsite/logout/">Logout</a>
+        <a href="/mainsite/messageboard/" class="btn btn-default">Back</a>
     </div>
 </body>
 </html>
+{% endblock %}
