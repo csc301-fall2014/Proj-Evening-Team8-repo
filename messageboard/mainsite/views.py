@@ -15,6 +15,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
 from datetime import datetime, timedelta
+from itertools import chain
 
 
 @login_required(login_url='/mainsite/login')
@@ -106,7 +107,16 @@ def tableview(request):
         return render(request, 'tableview.html', {
             'topics': topic_list,
             'messages': message_list})
-    return render(request, 'tableview.html', {'topics': topic_list, 'messages': message_list})
+
+    # Get all subscribed topics from previously filtered topics
+    subscribeIDs = user.subscribed_topics.values_list('id')
+    topic_sublist = topic_list.filter(id__in=subscribeIDs)
+
+    # Get all unsubscribed topics from previously filtered topics
+    topic_nsublist = Topic.objects.exclude(id__in=subscribeIDs)
+    topic_list2 = chain(topic_sublist, topic_nsublist)
+    
+    return render(request, 'tableview.html', {'topics': topic_list2, 'messages': message_list})
 
 
 # Not a view, helper function for notices (a richer and more customizable HttpResponse)
