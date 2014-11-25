@@ -1,5 +1,15 @@
-.info {
+.infoNotSubbed {
 	background-color: lightblue;
+	float: left;
+	width: 30%;
+	height: 75%;
+	border: 0.5px solid #000000;
+    margin: 0px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.infoSubbed {
+	background-color: pink;
 	float: left;
 	width: 30%;
 	height: 75%;
