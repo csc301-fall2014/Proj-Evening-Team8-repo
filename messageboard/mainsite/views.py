@@ -109,14 +109,14 @@ def tableview(request):
             'messages': message_list})
 
     # Get all subscribed topics from previously filtered topics
-    subscribeIDs = user.subscribed_topics.values_list('id')
-    topic_sublist = topic_list.filter(id__in=subscribeIDs)
+    subscribed_ids = user.subscribed_topics.values_list('id', flat=True)
+    topic_sublist = topic_list.filter(id__in=subscribed_ids)
 
     # Get all unsubscribed topics from previously filtered topics
-    topic_nsublist = Topic.objects.exclude(id__in=subscribeIDs)
+    topic_nsublist = Topic.objects.exclude(id__in=subscribed_ids)
     topic_list2 = chain(topic_sublist, topic_nsublist)
     
-    return render(request, 'tableview.html', {'topics': topic_list2, 'messages': message_list})
+    return render(request, 'tableview.html', {'topics': topic_list2, 'subIDs': subscribed_ids, 'messages': message_list})
 
 
 # Not a view, helper function for notices (a richer and more customizable HttpResponse)
