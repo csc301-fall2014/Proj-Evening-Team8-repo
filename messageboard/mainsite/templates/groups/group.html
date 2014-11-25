@@ -64,7 +64,7 @@
                     </p>
                 </div>
                 <div class="info" align="left">
-                    <p>Author: {{ topic.creator }}</p>
+                    <p>Author: <a href="{% url 'mainsite:userprofile' topic.creator.id %}" style="color: black;">{{topic.creator}}</a></p>
                     <p>Date: {{ topic.pub_date }}</p>
                     <p>Subscribers: {{ topic.subscriptions.count }}</p>
                 </div>
