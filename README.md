@@ -9,7 +9,16 @@
 * Inside of messageboard folder run `python manage.py runserver`
 * Navigate the browser to `127.0.0.1:8000/mainsite`
 
-### Links to team deliverables, Phase 3
+### Phase 4 Team Deliverables
+[Product.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase4/Product.md)
+
+[Process.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase4/Process.md)
+
+[Architecture.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase4/Architecture.md)
+
+[IndividualReports.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase4/IndividualReports.md)
+
+### Phase 3 Team Deliverables
 
 Project, as usual, is located in the [messageboard] (https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/tree/master/messageboard) folder.
 
@@ -22,7 +31,7 @@ Note that some WIP or completed tasks may not have been able to be merged with m
 [CodeReview.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase3/CodeReview.md)
 
 
-### Links to team deliverables, Phase 2
+### Phase 2 Team Deliverables
 
 [Product.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase2/Product.md)
 
