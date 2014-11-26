@@ -10,3 +10,4 @@ The controllers (views.py), which define the core logic of the website;  it proc
 
 Apart from these, there is a built-in development web server for actually handling the HTTP requests that are received.
 
+The Bootstrap framework is also used on top of our views to improve the UI of our product. 
