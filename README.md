@@ -1,6 +1,7 @@
 ### Installation
 
 * install pip
+* Navigate to messageboard folder
 * `pip install -r requirements.txt`
 
 ### Getting Started
