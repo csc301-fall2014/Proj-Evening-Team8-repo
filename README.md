@@ -4,10 +4,14 @@
 * Navigate to messageboard folder
 * `pip install -r requirements.txt`
 
+---
+
 ### Getting Started
 
 * Inside of messageboard folder run `python manage.py runserver`
 * Navigate the browser to `127.0.0.1:8000/mainsite`
+
+----
 
 ### Phase 4 Team Deliverables
 [Product.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase4/Product.md)
@@ -17,6 +21,8 @@
 [Architecture.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase4/Architecture.md)
 
 [IndividualReports.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase4/IndividualReports.md)
+
+----
 
 ### Phase 3 Team Deliverables
 
@@ -30,6 +36,7 @@ Note that some WIP or completed tasks may not have been able to be merged with m
 
 [CodeReview.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase3/CodeReview.md)
 
+----
 
 ### Phase 2 Team Deliverables
 
@@ -38,6 +45,8 @@ Note that some WIP or completed tasks may not have been able to be merged with m
 [Process.md](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/master/Phase2/Process.md)
 
 Main product can be found in /messageboard/, as a Django project.
+
+----
 
 ### Sprint One
 [Backlog](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/2)
@@ -49,6 +58,8 @@ Main product can be found in /messageboard/, as a Django project.
 [Second Daily Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/23)
 
 [Final Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/16)
+
+----
 
 ### Sprint Two
 [Planning Meeting Notes](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/issues/17)
