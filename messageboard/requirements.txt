@@ -1,0 +1,6 @@
+# Install with: `pip install -r requirements.txt`
+
+Django >= 1.6.8
+Pillow >= 2.6.1
+django-bootstrap >= 0.2.4
+django-extensions >= 1.1.1
