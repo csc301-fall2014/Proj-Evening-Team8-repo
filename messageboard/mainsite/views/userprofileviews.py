@@ -16,6 +16,11 @@ from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
 from datetime import datetime, timedelta
 from itertools import chain
+from mainviews import *
+from groupsviews import *
+from registrationviews import *
+from topicsviews import *
+from userprofileviews import *
 
 @login_required(login_url='/mainsite/login')
 def userprofile(request, userid):
@@ -108,6 +113,9 @@ def viewdirectmessage(request, convoid):
     user = request.user
     convo = Conversation.objects.get(id=convoid)
     messagelist = DirectMessage.objects.filter(conversation=convo)
+
+
+
     #post request
     if request.method == 'POST':
         filledForm = DirectMessageForm(request.POST)

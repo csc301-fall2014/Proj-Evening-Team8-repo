@@ -16,6 +16,11 @@ from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
 from datetime import datetime, timedelta
 from itertools import chain
+from mainviews import *
+from groupsviews import *
+from registrationviews import *
+from topicsviews import *
+from userprofileviews import *
 
 def index(request):
     return render(request, 'index.html')
