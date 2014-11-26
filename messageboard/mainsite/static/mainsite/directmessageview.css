@@ -1,0 +1,15 @@
+.messageBox{
+	width: 410px;
+	height: 410px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.messages{
+	width: 70%;
+	height: 67.5%;
+	overflow-y: scroll;
+	border-top: 0.5px solid #000000;
+	border-right: 0.5px solid #000000;
+	border-bottom: 0.5px solid #000000;
+}
