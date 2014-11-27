@@ -92,5 +92,12 @@
             <p> No topics to display </p>
         {% endfor %}
     </div>
+    
+    <script >
+        $(function(){
+            $("div.message:even").css("background-color", "#808080");
+            $("div.message:odd").css("background-color", "#B0B0B0");
+        });
+    </script>
 </body>
 {% endblock %}

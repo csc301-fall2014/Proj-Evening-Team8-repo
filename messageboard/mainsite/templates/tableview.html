@@ -25,17 +25,13 @@
                     </div>
                     {% if topic.id in subIDs %}
                         <div class="infoSubbed" align="left">
-                            <p>Author: <a href="{% url 'mainsite:userprofile' topic.creator.id %}" style="color: black;">{{topic.creator}}</a></p>
-                            <p>Date: {{ topic.pub_date }}</p>
-                            <p>Subscribers: {{ topic.subscriptions.count }}</p>
-                        </div>
                     {% else %}
                         <div class="infoNotSubbed" align="left">
+                    {% endif %}
                             <p>Author: <a href="{% url 'mainsite:userprofile' topic.creator.id %}" style="color: black;">{{topic.creator}}</a></p>
                             <p>Date: {{ topic.id }}</p>
                             <p>Subscribers: {{ topic.subscriptions.count }}</p>
                         </div>
-                    {% endif %}
                     <div class="messages" align="left">
                         {% for msg in messages %}
                             {% if msg.topic.id  == topic.id %}
