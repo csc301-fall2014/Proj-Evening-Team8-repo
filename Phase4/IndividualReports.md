@@ -7,19 +7,19 @@
 Here is an example of a fake report, just to give you an idea of the format we are expecting.
 We would like you to be concise yet informative.
 
- * My most significant contrubution was the design and implementation of Component X (links to relevant and interesting source-files/commits/issues).
- * While working on our Android app (and then later in class), I learned about adapters (links to relevant and interesting source-files/commits/issues).
- * I am always helping my teammates - I am the most experienced coder on the team, and I helped other teammates set up their development environment, and get up to speed with the tools we've used (give examples of specific tools).
- * I could keep people more informed of what I am doing - I made a few large commits that conflicted with everybody else's code, and merging everything wasted a lot of our time.
+* My most significant contrubution was the design and implementation of Component X (links to relevant and interesting source-files/commits/issues).
+* While working on our Android app (and then later in class), I learned about adapters (links to relevant and interesting source-files/commits/issues).
+* I am always helping my teammates - I am the most experienced coder on the team, and I helped other teammates set up their development environment, and get up to speed with the tools we've used (give examples of specific tools).
+* I could keep people more informed of what I am doing - I made a few large commits that conflicted with everybody else's code, and merging everything wasted a lot of our time.
 
 ----
 
 ## ***REMOVED*** (***REMOVED***)
 
- * What is your most significant individual contribution?
- * Tell us about a new technical concept/issue that you learned while working on the project.
- * What is your main strength(s) as a team member?
- * What is your main weakness(es) as a team member? (i.e. Where do you think you can/should improve?)
+ * My most significant individual technical contribution was the implementation of [topic subscription](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/a39d8a641226ecc3f58309e94ddda519b0b412da), [subscription notifications](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/768e64f1618e2cc04529aaed01cbbca1e6c2ccac), and the [enabling of external emailing for both subscriptions and account activation](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/e7d26d0e1557ac3c05afe744b258f5f0b8a1c3d7)
+ * While I had a little bit of experience from experimenting with another web framework (Ruby on Rails) in the past, this is my first major implementation of a web framework, so it really helped me understand some of the nuances of the MVC design pattern and really helped me understand how URL routing works.
+ * My organizational skills and ability to see the big picture really helped get the project off the ground at the beginning, from the choice of toolset, to organizing meetings, to be able to envision the structure of the product.  This made it easy to understand which tasks needed to be done at which point to ensure a reasonably painless workflow.
+ * A certain lack of creativity made it difficult to come up with tasks for myself for the final phase of the project, which required a certain vision of what exactly we wanted the final product to look like.  I should communicate with my team and with other more often to generate ideas during the 'would be nice' phase of a project.
 
 ----
 
@@ -52,27 +52,38 @@ We would like you to be concise yet informative.
 
 ## ***REMOVED*** (***REMOVED***)
 
- * My most significant contribution would have to be my work with message functionality. I implemented messaging originally in [topic views](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/messagetopic8), as well as [table view](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/tableviewmessaging55). Later on I also added the functionality to [topics in group view](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/groupmessagesfix70). There was also the scramble at the end of phase 3 [commit 1](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/fb71e50ff977583a65c320f46b57c60e73fdebfc), [commit 2](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/8d1f243e14d5b1019f516806fb2182c422843996), [commit 3](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/6e6c7ff4f34e4aeb6d1aa1c5d52675d44334af77) where I was able to save the project from a major reset right before the deadline.
+ * My most significant contribution would have to be my work with message functionality in [topic views](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/messagetopic8), [table view](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/tableviewmessaging55) and [topics in group view](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/groupmessagesfix70). There was also the scramble at the end of phase 3 [commit 1](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/fb71e50ff977583a65c320f46b57c60e73fdebfc), [commit 2](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/8d1f243e14d5b1019f516806fb2182c422843996), [commit 3](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/6e6c7ff4f34e4aeb6d1aa1c5d52675d44334af77) where I was able to save the project from a major reset right before the deadline.
  * The two largest technical concepts I learnt about were, MVC and web frameworks, through Django. Before the project I had never worked with a web framework, I had only done work using HTML/CSS and javascript in very small projects.
- * My ability to quickly grasp concepts. Going in to the project not knowing how Django, or more importantly web frameworks worked I was able to quickly get a hold of the basics, which then let me implement a very significant portion of the base functionality. That in turn allowed me to be a good source of knowledge for the rest of the project, with group members using parts of my original code as reference, and left me with a good intuition as to where the source of bugs were.
+ * My ability to quickly grasp concepts. Despite going in to the project not knowing how Django, or more importantly web frameworks worked I was able to quickly get a hold of the basics. That in turn allowed me to be a good source of knowledge for the rest of the project and left me with a good intuition as to where the source of bugs were.
  * My time management was definitely my weakest point. At the start of this project, when my workload wasn't so crazy I was able to make most if not all of the meetings. As the semester went on my growing workload as well as issues in my personal life caused me to cram all of my work for the project into a short period of time, and kept me from making a meeting or two.
 
 ----
 
 ## ***REMOVED*** (***REMOVED***)
 
- * What is your most significant individual contribution?
- * Tell us about a new technical concept/issue that you learned while working on the project.
- * What is your main strength(s) as a team member?
- * What is your main weakness(es) as a team member? (i.e. Where do you think you can/should improve?)
+ * My most significant individual contribution was allowing topics to be private based off of group memberships. This added a lot of privacy features that are needed for a good messageboard.
+ * I learnt a lot about web development and the tools needed to make a web application. Using Django taught me how the MVC pattern actually looks and works.
+ * My main strength would be that I tried to ask a lot of questions about other people's code and even my own to learn what could be done better. This helps with finding potential bugs if someoneone knows a better way than me to do a certain thing or vice versa.
+ * I think that I could definately improve on my communication to let others know what I wanted to/was working on.
 
 ----
 
 ## ***REMOVED*** (***REMOVED***/aleccool21/cannon-edgar)
 
  * What is your most significant individual contribution?
+ 
+My most significant contribution to the team I say would be [bringing new ideas to the team](https://docs.google.com/document/d/1XSi5KfYx6pVRrvmnEio1RfflnQ-aolPxFo9LbrbEBiU/edit?usp=sharing), [keeping things fresh](https://docs.google.com/document/d/1J7HSDrtcEN1SjF89X4f7vbfWQzR4S43IS-kBpIbZn_U/edit?usp=sharing) and also [keeping things organized](https://docs.google.com/document/d/154RksqAHv8_oPVOSH6bVH9sEdJI0Q8Z727UucDL8WZ8/edit?usp=sharing). I also [squashed a lot of bugs](https://docs.google.com/document/d/1qjO6C4pz3_j3uvisjhCUIyYFTW5DvnX0ixocyR73aCg/edit?usp=sharing). 
+
  * Tell us about a new technical concept/issue that you learned while working on the project.
+
+Many new things were learned through this project. In terms of software development, I now know the advantages and challenges faced with Scrum and Kaban. I personally like Kaban better because of how free-flowing it is and how it is more based on individual skill than team organization. In terms of using Django and doing a web-based project, many concepts relating to the MVC model of development were learned. The connection between models (databases/DAO), views (what is being viewed on screen), and controllers (our python functions), was a critical skill to learn to not only contribute to the project but also excel and suggest new features to the team. 
+
  * What is your main strength(s) as a team member?
+
+Keeping things fresh was a big thing. My largest contribution was to the design of the product and to squishing bugs. I learned how Django worked extensively and knew what things were possible and not possible during the timeline we had. My knowledge of new technlogies (Bootstrap and Sendgrid) made for some interesting upgrades to the overall project. 
+
  * What is your main weakness(es) as a team member? (i.e. Where do you think you can/should improve?)
+ 
+I could improve my code comprehension and overall knowledge of advanced git and django features. Making sure to write comments alongside my code is a struggle for me as I find I want to complete things too quickly. This also leads to me hacking away at something and realizing there is lots of bugs with it. I need to slow down and think about the problem I am facing because more often than not I will thank myself later on.
 
 ----
