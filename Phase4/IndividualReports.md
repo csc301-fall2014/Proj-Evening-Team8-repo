@@ -61,10 +61,10 @@ We would like you to be concise yet informative.
 
 ## ***REMOVED*** (***REMOVED***)
 
- * What is your most significant individual contribution?
- * Tell us about a new technical concept/issue that you learned while working on the project.
- * What is your main strength(s) as a team member?
- * What is your main weakness(es) as a team member? (i.e. Where do you think you can/should improve?)
+ * My most significant individual contribution was allowing topics to be private based off of group memberships. This added a lot of privacy features that are needed for a good messageboard.
+ * I learnt a lot about web development and the tools needed to make a web application. Using Django taught me how the MVC pattern actually looks and works.
+ * My main strength would be that I tried to ask a lot of questions about other people's code and even my own to learn what could be done better. This helps with finding potential bugs if someoneone knows a better way than me to do a certain thing or vice versa.
+ * I think that I could definately improve on my communication to let others know what I wanted to/was working on.
 
 ----
 
