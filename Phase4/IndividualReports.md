@@ -18,8 +18,8 @@ We would like you to be concise yet informative.
 
  * My most significant individual technical contribution was the implementation of [topic subscription](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/a39d8a641226ecc3f58309e94ddda519b0b412da), [subscription notifications](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/768e64f1618e2cc04529aaed01cbbca1e6c2ccac), and the [enabling of external emailing for both subscriptions and account activation](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/e7d26d0e1557ac3c05afe744b258f5f0b8a1c3d7)
  * While I had a little bit of experience from experimenting with another web framework (Ruby on Rails) in the past, this is my first major implementation of a web framework, so it really helped me understand some of the nuances of the MVC design pattern and really helped me understand how URL routing works.
- * something something not done yet
- * ..
+ * My organizational skills and ability to see the big picture really helped get the project off the ground at the beginning, from the choice of toolset, to organizing meetings, to be able to envision the structure of the product.  This made it easy to understand which tasks needed to be done at which point to ensure a reasonably painless workflow.
+ * A certain lack of creativity made it difficult to come up with tasks for myself for the final phase of the project, which required a certain vision of what exactly we wanted the final product to look like.  I should communicate with my team and with other more often to generate ideas during the 'would be nice' phase of a project.
 
 ----
 
