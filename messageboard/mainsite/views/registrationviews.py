@@ -1,21 +1,16 @@
 import hashlib
 import random
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm, DirectMessageForm
+from mainsite.forms import UserForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
-from django.core.exceptions import ValidationError
 from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
-from datetime import datetime, timedelta
-from itertools import chain
+from mainsite.models import UserProfile
+from mainsite.views import helperviews
 
 def registration(request):
     if request.method == 'POST':
@@ -53,7 +48,7 @@ def registration(request):
             return render(request, 'registration/registrationcomplete.html', {'data': data})
         else:
             # Display validation errors
-            return response(request,
+            return helperviews.response(request,
                             'Invalid Registration Information',
                             str(form.errors),
                             '/mainsite/registration/',
@@ -81,7 +76,7 @@ def email_activation(request, activation_key):
     try:
         user_profile = UserProfile.objects.get(activation_key=activation_key)
     except UserProfile.DoesNotExist:
-        return response(request,
+        return helperviews.response(request,
                         'Invalid Activation Link',
                         'The activation link you have provided does not correspond to any account.\n' +
                         'Double check you have the correct link.',
@@ -92,7 +87,7 @@ def email_activation(request, activation_key):
 
     # If already activated, do nothing
     if user.is_active:
-        return response(request,
+        return helperviews.response(request,
                         'Account already activated',
                         'The account is already activated.\n',
                         '/mainsite/',
@@ -101,7 +96,7 @@ def email_activation(request, activation_key):
     # Check if activation_key has expired
     if user_profile.key_expires < timezone.now():
         user.delete()  # Delete User, dependant UserProfile automatically deleted as well
-        return response(request,
+        return helperviews.response(request,
                         'Expired Activation Link',
                         'The activation link has expired. Please register again.',
                         '/mainsite/registration/',
@@ -109,7 +104,7 @@ def email_activation(request, activation_key):
 
     user.is_active = True
     user.save()
-    return response(request,
+    return helperviews.response(request,
                     'Account Activated',
                     'Your account has been activated. You may now login.',
                     '/mainsite/login/',
@@ -126,7 +121,7 @@ def login(request):
             else:
                 if user.user_profile.key_expires < timezone.now():
                     user.delete()  # Delete User, dependant UserProfile automatically deleted as well
-                    return response(request,
+                    return helperviews.response(request,
                                     'Expired Unactivated Account',
                                     'Account was not activated in time and has been deleted. Please register again.',
                                     '/mainsite/registration/',
@@ -134,14 +129,14 @@ def login(request):
                 else:
                     # Resend activation key
                     send_activation_email(user, user.user_profile.activation_key)
-                    return response(request,
+                    return helperviews.response(request,
                                     'Account Unactivated',
                                     'Account not activated. Another activation e-mail has been sent.',
                                     '/mainsite/login/',
                                     'Back')
         else:
             # Incorrect user or password
-            return response(request,
+            return helperviews.response(request,
                             'Incorrect Login',
                             'User does not exist or password is incorrect.',
                             '/mainsite/login/',

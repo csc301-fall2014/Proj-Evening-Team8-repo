@@ -1,20 +1,10 @@
-import hashlib
-import random
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.models import User
-from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm, DirectMessageForm
-from django.contrib.auth import authenticate, logout
-from django.contrib.auth import login as auth_login  # Changed name because login is our view function
-from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
-from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
-from datetime import datetime, timedelta
+from mainsite.models import Topic, Message, Tag
+from mainsite.views import helperviews
 from itertools import chain
 
 def index(request):
@@ -30,7 +20,7 @@ def messageboard(request):
                 tag = Tag.objects.get(tag_name=tag_name)
                 topic_list = tag.tagged_topics.all()
             except Tag.DoesNotExist:
-                return response(request,
+                return helperviews.response(request,
                                 'Nonexistent Tag',
                                 'Tag does not exist.',
                                 '/mainsite/messageboard/',
@@ -59,7 +49,7 @@ def tableview(request):
                 topic_list = topic_list.exclude(id=topic.id)
 
     if "POST_post" in request.POST:
-        post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
+        helperviews.post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
         return HttpResponseRedirect(reverse('mainsite:messageboard'))
     elif "POST_subscribe" in request.POST:
         current_topic = Topic.objects.get(id=request.POST['topic_id'])
@@ -89,7 +79,7 @@ def tableview(request):
                     tag.save()
                     current_topic.tags.add(tag)
                 except ValidationError as e:
-                    return response(request,
+                    return helperviews.response(request,
                                     'Invalid Tag',
                                     str(e.message_dict['tag_name'])[2:-2],  # Trim [' and ']
                                     '/mainsite/messageboard/',
@@ -139,11 +129,3 @@ def tableview(request):
     
     return render(request, 'tableview.html', {'topics': topic_list2, 'subIDs': subscribed_ids, 'messages': message_list})
 
-
-# Not a view, helper function for notices (a richer and more customizable HttpResponse)
-def response(request, title, message, link, button):
-    return render(request, 'response.html', {
-        'title': title,
-        'message': message,
-        'link': link,
-        'button': button})

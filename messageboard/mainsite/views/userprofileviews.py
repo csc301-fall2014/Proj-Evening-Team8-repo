@@ -1,21 +1,11 @@
-import hashlib
-import random
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm, DirectMessageForm
-from django.contrib.auth import authenticate, logout
-from django.contrib.auth import login as auth_login  # Changed name because login is our view function
-from django.contrib.auth.forms import AuthenticationForm
+from mainsite.forms import UserProfileForm, DirectMessageForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ValidationError
-from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
-from datetime import datetime, timedelta
-from itertools import chain
+from mainsite.models import UserProfile, Group, Requests, Conversation, DirectMessage
+
 
 @login_required(login_url='/mainsite/login')
 def userprofile(request, userid):
