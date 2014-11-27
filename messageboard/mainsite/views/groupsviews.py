@@ -16,6 +16,7 @@ from django.utils import timezone
 from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
 from datetime import datetime, timedelta
 from itertools import chain
+from .topicsviews import post_message
 
 @login_required(login_url='/mainsite/login')
 def create_group(request):
