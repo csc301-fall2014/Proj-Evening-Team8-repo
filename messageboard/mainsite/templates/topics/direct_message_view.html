@@ -27,16 +27,16 @@
 
     <div class="messageBox" align="center">
         {% for msg in messages %}
-        {% if user == msg.creator %}
-        <div class="mymessage" align="left">
-        {% else %}
-        <div class="othermessage" align="left">
-        {% endif %}
-            <p>
-                <b>{{ msg.creator }}:</b>
-                <font size='1' color='light-blue'>{{ msg.pub_date }}</font>
-                <br/>{{ msg.message_content }}   
-            </p>       
+        <div class="message">
+            <div class="meta" align="right">
+                <font size='1' color='grey'>{{ msg.pub_date }}|</font>
+                {% if user == msg.creator %}
+                <font color='light-blue'>{{ msg.creator }}</font>
+                {% else %}
+                <font color='red'>{{ msg.creator }}</font>
+                {% endif %}
+            </div>
+            <div class="content" align="left">{{ msg.message_content }}</div>
         </div>
         {% empty %}
             <p> No messages to display </p>
