@@ -1,22 +1,11 @@
-import hashlib
-import random
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm, TopicForm, GroupForm, UserProfileForm, DirectMessageForm
-from django.contrib.auth import authenticate, logout
-from django.contrib.auth import login as auth_login  # Changed name because login is our view function
-from django.contrib.auth.forms import AuthenticationForm
+from mainsite.forms import GroupForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ValidationError
-from django.utils import timezone
-from mainsite.models import Topic, Message, UserProfile, Group, Tag, Requests, Conversation, DirectMessage
-from datetime import datetime, timedelta
-from itertools import chain
-from .topicsviews import post_message
+from mainsite.models import Topic, Message, Group
+from mainsite.views import helperviews
 
 @login_required(login_url='/mainsite/login')
 def create_group(request):
@@ -54,7 +43,7 @@ def group(request, groupid):
                 return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))                    
             return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
         elif "POSTMSG" in request.POST:
-            post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
+            helperviews.post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
             return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
     else:
         group_creator = this_group.creator
@@ -85,7 +74,7 @@ def join_group(request):
         try:
             this_group = Group.objects.get(group_name=request.POST['group_name'])
         except Group.DoesNotExist:
-            return response(request,
+            return helperviews.response(request,
                             'Nonexistent Group',
                             'Group does not exist.',
                             '/mainsite/messageboard/joingroup/',
@@ -95,7 +84,7 @@ def join_group(request):
             this_group.user_set.add(user)
             user.joined_groups.add(this_group)
         else:
-            return response(request,
+            return helperviews.response(request,
                             'Incorrect Password',
                             'Password is incorrect.',
                             '/mainsite/messageboard/joingroup/',
