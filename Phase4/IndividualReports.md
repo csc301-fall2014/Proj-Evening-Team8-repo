@@ -71,8 +71,19 @@ We would like you to be concise yet informative.
 ## ***REMOVED*** (***REMOVED***/aleccool21/cannon-edgar)
 
  * What is your most significant individual contribution?
+ 
+My most significant contribution to the team I say would be [bringing new ideas to the team](https://docs.google.com/document/d/1XSi5KfYx6pVRrvmnEio1RfflnQ-aolPxFo9LbrbEBiU/edit?usp=sharing), [keeping things fresh](https://docs.google.com/document/d/1J7HSDrtcEN1SjF89X4f7vbfWQzR4S43IS-kBpIbZn_U/edit?usp=sharing) and also [keeping things organized](https://docs.google.com/document/d/154RksqAHv8_oPVOSH6bVH9sEdJI0Q8Z727UucDL8WZ8/edit?usp=sharing). I also [squashed a lot of bugs](https://docs.google.com/document/d/1qjO6C4pz3_j3uvisjhCUIyYFTW5DvnX0ixocyR73aCg/edit?usp=sharing). 
+
  * Tell us about a new technical concept/issue that you learned while working on the project.
+
+Many new things were learned through this project. In terms of software development, I now know the advantages and challenges faced with Scrum and Kaban. I personally like Kaban better because of how free-flowing it is and how it is more based on individual skill than team organization. In terms of using Django and doing a web-based project, many concepts relating to the MVC model of development were learned. The connection between models (databases/DAO), views (what is being viewed on screen), and controllers (our python functions), was a critical skill to learn to not only contribute to the project but also excel and suggest new features to the team. 
+
  * What is your main strength(s) as a team member?
+
+Keeping things fresh was a big thing. My largest contribution was to the design of the product and to squishing bugs. I learned how Django worked extensively and knew what things were possible and not possible during the timeline we had. My knowledge of new technlogies (Bootstrap and Sendgrid) made for some interesting upgrades to the overall project. 
+
  * What is your main weakness(es) as a team member? (i.e. Where do you think you can/should improve?)
+ 
+I could improve my code comprehension and overall knowledge of advanced git and django features. Making sure to write comments alongside my code is a struggle for me as I find I want to complete things too quickly. This also leads to me hacking away at something and realizing there is lots of bugs with it. I need to slow down and think about the problem I am facing because more often than not I will thank myself later on.
 
 ----
