@@ -3,13 +3,22 @@
 	height: 410px;
 	margin-left: auto;
 	margin-right: auto;
+    margin-bottom: 20px;
+	overflow-y: auto;
+	border: 0.5px solid grey;
 }
 
-.messages{
-	width: 70%;
-	height: 67.5%;
-	overflow-y: scroll;
-	border-top: 0.5px solid #000000;
-	border-right: 0.5px solid #000000;
-	border-bottom: 0.5px solid #000000;
+.mymessage{
+	background-color: pink;
+	width: 100%;
+}
+
+.othermessage{
+    width: 100%;
+}
+
+br{
+    display: block;
+    margin: 0px 0;
+    line-height: 10px;
 }
