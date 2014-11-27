@@ -26,29 +26,31 @@
     </div>
 
     <div class="messageBox" align="center">
-        <div class="messages" align="center">
-            {% for msg in messages %}
-            <div>
-                <p>
-                    <b>{{ msg.creator }}:</b>
-                    {{ msg.message_content }}   
-                    <font size='1'>{{ msg.pub_date }}</font>
-                </p>       
-            </div>
-            {% empty %}
-                <p> No messages to display </p>
-        	{% endfor %}
+        {% for msg in messages %}
+        {% if user == msg.creator %}
+        <div class="mymessage" align="left">
+        {% else %}
+        <div class="othermessage" align="left">
+        {% endif %}
+            <p>
+                <b>{{ msg.creator }}:</b>
+                <font size='1' color='light-blue'>{{ msg.pub_date }}</font>
+                <br/>{{ msg.message_content }}   
+            </p>       
         </div>
+        {% empty %}
+            <p> No messages to display </p>
+        {% endfor %}
+    </div>
 
-        <div id="textbox" align="center">
-            <form action= "" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <p> 
-                    <input type="SUBMIT" value="Post" class="btn btn-default"/>
-                </p>
-            </form>
-        </div>
+    <div id="textbox" align="center">
+        <form action= "" method="post">
+            {% csrf_token %}
+            <textarea style="resize:none" cols="40" id="new_message_content" name="message_content" rows="3"></textarea>
+            <p> 
+                <input type="SUBMIT" value="Post" class="btn btn-default"/>
+            </p>
+        </form>
     </div>
 </body>
 
