@@ -7,10 +7,10 @@
 Here is an example of a fake report, just to give you an idea of the format we are expecting.
 We would like you to be concise yet informative.
 
- * My most significant contrubution was the design and implementation of Component X (links to relevant and interesting source-files/commits/issues).
- * While working on our Android app (and then later in class), I learned about adapters (links to relevant and interesting source-files/commits/issues).
- * I am always helping my teammates - I am the most experienced coder on the team, and I helped other teammates set up their development environment, and get up to speed with the tools we've used (give examples of specific tools).
- * I could keep people more informed of what I am doing - I made a few large commits that conflicted with everybody else's code, and merging everything wasted a lot of our time.
+ * My most significant individual technical contribution was the implementation of [topic subscription](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/a39d8a641226ecc3f58309e94ddda519b0b412da), [subscription notifications](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/768e64f1618e2cc04529aaed01cbbca1e6c2ccac), and the [enabling of external emailing for both subscriptions and account activation](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/e7d26d0e1557ac3c05afe744b258f5f0b8a1c3d7)
+ * While I had a little bit of experience from experimenting with another web framework (Ruby on Rails) in the past, this is my first major implementation of a web framework, so it really helped me understand some of the nuances of the MVC design pattern and really helped me understand how URL routing works.
+ * something something not done yet
+ * ..
 
 ----
 
