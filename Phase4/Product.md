@@ -1,5 +1,5 @@
 # Product
-BadgerYard is a group discussion board aimed at university students and professors. A typical scenario that could take place within our application is if a student wants to ask a question to a specific group of students. He can make a group and invite his class to take part in discussions. Another similar scenario is that a professor could invite users to join a specific group. The student or professor can then go and post a private topic within that group for all of the members to see.
+Huddle is a group discussion board aimed at university students and professors. A typical scenario that could take place within our application is if a student wants to ask a question to a specific group of students. He can make a group and invite his class to take part in discussions. Another similar scenario is that a professor could invite users to join a specific group. The student or professor can then go and post a private topic within that group for all of the members to see.
 
 
 Users can register using their UTOR email and clicking on a unique link emailed to them to confirm their registration. Users can browse through public topics and can also make private topics within groups. Tags can be applied to topics which allows for easy searching when a user wants to find a specific topic.
