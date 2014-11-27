@@ -109,8 +109,6 @@ def post_message(content, topic, creator):
         if subscriber != message.creator:
             notify_subscriber(topic, subscriber)
 
-
-
 # Helper function for subscription notifications.
 # No loginrequired header is needed here, its not an actual view function.
 def notify_subscriber(topic, subscriber):

@@ -123,22 +123,17 @@ def tableview(request):
                 topic_list = tag.tagged_topics.all()
             except Tag.DoesNotExist:
                 topic_list = []
-        # If 'subscriptions only' checked, (further) filter by subscribed only.
-        if "subscribed" in request.POST:
-            topic_list = topic_list & request.user.subscribed_topics.all()
-        return render(request, 'tableview.html', {
-            'topics': topic_list,
-            'messages': message_list})
 
-    # Get all subscribed topics from previously filtered topics
     subscribed_ids = user.subscribed_topics.values_list('id', flat=True)
-    topic_sublist = topic_list.filter(id__in=subscribed_ids)
-
-    # Get all unsubscribed topics from previously filtered topics
-    topic_nsublist = Topic.objects.exclude(id__in=subscribed_ids)
-    topic_list2 = chain(topic_sublist, topic_nsublist)
     
-    return render(request, 'tableview.html', {'topics': topic_list2, 'subIDs': subscribed_ids, 'messages': message_list})
+    if topic_list != []:
+    # Get all subscribed topics from previously filtered topics
+        topic_sublist = topic_list.filter(id__in=subscribed_ids)
+    # Get all unsubscribed topics from previously filtered topics
+        topic_nsublist = Topic.objects.exclude(id__in=subscribed_ids)
+        topic_list = chain(topic_sublist, topic_nsublist)
+    
+    return render(request, 'tableview.html', {'topics': topic_list, 'subIDs': subscribed_ids, 'messages': message_list})
 
 
 # Not a view, helper function for notices (a richer and more customizable HttpResponse)
