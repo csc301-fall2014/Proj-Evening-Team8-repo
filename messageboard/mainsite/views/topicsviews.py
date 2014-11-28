@@ -14,9 +14,10 @@ def create_topic(request):
         topic = Topic(topic_name=request.POST['topic_name'], creator=request.user)
         topic.save()
         if "group_set" in request.POST:
-            for group in request.POST['group_set']:
+            for group in request.POST.getlist('group_set'):
                 topic.group_set.add(group)
             topic.save()
+            print(topic.group_set.all())
         return redirect('/mainsite/messageboard/')
     else:
         return render(request, 'topics/create_topic.html',
