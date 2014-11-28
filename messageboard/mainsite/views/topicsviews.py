@@ -17,7 +17,6 @@ def create_topic(request):
             for group in request.POST.getlist('group_set'):
                 topic.group_set.add(group)
             topic.save()
-            print(topic.group_set.all())
         return redirect('/mainsite/messageboard/')
     else:
         return render(request, 'topics/create_topic.html',
