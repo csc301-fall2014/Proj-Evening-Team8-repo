@@ -36,9 +36,10 @@ def tableview(request):
     message_list = Message.objects.all()
     # Filtering for private topics
     user = request.user
-    rm = True
     # In each topic, check if it is private
     for topic in topic_list:
+        rm = True
+        print(topic.topic_name)
         if topic.group_set.exists():
             # In each group, check if the user belongs to it.
             for group in topic.group_set.all():
