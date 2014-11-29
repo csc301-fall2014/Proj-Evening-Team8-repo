@@ -120,7 +120,7 @@ def tableview(request):
     # Get all subscribed topics from previously filtered topics
         topic_sublist = topic_list.filter(id__in=subscribed_ids)
     # Get all unsubscribed topics from previously filtered topics
-        topic_nsublist = Topic.objects.exclude(id__in=subscribed_ids)
+        topic_nsublist = topic_list.exclude(id__in=subscribed_ids)
         topic_list = chain(topic_sublist, topic_nsublist)
     
     return render(request, 'tableview.html', {'topics': topic_list, 'subIDs': subscribed_ids, 'messages': message_list})
