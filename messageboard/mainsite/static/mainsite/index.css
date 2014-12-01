@@ -1,9 +1,17 @@
 body {
-    background: url("images/randombuilding.jpg") no-repeat center center fixed;
+    background: url("images/landingpage.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+#logo{
+    min-width: 250px;
+    width: 25%;
+    min-height: 250px;
+    height: 25%;
+
 }
 
 .product-header{
@@ -17,6 +25,7 @@ body {
     margin-right: auto;
     top: 35%;
     font-size: 30px;
+    float: right;
 }
 
 a:link, a:visited {
@@ -24,8 +33,10 @@ a:link, a:visited {
 }
 
 h1{
-    font-size: 42px;
+    font-size: 30px;
+    font-family: "Rockwell";
     color: white;
+    text-shadow: 2px 2px 3px black;
 }
 
 h2{
