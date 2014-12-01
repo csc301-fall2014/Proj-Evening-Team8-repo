@@ -8,10 +8,11 @@
 {% block bootstrap3_content %}
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'mainsite/index.css'%}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/animations.css'%}" />
     
-    <div class="product-header" align="center">
-        <h1><b>Message Board</b></h1>
-        <p><b>Changing the world one message at a time.</b></p>
+    <div class="product-header pullUp" align="center">
+        <img id="logo" class="floating" src="{% static 'mainsite/images/logo.png'%}" />
+        <h1>Bring some ideas together.</h1>
     </div>
     
     <div class="links" align="center">
