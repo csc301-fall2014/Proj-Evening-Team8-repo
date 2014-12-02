@@ -5,7 +5,7 @@
     {% load staticfiles %}
     <meta charset="UTF-8">
     <title>{{ group.group_name }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/groupview.css'%}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -63,7 +63,7 @@
                         </a>
                     </p>
                 </div>
-                <div class="info" align="left">
+                <div class="infoNotSubbed" align="left">
                     <p>Author: <a href="{% url 'mainsite:userprofile' topic.creator.id %}" style="color: black;">{{topic.creator}}</a></p>
                     <p>Date: {{ topic.pub_date }}</p>
                     <p>Subscribers: {{ topic.subscriptions.count }}</p>
@@ -95,8 +95,8 @@
     
     <script >
         $(function(){
-            $("div.message:even").css("background-color", "#808080");
-            $("div.message:odd").css("background-color", "#B0B0B0");
+            $("div.message:even").css("background-color", "#A1A1A1");
+            $("div.message:odd").css("background-color", "#C2C2C2");
         });
     </script>
 </body>
