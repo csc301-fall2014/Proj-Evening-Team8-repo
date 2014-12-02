@@ -15,10 +15,9 @@
         <div class="page-header" ><h2>{{ group.group_name }}</h2></div>
     </div>
     <div class=groupinfo>
-        <div id="creator" align="left">
+        <div id="creator" align="center">
             <p>Administrator: <b>{{ creator.user_profile }}</b></p>
             {% if creator.username == user.username %}
-                <p>Admin options:</p>
                 <form action="" method="POST">
                     {% csrf_token %}
                     Add Moderator: <input type="text" name="mod_name"/>
@@ -82,7 +81,7 @@
                 <div class="textbox" align="center">
                     <form id="new_message" action= "" method="post">
                        {% csrf_token %}
-                       <input type="text" id="message_content" name="message_content" size="36" autocomplete="off" placeholder="Enter a message to chat..."/>
+                       <input type="text" id="message_content" name="message_content" size="40" autocomplete="off" placeholder="Enter a message to chat..."/>
                        <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
                        <input type="submit" name="POSTMSG" value="Post" hidden="true"/>
                     </form>
