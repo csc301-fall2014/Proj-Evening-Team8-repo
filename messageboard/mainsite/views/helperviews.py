@@ -1,6 +1,6 @@
 from mainsite.models import Message
 from django.shortcuts import render
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from django.core.mail import send_mail
 
 # Helper function for subscription notifications.
@@ -31,7 +31,7 @@ def notify_subscriber(topic, subscriber):
 
         # Clear the notification queue, set the last_notified time.
         profile.notification_queue.clear()
-        profile.last_notified = timezone.now()
+        profile.last_notified = datetime.datetime.now()
         profile.save()
 
 # Not a view, helper function for notices (a richer and more customizable HttpResponse)
