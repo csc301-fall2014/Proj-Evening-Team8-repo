@@ -72,7 +72,7 @@
                         {% if msg.topic.id  == topic.id %}
                             <div class="message">
                                 <p> <a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: black;">
-                                    {{msg.creator}}</a> @ {{msg.pub_date|date:"M d g:i a"}}</p>
+                                    {{msg.creator}}</a> @ <font size="1" color="grey">{{msg.pub_date|date:"M d g:i a"}}</font></p>
                                 <p>{{ msg.message_content }}</p>
                             </div>
                         {% endif %}
@@ -91,12 +91,5 @@
             <p> No topics to display </p>
         {% endfor %}
     </div>
-    
-    <script >
-        $(function(){
-            $("div.message:even").css("background-color", "#A1A1A1");
-            $("div.message:odd").css("background-color", "#C2C2C2");
-        });
-    </script>
 </body>
 {% endblock %}

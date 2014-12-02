@@ -32,7 +32,7 @@
                         {% for msg in messages %}
                             {% if msg.topic.id  == topic.id %}
                                 <div class="message">
-                                    <p> {{msg.creator}} @ {{msg.pub_date|date:"M d g:i a"}}</p>
+                                    <p> {{msg.creator}} @<font size="1" color="grey"> {{msg.pub_date|date:"M d g:i a"}}</font></p>
                                     <p>{{ msg.message_content }}</p>
                                 </div>
                             {% endif %}
@@ -52,13 +52,6 @@
             {% endfor %}
         </div>
     </div>
-
-    <script >
-        $(function(){
-            $("div.message:even").css("background-color", "#A1A1A1");
-            $("div.message:odd").css("background-color", "#C2C2C2");
-        });
-    </script>
 </body>
 </html>
 {% endblock %}
