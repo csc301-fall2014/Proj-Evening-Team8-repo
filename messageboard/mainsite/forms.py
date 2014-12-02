@@ -4,6 +4,13 @@ from mainsite.models import Message, Topic, Group, UserProfile, DirectMessage
 
 
 class UserForm(forms.ModelForm):
+    OPTIONS = (
+            ("student", "Student"),
+            ("teacher", "Teacher"),
+            )
+    role = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                     choices=OPTIONS)
+
     class Meta:
         model = User
         fields = ['username', 'password', 'email',  'first_name', 'last_name']
