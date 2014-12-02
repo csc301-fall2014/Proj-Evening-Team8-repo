@@ -25,8 +25,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        exclude = ('user', 'activation_key', 'key_expires', 'timejoined', 'notification_delay',
-                   'last_notified', 'notification_queue')
+        fields = ['user_description', 'school', 'notifications_enabled']
 
     # Ensure e-mail is unique.
     def clean_email(self):

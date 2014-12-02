@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from mainsite.forms import UserProfileForm, DirectMessageForm
@@ -22,20 +22,19 @@ def edituserprofile(request, userid):
     if User.objects.get(id=userid).id != user.id:
         return render(request, '404error.html')
     userprofile = user.user_profile
-    img = None
-    if request.method == "POST":
-        form = UserProfileForm(request.POST, instance=user)
-        if form.is_valid():
-            #get data from form
-            data = form.cleaned_data
 
+    if request.method == "POST":
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            # Get data from form
+            data = form.cleaned_data
             userprofile.user_description = data['user_description']
             userprofile.school = data['school']
+            userprofile.notifications_enabled = data['notifications_enabled']
             userprofile.save()
-            return render(request, 'userprofile/userprofile.html', {'user': user})
+            return redirect('mainsite:userprofile', userid=userid)
     else:
-        form = UserProfileForm(instance=user,
-         initial={'user_description': user.user_profile.user_description, 'school': user.user_profile.school})
+        form = UserProfileForm(instance=userprofile)
 
     args['form'] = form
     return render(request, "userprofile/edituserprofile.html", args)
