@@ -18,9 +18,7 @@
 	width: 30%;
 	height: 75%;
 	border: 1px solid #E7E7E7;
-    margin: 0px;
-	overflow-y: scroll;
-	overflow-x: hidden;
+    padding-left: 2px;
 }
 .infoSubbed {
 	background-color: pink;
@@ -28,9 +26,7 @@
 	width: 30%;
 	height: 75%;
 	border: 1px solid #E7E7E7;
-    margin: 0px;
-	overflow-y: scroll;
-	overflow-x: hidden;
+    padding-left: 2px;
 }
 .messages{
 	float: left;
@@ -40,6 +36,10 @@
 	border-top: 1px solid #E7E7E7;
 	border-right: 1px solid #E7E7E7;
 	border-bottom: 1px solid #E7E7E7;
+}
+.message{
+    word-wrap:break-word;
+    border-bottom: 1px solid #C2C2C2;
 }
 .textbox{
     float: left;

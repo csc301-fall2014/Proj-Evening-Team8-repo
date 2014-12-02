@@ -1,0 +1,30 @@
+.message{
+    width: 85%;
+    overflow: auto;
+    border: 1px solid #E7E7E7;
+    margin-bottom: 10px;
+}
+
+.header{
+    width: fill;
+}
+
+.leftheader{
+    float: left;
+}
+
+.rightheader{
+    float: right;
+}
+
+.content{
+    float: left;
+    padding: 5px;
+    overflow: hidden;
+    width: 100%;
+    background-color: #E7E7E7;
+}
+
+.edit{
+    float: centre;
+}
