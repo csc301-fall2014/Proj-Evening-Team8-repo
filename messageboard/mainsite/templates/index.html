@@ -10,13 +10,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'mainsite/index.css'%}" />
     <link rel="stylesheet" type="text/css" href="{% static 'mainsite/animations.css'%}" />
     
+    <div class="links" align="center">
+        <form action="/mainsite/login/"><button class="btn btn-success">Login</button></form>
+        <form action="/mainsite/registration/"><button class="btn btn-success">Register</button></form>
+    </div>
     <div class="product-header pullUp" align="center">
-        <img id="logo" class="floating" src="{% static 'mainsite/images/logo.png'%}" />
+        <img id="logo" src="{% static 'mainsite/images/logo.png'%}" />
         <h1>Bring some ideas together.</h1>
     </div>
     
-    <div class="links" align="center">
-        <h2><a href="/mainsite/login/">Login</a></h2>
-        <h2><a href="/mainsite/registration/">Register</a></h2>
-    </div>
 {% endblock %}
