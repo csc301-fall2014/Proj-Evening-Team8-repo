@@ -1,6 +1,7 @@
 from mainsite.models import Message
 from django.shortcuts import render
-from datetime import datetime, timedelta, timezone
+from django.utils import timezone
+from datetime import datetime, timedelta
 from django.core.mail import send_mail
 
 # Helper function for subscription notifications.
