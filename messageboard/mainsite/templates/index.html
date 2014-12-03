@@ -6,17 +6,27 @@
 {% load bootstrap3 %}
 
 {% block bootstrap3_content %}
+    {% load bootstrap_themes %}
+    {% bootstrap_styles theme='lumen' type='css' %}
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'mainsite/index.css'%}" />
     <link rel="stylesheet" type="text/css" href="{% static 'mainsite/animations.css'%}" />
     
-    <div class="links" align="center">
-        <form action="/mainsite/login/"><button class="btn btn-success">Login</button></form>
-        <form action="/mainsite/registration/"><button class="btn btn-success">Register</button></form>
+    <div id="links" class="btn-group" role="group" aria-label="...">
+        <a href="{% url 'mainsite:login'%}" class="btn btn-primary">Login</a>
+        <a href="{% url 'mainsite:registration'%}" class="btn btn-primary">Register</a>
     </div>
-    <div class="product-header pullUp" align="center">
+    <div id="product-header" class="pullUp" align="center">
         <img id="logo" src="{% static 'mainsite/images/logo.png'%}" />
         <h1>Bring some ideas together.</h1>
     </div>
+    <!--
+    <div id="indexLogin">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Username">
+            <input type="text" class="form-control" placeholder="Password">
+        </div>
+    </div>
+    -->
     
 {% endblock %}
