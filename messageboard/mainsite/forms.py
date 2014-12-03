@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 from mainsite.models import Message, Topic, Group, UserProfile, DirectMessage
 
 
@@ -8,11 +9,30 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'password', 'email',  'first_name', 'last_name']
         widgets = {
-            'username': forms.TextInput(attrs={'required': 'True'}),
-            'password': forms.PasswordInput(attrs={'required': 'True'}),
-            'email': forms.TextInput(attrs={'required': 'True'}),
+            'username': forms.TextInput(attrs={'required': 'True',
+                                               'size': 30,
+                                               'placeholder': 'Username'}),
+            'password': forms.PasswordInput(attrs={'required': 'True',
+                                                   'size': 30,
+                                                   'placeholder': 'Password'}),
+            'email': forms.TextInput(attrs={'required': 'True',
+                                            'size': 30,
+                                            'placeholder': 'Email'}),
         }
-
+        
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['username'].label = ''
+        self.fields['username'].help_text = None
+        self.fields['password'].label = ''
+        self.fields['email'].label = ''
+        self.fields['first_name'].label = ''
+        self.fields['first_name'].widget.attrs['size'] = 30
+        self.fields['first_name'].widget.attrs['placeholder'] = 'First name'
+        self.fields['last_name'].label = ''
+        self.fields['last_name'].widget.attrs['size'] = 30
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Last name'
+        
     # Ensure e-mail is unique.
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -21,6 +41,15 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError(u'Email addresses must be unique.')
         return email
 
+class LoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].label = ''
+        self.fields['username'].widget.attrs['size'] = 30
+        self.fields['username'].widget.attrs['placeholder'] = 'Username'
+        self.fields['password'].label = ''
+        self.fields['password'].widget.attrs['size'] = 30
+        self.fields['password'].widget.attrs['placeholder'] = 'Password'
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

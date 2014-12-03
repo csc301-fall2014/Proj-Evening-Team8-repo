@@ -2,10 +2,9 @@ import hashlib
 import random
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from mainsite.forms import UserForm
+from mainsite.forms import UserForm, LoginForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login  # Changed name because login is our view function
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.utils import timezone
@@ -142,10 +141,10 @@ def login(request):
                             '/mainsite/login/',
                             'Back')
     else:
-        return render(request, 'registration/login.html', {'form': AuthenticationForm()})
+        return render(request, 'registration/login.html', {'form': LoginForm()})
 
 
 def logout_view(request):
     logout(request)
     # Redirect to a success page.
-    return render(request, 'index.html', {'form': AuthenticationForm()})
+    return render(request, 'index.html', {'form': LoginForm()})
