@@ -1,34 +1,43 @@
 body {
-    background: url("images/randombuilding.jpg") no-repeat center center fixed;
+    background: url("images/landingpage.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
 
-.product-header{
-    margin-left: auto;
-    margin-right: auto;
-    top: 15%;
+#logo{
+    min-width: 200px;
+    width: 20%;
+    min-height: 200px;
+    height: 20%;
 }
 
-.links{
-    margin-left: auto;
-    margin-right: auto;
-    top: 35%;
+#links{
+    float: right;
+    margin-top: 1%;
+    margin-right: 15%;
+    top: 10%;
     font-size: 30px;
 }
 
-a:link, a:visited {
-    color: white;
+#product-header{
+    clear: both;
+    float: center;
+    height: fill;
 }
 
+#index-login{
+    float: center;
+    clear: both;
+}
 h1{
-    font-size: 42px;
+    font-size: 30px;
+    font-family: "Rockwell";
     color: white;
+    text-shadow: 2px 2px 3px black;
 }
 
 h2{
-
-    font-size: 30px;
+    font-size: 15px;
 }

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='lumen' type='css' %}
+<head lang="en">
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Message Board - Subscribed Topics</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="page">
+        
+        <div class="allTopics" align="center">
+            {% for topic in topics %}
+                <div class="topicBox">
+                    <div class="title">
+                        <p>
+                            <a href="{% url 'mainsite:topic' topic.id %}">
+                                <font size="6" color="grey">{{ topic.topic_name }}</font>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="infoSubbed" align="left">
+                        <p>Author: {{ topic.creator }}</p>
+                        <p>Date: {{ topic.pub_date }}</p>
+                        <p>Subscribers: {{ topic.subscriptions.count }}</p>
+                    </div>
+                    <div class="messages" align="left">
+                        {% for msg in messages %}
+                            {% if msg.topic.id  == topic.id %}
+                                <div class="message">
+                                    <p> {{msg.creator}} @<font size="1" color="grey"> {{msg.pub_date|date:"M d g:i a"}}</font></p>
+                                    <p>{{ msg.message_content }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="textbox" align="center">
+                         <form id="new_message" action= "" method="post">
+                            {% csrf_token %}
+                            <input type="text" id="message_content" name="message_content" size="40" autocomplete="off" placeholder="Enter a message to chat..."/>
+                            <input name="topic" type="HIDDEN" value="{{ topic.id }}"/>
+                            <input type="SUBMIT" name="POST" value="Post" hidden="true"/>
+                        </form>
+                    </div>
+                </div>
+            {% empty %}
+                <p> No topics to display </p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+{% endblock %}

@@ -1,52 +1,53 @@
+.topicBox{
+	float: left;
+	width: 410px;
+	height: 410px;
+    margin: 3px;
+}
+.title{
+    background-color: #F0F0FF;
+    width: fill;
+	height: 25%;
+	border-left: 1px solid #E7E7E7;
+    border-top: 1px solid #E7E7E7;
+    border-right: 1px solid #E7E7E7;
+}
 .infoNotSubbed {
 	background-color: lightblue;
 	float: left;
 	width: 30%;
 	height: 75%;
-	border: 0.5px solid #000000;
-    margin: 0px;
-	overflow-y: scroll;
-	overflow-x: hidden;
+	border: 1px solid #E7E7E7;
+    padding-left: 2px;
 }
 .infoSubbed {
 	background-color: pink;
 	float: left;
 	width: 30%;
 	height: 75%;
-	border: 0.5px solid #000000;
-    margin: 0px;
-	overflow-y: scroll;
-	overflow-x: hidden;
-}
-.topicBox{
-	float: left;
-	width: 410px;
-	height: 410px;
-    margin: 2px;
-}
-.title{
-    width:fill;
-	height: 25%;
-	border-left:0.5px solid #000000;
-    border-top:0.5px solid #000000;
-    border-right:0.5px solid #000000;
+	border: 1px solid #E7E7E7;
+    padding-left: 2px;
 }
 .messages{
 	float: left;
 	width: 70%;
-	height: 67.5%;
+	height: 68%;
 	overflow-y: scroll;
-	border-top: 0.5px solid #000000;
-	border-right: 0.5px solid #000000;
-	border-bottom: 0.5px solid #000000;
+	border-top: 1px solid #E7E7E7;
+	border-right: 1px solid #E7E7E7;
+	border-bottom: 1px solid #E7E7E7;
+}
+.message{
+    word-wrap:break-word;
+    border-bottom: 1px solid #C2C2C2;
 }
 .textbox{
     float: left;
     width: 70%;
-    height: 7.5%;
-    border-bottom: 0.5px solid #000000;
-    border-right: 0.5px solid #000000;
-    padding: 2px;
+    height: 7%;
+    border-bottom: 1px solid #E7E7E7;
+    border-right: 1px solid #E7E7E7;
+    padding: 0px;
 }
 .logout{
 	clear: both;
@@ -57,6 +58,10 @@
 }
 .page-header{
 	margin-left: 25%;
+}
+.groupinfo{
+    float: left;
+    width: 20%;
 }
 .navBar{
     float: left;
