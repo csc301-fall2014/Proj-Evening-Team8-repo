@@ -6,6 +6,7 @@
     border-radius: 4px;
     border: 1px solid #E7E7E7;
     background-color: #F0F0FF;
+    box-shadow: 0px 4px 8px #E7E7E7;
 }
 .title{
     width: fill;
