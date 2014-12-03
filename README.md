@@ -4,6 +4,8 @@
 * Navigate to messageboard folder
 * `pip install -r requirements.txt`
 
+Note: one of the required packages, Pillow, has additional dependencies for Linux distributions.  Please see http://pillow.readthedocs.org/en/latest/installation.html to ensure you have the dependencies.
+
 ---
 
 ### Getting Started
