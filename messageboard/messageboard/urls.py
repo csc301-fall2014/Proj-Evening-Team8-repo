@@ -3,6 +3,7 @@ from django.contrib import admin
 from mainsite import views
 
 urlpatterns = [
+    url(r'^$', views.index, name='index'),
     #check if it is landing page
     url(r'^mainsite/$', views.index, name='index'),
 	#check for login/registration urls
