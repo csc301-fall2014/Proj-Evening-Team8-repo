@@ -18,7 +18,7 @@
 	width: 30%;
 	height: 75%;
 	border: 1px solid #E7E7E7;
-    padding-left: 2px;
+    padding: 8px;
 }
 .infoSubbed {
 	background-color: pink;
@@ -26,7 +26,7 @@
 	width: 30%;
 	height: 75%;
 	border: 1px solid #E7E7E7;
-    padding-left: 2px;
+    padding: 8px;
 }
 .messages{
 	float: left;
