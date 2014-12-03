@@ -3,7 +3,7 @@
     width: 410px;
     height: 410px;
     margin: 4px;
-    border-radius: 8px;
+    border-radius: 4px;
     border: 1px solid #E7E7E7;
     background-color: #F0F0FF;
 }
@@ -19,7 +19,7 @@
     border-top: 1px solid #E7E7E7;
     border-right: 1px solid #E7E7E7;
     padding: 8px;
-    border-bottom-left-radius: 8px;
+    border-bottom-left-radius: 4px;
 }
 .infoSubbed {
     background-color: pink;
@@ -29,7 +29,7 @@
     border-top: 1px solid #E7E7E7;
     border-right: 1px solid #E7E7E7;
     padding: 8px;
-    border-bottom-left-radius: 8px;
+    border-bottom-left-radius: 4px;
 }
 .messages{
     float: left;
@@ -42,15 +42,16 @@
     background-color: #FFFFFF;
 }
 .message{
+    padding-left: 4px;
     word-wrap:break-word;
-    border-bottom: 1px solid #C2C2C2;
+    border-bottom: 1px solid #E7E7E7; /* #C2C2C2 */
 }
 .textbox{
     float: left;
     width: 70%;
     height: 7%;
     background-color: #FFFFFF;
-    border-bottom-right-radius: 8px;
+    border-bottom-right-radius: 4px;
     padding: 0px;
 }
 .logout{
