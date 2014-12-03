@@ -104,7 +104,7 @@ def subscribed_topics(request):
             message.topic = current_topic
             message.message_content = request.POST['message_content']
             message.save()
-            return HttpResponseRedirect(reverse('mainsite:subscriptions'))
+            return HttpResponseRedirect(reverse('mainsite:subscribed_topics'))
     user = request.user
     topic_list = user.subscribed_topics.all()
     message_list = Message.objects.filter(topic__in=topic_list)
