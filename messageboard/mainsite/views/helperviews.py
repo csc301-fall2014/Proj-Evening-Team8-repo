@@ -46,11 +46,15 @@ def post_message(content, topic, creator):
     message = Message()
     message.creator = creator
     message.topic = topic
-    message.message_content = content
-    message.save()
+    content = content.strip()
+    if(content != ""):
+        message.message_content = content
+        message.save()
+        # Hand out subscription notifications (currently synchronous)
+        subscribers = topic.subscriptions.all()
+        for subscriber in subscribers:
+            if subscriber != message.creator:
+                notify_subscriber(topic, subscriber)
 
-    # Hand out subscription notifications (currently synchronous)
-    subscribers = topic.subscriptions.all()
-    for subscriber in subscribers:
-        if subscriber != message.creator:
-            notify_subscriber(topic, subscriber)
+
+

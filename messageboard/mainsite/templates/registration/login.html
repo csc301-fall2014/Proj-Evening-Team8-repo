@@ -5,6 +5,9 @@
 {% load bootstrap3 %}
 
 {% block bootstrap3_content %}
+
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='lumen' type='css' %}
     <div align="center">
         <div class="page-header" ><h3>Login</h3></div>
         <form action="" method="post"> <!--Send form data back to same view via POST-->
