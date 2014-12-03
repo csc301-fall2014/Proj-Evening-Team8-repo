@@ -41,7 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mainsite',
     'bootstrap3',
-    'django_extensions'
+    'django_extensions',
+    'bootstrap_themes'
 )
 
 MIDDLEWARE_CLASSES = (

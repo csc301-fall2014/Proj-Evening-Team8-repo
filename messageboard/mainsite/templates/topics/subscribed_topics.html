@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
-<html>
+
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='lumen' type='css' %}
 <head lang="en">
     {% load staticfiles %}
     <meta charset="UTF-8">
     <title>Message Board - Subscribed Topics</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/subview.css'%}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -23,7 +24,7 @@
                             </a>
                         </p>
                     </div>
-                    <div class="info" align="left">
+                    <div class="infoSubbed" align="left">
                         <p>Author: {{ topic.creator }}</p>
                         <p>Date: {{ topic.pub_date }}</p>
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
@@ -32,7 +33,7 @@
                         {% for msg in messages %}
                             {% if msg.topic.id  == topic.id %}
                                 <div class="message">
-                                    <p> {{msg.creator}} @ {{msg.pub_date|date:"M d g:i a"}}</p>
+                                    <p> {{msg.creator}} @<font size="1" color="grey"> {{msg.pub_date|date:"M d g:i a"}}</font></p>
                                     <p>{{ msg.message_content }}</p>
                                 </div>
                             {% endif %}
@@ -52,17 +53,5 @@
             {% endfor %}
         </div>
     </div>
-
-    <div class="logout" align="center">
-        <a href="/mainsite/messageboard/" class="btn btn-default">Back</a>
-    </div>
-
-    <script >
-        $(function(){
-            $("div.message:even").css("background-color", "#808080");
-            $("div.message:odd").css("background-color", "#B0B0B0");
-        });
-    </script>
 </body>
-</html>
 {% endblock %}

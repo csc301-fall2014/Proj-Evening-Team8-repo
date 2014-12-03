@@ -1,22 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='lumen' type='css' %}
 <div id="header" align="center">
 	<!--<p>{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}</p>
 	<img src="{{MEDIA_URL}}avatars/{{ user.get_profile.avatar }}">-->
     <div class="page-header" ><h2>{{ group.group_name }}</h2></div>
 </div>
 
-<div id="creator" align="center">
-    <p>Administrator: {{ creator.user_profile }}</p>
-</div>
-
 <div id="users" align="center">
     <p>You invited: {{ user }}</p>
 </div>
 
-
-<div id="logout" align="center">
-  <a href="/mainsite/messageboard/" class="btn btn-default">Back</a>
-</div>
 {% endblock %}

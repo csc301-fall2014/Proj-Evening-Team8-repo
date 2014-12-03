@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='lumen' type='css' %}
 <head lang="en">
     {% load staticfiles %}
     <meta charset="UTF-8">
     <title>{{ group.group_name }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/groupview.css'%}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/tableview.css'%}"/>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -15,10 +18,9 @@
         <div class="page-header" ><h2>{{ group.group_name }}</h2></div>
     </div>
     <div class=groupinfo>
-        <div id="creator" align="left">
+        <div id="creator" align="center">
             <p>Administrator: <b>{{ creator.user_profile }}</b></p>
             {% if creator.username == user.username %}
-                <p>Admin options:</p>
                 <form action="" method="POST">
                     {% csrf_token %}
                     Add Moderator: <input type="text" name="mod_name"/>
@@ -63,7 +65,7 @@
                         </a>
                     </p>
                 </div>
-                <div class="info" align="left">
+                <div class="infoNotSubbed" align="left">
                     <p>Author: <a href="{% url 'mainsite:userprofile' topic.creator.id %}" style="color: black;">{{topic.creator}}</a></p>
                     <p>Date: {{ topic.pub_date }}</p>
                     <p>Subscribers: {{ topic.subscriptions.count }}</p>
@@ -73,7 +75,7 @@
                         {% if msg.topic.id  == topic.id %}
                             <div class="message">
                                 <p> <a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: black;">
-                                    {{msg.creator}}</a> @ {{msg.pub_date|date:"M d g:i a"}}</p>
+                                    {{msg.creator}}</a> @ <font size="1" color="grey">{{msg.pub_date|date:"M d g:i a"}}</font></p>
                                 <p>{{ msg.message_content }}</p>
                             </div>
                         {% endif %}
@@ -82,7 +84,7 @@
                 <div class="textbox" align="center">
                     <form id="new_message" action= "" method="post">
                        {% csrf_token %}
-                       <input type="text" id="message_content" name="message_content" size="36" autocomplete="off" placeholder="Enter a message to chat..."/>
+                       <input type="text" id="message_content" name="message_content" size="40" autocomplete="off" placeholder="Enter a message to chat..."/>
                        <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
                        <input type="submit" name="POSTMSG" value="Post" hidden="true"/>
                     </form>
@@ -92,12 +94,5 @@
             <p> No topics to display </p>
         {% endfor %}
     </div>
-    
-    <script >
-        $(function(){
-            $("div.message:even").css("background-color", "#808080");
-            $("div.message:odd").css("background-color", "#B0B0B0");
-        });
-    </script>
 </body>
 {% endblock %}

@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<!DOCTYPE html>
-<html>
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='lumen' type='css' %}
 <head lang="en">
+    {% load staticfiles %}
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/topic.css'%}"/>
     <div id="header" align="center">
         <div class="page-header" ><h2>{{ topic.topic_name }}</h2></div>
     </div>
@@ -39,28 +41,43 @@
     </div>
     <div id="messages" align="center">
         {% for msg in messages %}
-            <p>{{msg.message_content}}
-                {% if msg.creator.username == user.username %}
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <p><input type="HIDDEN" name="msgID" value="{{ msg.id }}"></p>
-                        <input type="SUBMIT" name="REMOVE" value="Remove">
-                        <input type="button" value="Edit" onClick="hideorshow({{ msg.id }})">
-                    </form>
-                    <form id="{{ msg.id }}" action="" method="post" style="display:none">
-                        {% csrf_token %}
-                        <p>
+            <div class="message">
+                <div class="header" align="left">
+                    <div class="leftheader">
+                        <p><a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: black;">
+                        {{msg.creator}}</a> @ <font size='1' color='grey'>{{msg.pub_date|date:"M. d, g:i a"}}</font></p>
+                    </div>
+                    <div class="rightheader">
+                    {% if msg.creator.username == user.username %}
+                        <form action="" method="post">
+                            {% csrf_token %}
                             <input type="HIDDEN" name="msgID" value="{{ msg.id }}">
-                        </p>
-                        <p>
-                            <textarea cols="40" id="message_content" name="message_content" rows="3">{{msg.message_content}}</textarea>
-                        </p>
-                        <p>
-                            <input type="SUBMIT" name="save" value="save">
-                        </p>
-                    </form>
-                {% endif %}
-            </p>
+                            <input type="SUBMIT" name="REMOVE" value="Remove">
+                            <input type="button" value="Edit" onClick="hideorshow({{ msg.id }})">
+                        </form>
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="content" align="left">
+                    <span>{{msg.message_content}}</span>
+                </div>              
+                <div class="edit" align="centre">
+                    {% if msg.creator.username == user.username %}
+                        <form id="{{ msg.id }}" action="" method="post" style="display:none">
+                            {% csrf_token %}
+                            <p>
+                                <input type="HIDDEN" name="msgID" value="{{ msg.id }}">
+                            </p>
+                            <p>
+                                <textarea cols="40" id="message_content" name="message_content" rows="3">{{msg.message_content}}</textarea>
+                            </p>
+                            <p>
+                                <input type="SUBMIT" name="save" value="Save">
+                            </p>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
         {% empty %}
             <p> No messages to display </p>
         {% endfor %}
@@ -74,12 +91,9 @@
     </div>
 
     <div id="subscribe" align="center">
-        <a href="subscribe" class="btn btn-default">Subscribe to this topic.</a>
+        <a href="subscribe" class="btn btn-default">Subscribe to this topic</a>
     </div>
-
-    <div id="logout" align="center">
-        <a href="/mainsite/messageboard/" class="btn btn-default">Back</a>
-    </div>
+    </br>
 </body>
 </html>
 {% endblock %}

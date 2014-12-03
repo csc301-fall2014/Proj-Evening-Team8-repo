@@ -4,9 +4,12 @@
 
 {% load bootstrap3 %}
 
-{% block bootstrap3_content %}
 
-<nav role="navigation" class="navbar navbar-default navbar-static-top">
+{% block bootstrap3_content %}
+{% load staticfiles %}
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='lumen' type='css' %}
+<nav role="navigation" class="navbar navbar-inverse navbar-static-top">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
         <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
@@ -15,7 +18,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="/mainsite/messageboard/" class="navbar-brand">Message Board</a>
+        <a class="navbar-brand" id="logo" href="{% url 'mainsite:messageboard'%}">Huddle</a>
     </div>
 
     <!-- Collection of nav links and other content for toggling -->
@@ -40,11 +43,16 @@
         <!-- filter -->
         <form id="tagFilters" method="POST" class="navbar-form navbar-right" role="search" style="padding-right: 20px;">
             {% csrf_token %}
-            <div class="form-group">
-              <input type="text" name="tag_name" class="form-control" placeholder="Search Tags">
+            <div class="input-group">
+                <div class="form-group">
+                    <input type="text" name="tag_name" class="form-control" placeholder="Search Tags">
+                </div>
+                <div class="input-group-btn">
+                    <button type="submit" name="POST_filter" value="Filter" class="btn btn-default">Submit</button>
+                </div>
             </div>
-            <button type="submit" name="POST_filter" value="Filter" class="btn btn-default">Submit</button>
             <input type="submit" value="Clear Filter" class="btn btn-default"/>
+
         </form>
        
     </div>

@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<!DOCTYPE html>
-<html>
 <head lang="en">
     {% load staticfiles %}
     <meta charset="UTF-8">
@@ -29,7 +26,7 @@
                         <div class="infoNotSubbed" align="left">
                     {% endif %}
                             <p>Author: <a href="{% url 'mainsite:userprofile' topic.creator.id %}" style="color: black;">{{topic.creator}}</a></p>
-                            <p>Date: {{ topic.id }}</p>
+                            <p>Date: {{ topic.pub_date }}</p>
                             <p>Subscribers: {{ topic.subscriptions.count }}</p>
                         </div>
                     <div class="messages" align="left">
@@ -37,7 +34,7 @@
                             {% if msg.topic.id  == topic.id %}
                                 <div class="message">
                                     <p> <a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: black;">
-                                    {{msg.creator}}</a> @ {{msg.pub_date|date:"M. d, g:i a"}}</p>
+                                    {{msg.creator}}</a> @ <font size="1" color="grey">{{msg.pub_date|date:"M. d, g:i a"}}</font></p>
                                     <p>{{ msg.message_content }}</p>
                                 </div>
                             {% endif %}
@@ -57,14 +54,7 @@
             {% endfor %}
         </div>
     </div>
-
-
-    <script >
-        $(function(){
-            $("div.message:even").css("background-color", "#808080");
-            $("div.message:odd").css("background-color", "#B0B0B0");
-        });
-    </script>
+    </div>
 </body>
 </html>
 {% endblock %}
