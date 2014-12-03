@@ -97,16 +97,26 @@ def subscribe(request, topicid):
 
 @login_required(login_url='/mainsite/login')
 def subscribed_topics(request):
+    user = request.user
+    topic_list = user.subscribed_topics.all()
     if "POST" in request.POST:
             message = Message()
-            message.creator = request.user
+            message.creator = user
             current_topic = Topic.objects.get(id=request.POST['topic'])
             message.topic = current_topic
             message.message_content = request.POST['message_content']
             message.save()
             return HttpResponseRedirect(reverse('mainsite:subscribed_topics'))
-    user = request.user
-    topic_list = user.subscribed_topics.all()
+    elif "POST_filter" in request.POST:
+        tag_name = request.POST['tag_name']
+        # If tag field is not empty, filter by tag if it exists.
+        if tag_name:
+            try:
+                tag = Tag.objects.get(tag_name=tag_name)
+                topic_list = tag.tagged_topics.all()
+            except Tag.DoesNotExist:
+                topic_list = []
+
     message_list = Message.objects.filter(topic__in=topic_list)
     return render(request, 'topics/subscribed_topics.html', {'topics': topic_list,
                                                              'messages':message_list})
