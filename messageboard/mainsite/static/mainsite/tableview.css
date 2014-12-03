@@ -1,7 +1,7 @@
 .topicBox{
-	float: left;
-	width: 410px;
-	height: 410px;
+    float: left;
+    width: 410px;
+    height: 410px;
     margin: 4px;
     border-radius: 8px;
     border: 1px solid #E7E7E7;
@@ -9,41 +9,37 @@
 }
 .title{
     width: fill;
-	height: 25%;
-	/* background-color: #F0F0FF;
-	border-left: 1px solid #E7E7E7;
-    border-top: 1px solid #E7E7E7;
-    border-right: 1px solid #E7E7E7; */
+    height: 25%;
 }
 .infoNotSubbed {
-	background-color: lightblue;
-	float: left;
-	width: 30%;
-	height: 75%;
-	border-top: 1px solid #E7E7E7;
-	border-right: 1px solid #E7E7E7;
+    background-color: lightblue;
+    float: left;
+    width: 30%;
+    height: 75%;
+    border-top: 1px solid #E7E7E7;
+    border-right: 1px solid #E7E7E7;
     padding: 8px;
     border-bottom-left-radius: 8px;
 }
 .infoSubbed {
-	background-color: pink;
-	float: left;
-	width: 30%;
-	height: 75%;
-	border-top: 1px solid #E7E7E7;
-	border-right: 1px solid #E7E7E7;
+    background-color: pink;
+    float: left;
+    width: 30%;
+    height: 75%;
+    border-top: 1px solid #E7E7E7;
+    border-right: 1px solid #E7E7E7;
     padding: 8px;
     border-bottom-left-radius: 8px;
 }
 .messages{
-	float: left;
-	width: 70%;
-	height: 68%;
-	overflow-y: scroll;
-	border-top: 1px solid #E7E7E7;
-	border-right: 1px solid #E7E7E7;
-	border-bottom: 1px solid #E7E7E7;
-	background-color: #FFFFFF;
+    float: left;
+    width: 70%;
+    height: 68%;
+    overflow-y: scroll;
+    border-top: 1px solid #E7E7E7;
+    border-right: 1px solid #E7E7E7;
+    border-bottom: 1px solid #E7E7E7;
+    background-color: #FFFFFF;
 }
 .message{
     word-wrap:break-word;
@@ -53,21 +49,19 @@
     float: left;
     width: 70%;
     height: 7%;
-    /* border-bottom: 1px solid #E7E7E7;
-    border-right: 1px solid #E7E7E7; */
     background-color: #FFFFFF;
     border-bottom-right-radius: 8px;
     padding: 0px;
 }
 .logout{
-	clear: both;
+    clear: both;
 }
 .allTopics{
-	float: left;
-	width: auto;
+    float: left;
+    width: auto;
 }
 .page-header{
-	margin-left: 25%;
+    margin-left: 25%;
 }
 .groupinfo{
     float: left;
@@ -78,7 +72,7 @@
     width: 20%;
 }
 h1{
-	text-align: center;
+    text-align: center;
 }
 .container{
     width: auto;
