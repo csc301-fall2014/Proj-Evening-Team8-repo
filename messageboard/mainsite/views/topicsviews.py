@@ -107,6 +107,18 @@ def subscribed_topics(request):
             message.message_content = request.POST['message_content']
             message.save()
             return HttpResponseRedirect(reverse('mainsite:subscribed_topics'))
+    elif "POST_subscribe" in request.POST:
+        current_topic = Topic.objects.get(id=request.POST['topic_id'])
+        # If subscribed, unsubscribe
+        if current_topic.subscriptions.filter(username=request.user.username).exists():
+            # Need to remove both sides of the relation manually
+            current_topic.subscriptions.remove(request.user)
+            request.user.subscribed_topics.remove(current_topic)
+        # If not subscribed, subscribe
+        else:
+            # No need to add to both sides of the relation
+            current_topic.subscriptions.add(request.user)
+        return HttpResponseRedirect(reverse('mainsite:subscribed_topics'))
     elif "POST_filter" in request.POST:
         tag_name = request.POST['tag_name']
         # If tag field is not empty, filter by tag if it exists.

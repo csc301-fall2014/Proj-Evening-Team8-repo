@@ -28,6 +28,15 @@
                             <p>Author: <a href="{% url 'mainsite:userprofile' topic.creator.id %}" style="color: black;">{{topic.creator}}</a></p>
                             <p>Date: {{ topic.pub_date }}</p>
                             <p>Subscribers: {{ topic.subscriptions.count }}</p>
+                            <form action="" Method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
+                                {% if topic.id in subIDs %}
+                                <input type="submit" name="POST_subscribe" value="Unsubscribe"/>
+                                {% else %}
+                                <input type="submit" name="POST_subscribe" value="Subscribe"/>
+                                {% endif %}
+                            </form>
                         </div>
                     <div class="messages" align="left">
                         {% for msg in messages %}
