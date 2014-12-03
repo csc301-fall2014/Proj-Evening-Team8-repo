@@ -80,7 +80,7 @@ def send_activation_email(new_user, activation_key):
 http://127.0.0.1:8000/mainsite/activation/%s\n\nYours,\nTeam8s" % (new_user.username, activation_key)
     send_mail(email_subject,
               email_body,
-              'no-reply@messageboard.ca',
+              'donotreply@huddle.ca',
               [new_user.email],
               fail_silently=False)
 
