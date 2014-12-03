@@ -21,7 +21,6 @@ urlpatterns = [
     url(r'^messageboard/directmessages/(?P<convoid>[0-9]*)/$', views.viewdirectmessage, name='viewdirectmessage'),
 
     # Subscriptions
-    url(r'^messageboard/(?P<topicid>[0-9]*)/subscribe/$', views.subscribe, name="subscribe"),
     url(r'^messageboard/subscriptions/$', views.subscribed_topics, name='subscribed_topics'),
 
     # Groups
