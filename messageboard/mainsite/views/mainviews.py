@@ -11,24 +11,6 @@ from itertools import chain
 def index(request):
     return render(request, 'index.html')
 
-@login_required(login_url='/mainsite/login')
-def messageboard(request):
-    topic_list = Topic.objects.all()
-    if request.method == 'POST':
-        tag_name = request.POST['tag_name']
-        if tag_name:
-            try:
-                tag = Tag.objects.get(tag_name=tag_name)
-                topic_list = tag.tagged_topics.all()
-            except Tag.DoesNotExist:
-                return helperviews.response(request,
-                                'Nonexistent Tag',
-                                'Tag does not exist.',
-                                '/mainsite/messageboard/',
-                                'Back')
-
-    return render(request, 'messageboard.html', {'topics': topic_list})
-
 
 @login_required(login_url='/mainsite/login')
 def tableview(request):
