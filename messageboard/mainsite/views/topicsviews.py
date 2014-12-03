@@ -26,6 +26,7 @@ def create_topic(request):
 @login_required(login_url='/mainsite/login')
 def topic(request, topicid):
     this_topic = Topic.objects.get(id=topicid)
+    subscribed_ids = request.user.subscribed_topics.values_list('id', flat=True)
     tag_error = ""
     if request.method == 'POST':
 
@@ -79,20 +80,27 @@ def topic(request, topicid):
                 except Tag.DoesNotExist:
                     pass  # Do nothing is tag doesn't exist
             return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
+
+        elif "POST_subscribe" in request.POST:
+            current_topic = Topic.objects.get(id=request.POST['topic_id'])
+            # If subscribed, unsubscribe
+            if current_topic.subscriptions.filter(username=request.user.username).exists():
+                # Need to remove both sides of the relation manually
+                current_topic.subscriptions.remove(request.user)
+                request.user.subscribed_topics.remove(current_topic)
+            # If not subscribed, subscribe
+            else:
+                # No need to add to both sides of the relation
+                current_topic.subscriptions.add(request.user)
+            return HttpResponseRedirect(reverse('mainsite:topic', args=(topicid,)))
+
     messagelist = Message.objects.filter(topic__id=this_topic.id)
     return render(request, 'topics/topic.html', {
         'messages': messagelist,
         'topic': this_topic,
         'tags': this_topic.tags.all,
-        'tag_error': tag_error})
-
-@login_required(login_url='/mainsite/login')
-def subscribe(request, topicid):
-    # Associate the topic and user to create a subscription
-    user = request.user
-    user.subscribed_topics.add(Topic.objects.get(id=topicid))
-    # After subscribing, redirect to the user's subscription list.
-    return redirect(reverse('mainsite:topic', args=(topicid,)))
+        'tag_error': tag_error,
+        'subIDs': subscribed_ids})
 
 
 @login_required(login_url='/mainsite/login')

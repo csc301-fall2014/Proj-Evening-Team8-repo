@@ -89,9 +89,18 @@
             <p> <input type="SUBMIT" name="POST" value="Post" class="btn btn-default"></p>
         </form>
     </div>
-
     <div id="subscribe" align="center">
-        <a href="subscribe" class="btn btn-default">Subscribe to this topic</a>
+        <form action="" Method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
+            <button class="btn btn-default" type="submit" name="POST_subscribe">
+                {% if topic.id in subIDs %}
+                    Unsubscribe to this Topic
+                {% else %}
+                    Subscribe to this Topic
+                {% endif %}
+            </button>
+        </form>
     </div>
     </br>
 </body>
