@@ -8,6 +8,8 @@
 
 {% load bootstrap_themes %}
 {% bootstrap_styles theme='lumen' type='css' %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mainsite/registration.css'%}"/>
     <div align="center">
         <div class="page-header" ><h3>Registration</h3></div>
         <form action="" method="post"> <!--Send form data back to same view via POST-->
