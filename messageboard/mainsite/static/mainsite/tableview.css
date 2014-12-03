@@ -54,7 +54,7 @@
 }
 .allTopics{
 	float: left;
-	width: 100%;
+	width: auto;
 }
 .page-header{
 	margin-left: 25%;
@@ -71,5 +71,5 @@ h1{
 	text-align: center;
 }
 .container{
-    width: 100%
+    width: auto
 }
