@@ -30,8 +30,8 @@
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
                         <form action="" Method="POST">
                             {% csrf_token %}
-                            <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                            <input type="submit" name="POST_subscribe" value="Unsubscribe"/>
+                            <input  type="hidden" name="topic_id" value="{{ topic.id }}"/>
+                            <button class="btn btn-default" type="submit" name="POST_subscribe">Unsubscribe</button>
                         </form>
                     </div>
                     <div class="messages" align="left">

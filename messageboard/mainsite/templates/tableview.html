@@ -31,11 +31,14 @@
                             <form action="" Method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                                {% if topic.id in subIDs %}
-                                <input type="submit" name="POST_subscribe" value="Unsubscribe"/>
-                                {% else %}
-                                <input type="submit" name="POST_subscribe" value="Subscribe"/>
-                                {% endif %}
+
+                                <button class="btn btn-default" type="submit" name="POST_subscribe">
+                                    {% if topic.id in subIDs %}
+                                        Unsubscribe
+                                    {% else %}
+                                        Subscribe
+                                    {% endif %}
+                                </button>
                             </form>
                         </div>
                     <div class="messages" align="left">
