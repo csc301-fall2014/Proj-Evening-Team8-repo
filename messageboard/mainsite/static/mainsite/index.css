@@ -13,20 +13,24 @@ body {
     height: 20%;
 }
 
-.links{
+#links{
     float: right;
     margin-top: 1%;
-    margin-right: 3%;
+    margin-right: 15%;
     top: 10%;
     font-size: 30px;
 }
 
-.product-header{
+#product-header{
     clear: both;
     float: center;
     height: fill;
 }
 
+#index-login{
+    float: center;
+    clear: both;
+}
 h1{
     font-size: 30px;
     font-family: "Rockwell";
@@ -35,6 +39,5 @@ h1{
 }
 
 h2{
-
-    font-size: 30px;
+    font-size: 15px;
 }
