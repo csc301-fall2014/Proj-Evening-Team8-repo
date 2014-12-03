@@ -132,8 +132,8 @@ def subscribed_topics(request):
         # If tag field is not empty, filter by tag if it exists.
         if tag_name:
             try:
-                tag = Tag.objects.get(tag_name=tag_name)
-                topic_list = tag.tagged_topics.all()
+                tagged_topics = Tag.objects.get(tag_name=tag_name).tagged_topics.values_list('id')
+                topic_list = topic_list.filter(id__in=tagged_topics)
             except Tag.DoesNotExist:
                 topic_list = []
 
