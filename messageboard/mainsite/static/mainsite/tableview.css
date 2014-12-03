@@ -54,7 +54,7 @@
 }
 .allTopics{
 	float: left;
-	width: 80%;
+	width: 100%;
 }
 .page-header{
 	margin-left: 25%;
@@ -69,4 +69,7 @@
 }
 h1{
 	text-align: center;
+}
+.container{
+    width: 100%
 }
