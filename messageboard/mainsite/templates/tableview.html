@@ -47,8 +47,17 @@
                         {% for msg in messages %}
                             {% if msg.topic.id  == topic.id %}
                                 <div class="message">
-                                    <p> <a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: black;">
-                                    {{msg.creator}}</a><font size="1" color="grey">@ {{msg.pub_date|date:"M. d, g:i a"}}</font></p>
+                                    <p> 
+                                        {% if msg.creator.user_profile.student == True %}
+                                            <a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: blue;">
+                                                {{msg.creator}}
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: red;">
+                                                {{msg.creator}}
+                                            </a>
+                                        {% endif %}
+                                         @ <font size="1" color="grey">{{msg.pub_date|date:"M. d, g:i a"}}</font></p>
                                     <p>{{ msg.message_content }}</p>
                                 </div>
                             {% endif %}

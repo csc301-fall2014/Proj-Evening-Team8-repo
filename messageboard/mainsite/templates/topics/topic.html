@@ -44,8 +44,12 @@
             <div class="message">
                 <div class="header" align="left">
                     <div class="leftheader">
-                        <p><a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: black;">
-                        {{msg.creator}}</a> @ <font size='1' color='grey'>{{msg.pub_date|date:"M. d, g:i a"}}</font></p>
+                        <p>
+                            <a href="{% url 'mainsite:userprofile' msg.creator.id %}" style="color: black;">
+                                {{msg.creator}}
+                            </a> 
+                                @ <font size='1' color='grey'>{{msg.pub_date|date:"M. d, g:i a"}}</font>
+                        </p>
                     </div>
                     <div class="rightheader">
                     {% if msg.creator.username == user.username %}

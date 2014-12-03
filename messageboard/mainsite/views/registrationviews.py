@@ -25,6 +25,14 @@ def registration(request):
                             last_name=data['last_name'],
                             is_active=False)
 
+            #extra form data
+            isStudent = False
+            isTeacher = False
+            if data['role'][0] == 'student':
+                isStudent = True
+            else:
+                isTeacher = True
+
             # Generate activation key, check for duplicates however astronomically unlikely it would be
             activation_key = None
             while activation_key is None or UserProfile.objects.filter(activation_key=activation_key).exists():
@@ -39,9 +47,16 @@ def registration(request):
             new_user.save()
 
             # Create UserProfile
-            new_profile = UserProfile(user=new_user,
+            if isStudent == True:
+                new_profile = UserProfile(user=new_user,
                                       activation_key=activation_key,
-                                      key_expires=key_expires)
+                                      key_expires=key_expires,
+                                      student=True)
+            else:
+                new_profile = UserProfile(user=new_user,
+                                      activation_key=activation_key,
+                                      key_expires=key_expires,
+                                      teacher=True)
             new_profile.save()
 
             return render(request, 'registration/registrationcomplete.html', {'data': data})

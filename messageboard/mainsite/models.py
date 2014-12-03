@@ -13,6 +13,10 @@ class UserProfile(models.Model):
     school = models.CharField(max_length=200, blank=True, default="", unique=False, null=True)
     timejoined = models.DateTimeField(default=timezone.now)
 
+    #roles
+    student = models.BooleanField('student', default=False)
+    teacher = models.BooleanField('teacher', default=False)
+
     # Time between subscription notifications
     notification_delay = models.FloatField(default=timedelta(seconds=21600).total_seconds())
 
