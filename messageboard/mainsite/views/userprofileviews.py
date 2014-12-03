@@ -9,9 +9,9 @@ from mainsite.models import UserProfile, Group, Requests, Conversation, DirectMe
 
 @login_required(login_url='/mainsite/login')
 def userprofile(request, userid):
-    user = User.objects.get(id=userid)
+    user_to_display = User.objects.get(id=userid)
     logged_in_user = request.user
-    return render(request, 'userprofile/userprofile.html', {'user': user,
+    return render(request, 'userprofile/userprofile.html', {'user_to_display': user_to_display,
      'logged_in_user': logged_in_user})
 
 
