@@ -2,23 +2,25 @@
 
 {% block content %}
 <div id="header" align="center">
-    <p>
-        {% if user_to_display.user_profile.student == True %}
-	       <img src="http://badgebadge.co.uk/img/b/m/75.png">
-        {% else %}
-            <img src="http://www.koolbadges.co.uk/images/thumbnails/superteacheryellow-250x250.jpg">
-        {% endif %}
     <div class="page-header" >
-        <h2>
-            {{ user_to_display.first_name }} {{ user_to_display.last_name }}
-        </h2>
-        
+        {% if user_to_display.user_profile.student == True %}
+	        <h2><font color="blue">{{ user_to_display.first_name }} {{ user_to_display.last_name }}</font></h2>
+        {% else %}
+            <h2><font color="red">{{ user_to_display.first_name }} {{ user_to_display.last_name }}</font></h2>
+        {% endif %}
     </div>
 </div>
 
 <div id="userinfo" align="center">
     <p>@{{ user_to_display.username }}</p>
     <p>Description: {{ user_to_display.user_profile.user_description }}</p>
+    <p>
+        {% if user_to_display.user_profile.student == True %}
+	        Role: Student
+        {% else %}
+            Role: Teacher
+        {% endif %}
+    </p>
     <p>School: {{ user_to_display.user_profile.school }}</p>
     <p>Time Joined: {{ user_to_display.user_profile.timejoined|date:"M Y" }}</p>
 </div>
