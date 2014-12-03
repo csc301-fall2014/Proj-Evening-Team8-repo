@@ -27,7 +27,7 @@ def notify_subscriber(topic, subscriber):
         for t in profile.notification_queue.all():
             email_body += "http://127.0.0.1:8000/mainsite/messageboard/%d\n" % t.id
         email_body += "\n\nYours,\nTeam8s"
-        send_mail(email_subject, email_body, 'no-reply@messageboard.com', [subscriber.email], fail_silently=False)
+        send_mail(email_subject, email_body, 'donotreply@huddle.ca', [subscriber.email], fail_silently=False)
 
         # Clear the notification queue, set the last_notified time.
         profile.notification_queue.clear()
