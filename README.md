@@ -3,7 +3,6 @@
 * install pip
 * Navigate to messageboard folder
 * `pip install -r requirements.txt`
-* `pip install django-bootstrap-themes`
 
 ---
 
