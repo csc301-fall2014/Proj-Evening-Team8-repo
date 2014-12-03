@@ -27,6 +27,7 @@ def create_group(request):
 @login_required(login_url='/mainsite/login')
 def group(request, groupid):
     this_group = Group.objects.get(id=groupid)
+    subscribed_ids = request.user.subscribed_topics.values_list('id', flat=True)
     if request.method == 'POST':
         if "INVITE" in request.POST:
             return redirect('inviteuser/')
@@ -45,6 +46,18 @@ def group(request, groupid):
         elif "POSTMSG" in request.POST:
             helperviews.post_message(request.POST['message_content'], Topic.objects.get(id=request.POST['topic_id']), request.user)
             return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
+        elif "POST_subscribe" in request.POST:
+            current_topic = Topic.objects.get(id=request.POST['topic_id'])
+            # If subscribed, unsubscribe
+            if current_topic.subscriptions.filter(username=request.user.username).exists():
+                # Need to remove both sides of the relation manually
+                current_topic.subscriptions.remove(request.user)
+                request.user.subscribed_topics.remove(current_topic)
+            # If not subscribed, subscribe
+            else:
+                # No need to add to both sides of the relation
+                current_topic.subscriptions.add(request.user)
+            return HttpResponseRedirect(reverse('mainsite:group', args=(groupid,)))
     else:
         group_creator = this_group.creator
         user_list = this_group.user_set.all()
@@ -56,7 +69,8 @@ def group(request, groupid):
                                                      'mods': mod_list,
                                                      'users': user_list,
                                                      'topics': topic_list,
-                                                     'messages': message_list})
+                                                     'messages': message_list,
+                                                     'subIDs': subscribed_ids})
 
 @login_required(login_url='/mainsite/login')
 def joined_groups(request):

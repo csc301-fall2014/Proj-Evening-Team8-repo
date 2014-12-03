@@ -31,7 +31,6 @@
                             <form action="" Method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="topic_id" value="{{ topic.id }}"/>
-
                                 <button class="btn btn-default" type="submit" name="POST_subscribe">
                                     {% if topic.id in subIDs %}
                                         Unsubscribe
