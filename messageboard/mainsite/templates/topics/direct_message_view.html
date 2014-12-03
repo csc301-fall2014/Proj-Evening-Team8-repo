@@ -53,6 +53,15 @@
         </form>
     </div>
 </body>
-
 </html>
+
+<script type="text/javascript">
+    function defaultScrollPosition() {
+        var elements = document.getElementsByClassName("messageBox");
+        for(var i=0; i<elements.length; i++) {
+            elements[i].scrollTop=elements[i].scrollHeight;
+        }
+    }
+    window.onload = defaultScrollPosition;
+</script>
 {% endblock %}
