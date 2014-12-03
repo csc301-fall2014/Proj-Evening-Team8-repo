@@ -25,14 +25,17 @@
                         </p>
                     </div>
                     <div class="infoSubbed" align="left">
+                        <div class="subscribe" align="center">
+                            <form action="" Method="POST">
+                                {% csrf_token %}
+                                <input  type="hidden" name="topic_id" value="{{ topic.id }}"/>
+                                <button class="btn btn-default btn-block" type="submit" name="POST_subscribe">Unsubscribe</button>
+                            </form>
+                        </div>
+                        <br>
                         <p>Author: {{ topic.creator }}</p>
                         <p>Date: {{ topic.pub_date }}</p>
                         <p>Subscribers: {{ topic.subscriptions.count }}</p>
-                        <form action="" Method="POST">
-                            {% csrf_token %}
-                            <input  type="hidden" name="topic_id" value="{{ topic.id }}"/>
-                            <button class="btn btn-default" type="submit" name="POST_subscribe">Unsubscribe</button>
-                        </form>
                     </div>
                     <div class="messages" align="left">
                         {% for msg in messages %}
