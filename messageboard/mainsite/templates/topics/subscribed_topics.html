@@ -50,7 +50,7 @@
                     <div class="textbox" align="center">
                          <form id="new_message" action= "" method="post">
                             {% csrf_token %}
-                            <input type="text" id="message_content" name="message_content" size="40" autocomplete="off" placeholder="Enter a message to chat..."/>
+                            <input type="text" id="message_content" name="message_content" autocomplete="off" placeholder="Enter a message to chat..." style="border: none; border-color: transparent; width:100%;"/>
                             <input name="topic" type="HIDDEN" value="{{ topic.id }}"/>
                             <input type="SUBMIT" name="POST" value="Post" hidden="true"/>
                         </form>
