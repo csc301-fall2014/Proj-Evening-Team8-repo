@@ -44,7 +44,7 @@ def edituserprofile(request, userid):
 def groupinvite(request, groupid):
     this_group = Group.objects.get(id=groupid)
     group_creator = this_group.creator
-    user_list = User.objects.all()
+    user_list = User.objects.filter(is_active=True)
     
 
     return render(request, 'groups/groupinvite.html', {'group': this_group,
