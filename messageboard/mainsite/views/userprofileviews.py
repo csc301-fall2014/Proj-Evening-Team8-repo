@@ -64,7 +64,8 @@ def confirmation(request, groupid, userid):
                                   user_that_invited=user_profile)
     new_request.save()
 
-    return render(request, 'groups/groupinviteconfirmation.html', {'user': user_to_invite})
+    return render(request, 'groups/groupinviteconfirmation.html', {'user_to_invite': user_to_invite,
+                                                                   'group': this_group})
 
 
 #view invites
