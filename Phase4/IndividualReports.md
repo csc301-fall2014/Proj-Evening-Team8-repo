@@ -1,6 +1,6 @@
 # Individual Reports
 
-## ***REMOVED*** (***REMOVED***)
+## ** REMOVED **
 
  * My most significant individual technical contribution was the implementation of [topic subscription](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/a39d8a641226ecc3f58309e94ddda519b0b412da), [subscription notifications](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/768e64f1618e2cc04529aaed01cbbca1e6c2ccac), and the [enabling of external emailing for both subscriptions and account activation](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/e7d26d0e1557ac3c05afe744b258f5f0b8a1c3d7)
  * While I had a little bit of experience from experimenting with another web framework (Ruby on Rails) in the past, this is my first major implementation of a web framework, so it really helped me understand some of the nuances of the MVC design pattern and really helped me understand how URL routing works.
@@ -9,7 +9,7 @@
 
 ----
 
-## ***REMOVED*** (***REMOVED***)
+## ** REMOVED **
 
  * My most significant contribution was the implementation of basic [group functionality]( https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/4cb91e70930d0c8860c136188c83617cc6c87661) for our website, which has the group model, creation, and group page. This also includes group deletion and user types within the group, which was implemented in the following [commit](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/2607beb28b77933f3977498d8badb64fb4f8c8d7).
  * I learned about how the model-view-controller architecture pattern works and is implemented, and also web languages like html, javascript, and css.
@@ -18,7 +18,7 @@
 
 ----
 
-## ***REMOVED*** (***REMOVED***)
+## ** REMOVED **
 
 -I implemented editing and removing message functionality.
 -This is my first webframe work project. I learnt a bit html and javascript.
@@ -27,7 +27,7 @@
 
 ----
 
-## ***REMOVED*** (***REMOVED***)
+## ** REMOVED **
 
  * Most of my work is relatively spread out, but the most significant standalone feature is the [registration system](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/tree/registration20) from Phase 2. Cumulatively, it would be my work on [table view](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/tree/tagsintables59) in Phase 3.
  * Throughout the project, I learned a lot about web design, going in only knowing a little about HTML. I learned about frameworks in general, MVP, and Django.
@@ -36,7 +36,7 @@
 
 ----
 
-## ***REMOVED*** (***REMOVED***)
+## ** REMOVED **
 
  * My most significant contribution would have to be my work with message functionality in [topic views](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/messagetopic8), [table view](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/tableviewmessaging55) and [topics in group view](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commits/groupmessagesfix70). There was also the scramble at the end of phase 3 [commit 1](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/fb71e50ff977583a65c320f46b57c60e73fdebfc), [commit 2](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/8d1f243e14d5b1019f516806fb2182c422843996), [commit 3](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/6e6c7ff4f34e4aeb6d1aa1c5d52675d44334af77) where I was able to save the project from a major reset right before the deadline.
  * The two largest technical concepts I learnt about were, MVC and web frameworks, through Django. Before the project I had never worked with a web framework, I had only done work using HTML/CSS and javascript in very small projects.
@@ -45,7 +45,7 @@
 
 ----
 
-## ***REMOVED*** (***REMOVED***)
+## ** REMOVED **
 
  * My most significant individual contribution was allowing topics to be private based off of group memberships. This added a lot of privacy features that are needed for a good messageboard.
  * I learnt a lot about web development and the tools needed to make a web application. Using Django taught me how the MVC pattern actually looks and works.
@@ -54,7 +54,7 @@
 
 ----
 
-## ***REMOVED*** (***REMOVED***/aleccool21/cannon-edgar)
+## ** REMOVED **
 
  * What is your most significant individual contribution?
  
