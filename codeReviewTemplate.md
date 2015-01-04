@@ -4,7 +4,7 @@ The table below indicates which team member reviewed which other team member's c
 
 | Reviewer | Coder |
 | -------- | ----- |
-| ***REMOVED*** |  ***REMOVED*** |
+| bensonchan |  spencerwahl |
 | GitHub username 2 |  Github username 3 |
 | GitHub username 3 |  GitHub username 4 |
 | GitHub username 4 |  GitHub username 5 |
@@ -29,7 +29,7 @@ You can see all of my comments by searching for issues with the label _code-revi
 
 -----
 
-## Reviewer : ***REMOVED***
+## Reviewer : bensonchan
 
  * I found a minor bug in table view CSS where the tables weren't wrapping properly. Spencer promptly fixed it in [this commit](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/70358fdb284ec396d1fa0b3c7318d0bec62ad690).
  * I changed the name attribute of the submit type input in [this commit](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/commit/f27671831f6133e6be8ac6c3776ea9df4da3b863) and appended POST_ before the name to ensure that any POST requests sent from [tableview.html](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/tagsintables59/messageboard/mainsite/templates/tableview.html) are interpreted by the view tableview in [views.py](https://github.com/csc301-fall2014/Proj-Evening-Team8-repo/blob/tagsintables59/messageboard/mainsite/views.py) correctly as it only checks if a name is present in the entire POST, which contains many other names referring to actual data inputs.
